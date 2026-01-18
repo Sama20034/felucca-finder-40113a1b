@@ -26,7 +26,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="text-center md:text-right">
               <h3 className="font-serif text-2xl font-bold text-primary mb-2">
-                {isRTL ? 'انضمي لعائلة Resilience Gold' : 'Join the Resilience Gold Family'}
+                {isRTL ? 'انضمي لعائلة Reselience Gold' : 'Join the Reselience Gold Family'}
               </h3>
               <p className="text-muted-foreground">
                 {isRTL ? 'احصلي على عروض حصرية ونصائح للعناية بالشعر' : 'Get exclusive offers and hair care tips'}
@@ -52,9 +52,9 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <img src={logo} alt="Resilience Gold" className="h-16 w-auto" />
+              <img src={logo} alt="Reselience Gold" className="h-16 w-auto" />
               <div>
-                <h2 className="font-serif text-xl font-bold text-primary">Resilience</h2>
+                <h2 className="font-serif text-xl font-bold text-primary">Reselience</h2>
                 <p className="text-xs text-muted-foreground tracking-widest uppercase">Gold</p>
               </div>
             </div>
@@ -128,7 +128,7 @@ const Footer = () => {
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center border border-primary/30">
                   <Mail className="w-4 h-4 text-primary" />
                 </div>
-                <span>info@resiliencegold.com</span>
+                <span>info@reseliencegold.com</span>
               </li>
               <li className="flex items-center gap-4 text-sm text-muted-foreground">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center border border-primary/30">
@@ -170,7 +170,7 @@ const Footer = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
             <p className="flex items-center gap-2">
-              © 2026 <span className="text-primary font-serif font-semibold">Resilience Gold</span>. 
+              © 2026 <span className="text-primary font-serif font-semibold">Reselience Gold</span>. 
               {isRTL ? ' جميع الحقوق محفوظة.' : ' All rights reserved.'}
             </p>
             <div className="flex items-center gap-4">

@@ -47,10 +47,32 @@ const HeroSection = () => {
       <div className="relative container mx-auto px-4 min-h-screen flex items-center">
         <div className={`max-w-3xl transition-all duration-1500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           
-          {/* Cinematic tagline */}
+          {/* Polygonal Badge */}
           <div className="overflow-hidden mb-6">
-            <p className="text-primary/70 text-sm md:text-base tracking-[0.3em] uppercase font-light animate-slide-up">
-              {isRTL ? 'اكتشفي سر الجمال الأبدي' : 'Discover The Secret of Eternal Beauty'}
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full border-2 border-primary/60 bg-primary/10 backdrop-blur-sm animate-slide-up">
+              <svg className="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5L12 1zm0 3.18l6 2.73v4.96c0 4.08-2.79 7.9-6 8.94-3.21-1.04-6-4.86-6-8.94V6.91l6-2.73z"/>
+              </svg>
+              <span className="text-primary font-medium text-sm tracking-wide">Luxury Hair Care</span>
+              <div className="flex gap-1">
+                <span className="text-primary">★</span>
+                <span className="text-primary">★</span>
+                <span className="text-primary">★</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Gold Brand Name */}
+          <div className="overflow-hidden mb-4">
+            <p className="text-primary/80 text-lg md:text-xl tracking-[0.2em] uppercase font-light animate-slide-up" style={{ animationDelay: '0.1s' }}>
+              GOLD
+            </p>
+          </div>
+
+          {/* Arabic Tagline */}
+          <div className="overflow-hidden mb-6">
+            <p className="text-primary/70 text-base md:text-lg tracking-wide font-light animate-slide-up" style={{ animationDelay: '0.15s' }}>
+              {isRTL ? 'اكتشفي سر الجمال الأبدي' : 'اكتشفي سر الجمال الأبدي'}
             </p>
           </div>
 
@@ -116,7 +138,7 @@ const HeroSection = () => {
       <div className="absolute left-8 top-1/2 -translate-y-1/2 hidden xl:flex flex-col items-center gap-4">
         <div className="w-px h-20 bg-primary/30" />
         <span className="text-[10px] text-primary/50 uppercase tracking-[0.3em] writing-mode-vertical rotate-180" style={{ writingMode: 'vertical-rl' }}>
-          Resilience Gold — 2026
+          Reselience Gold — 2026
         </span>
         <div className="w-px h-20 bg-primary/30" />
       </div>
