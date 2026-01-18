@@ -6,91 +6,96 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Eye } from "lucide-react";
 
 const faqs = [
   {
-    question: "إمتى يوصل طلبي؟",
-    answer: "يتم توصيل الطلبات خلال 2-5 أيام عمل حسب المحافظة. الشحن للقاهرة والجيزة عادة يكون أسرع (2-3 أيام).",
+    question: "Is the product safe for children or pregnant women?",
+    answer: "Yes, it is completely safe because it is natural.",
   },
   {
-    question: "هل المنتجات أصلية؟",
-    answer: "نعم، جميع منتجاتنا مختارة بعناية من أفضل الموردين ونضمن جودتها. نحرص على توفير منتجات عالية الجودة فقط.",
+    question: "How many times do I use it a week?",
+    answer: "Use it 3 to 4 times a week.",
   },
   {
-    question: "لو المنتج فيه مشكلة؟",
-    answer: "في حالة وجود أي مشكلة بالمنتج، يمكنك التواصل معنا خلال 7 أيام من الاستلام للاستبدال أو الاسترجاع.",
+    question: "When do the results appear?",
+    answer: "Some people noticed a difference from the first week, and full results occurred within a month and a half to 3 months, depending on the case.",
   },
   {
-    question: "ما هي طرق الدفع المتاحة؟",
-    answer: "نوفر الدفع عند الاستلام، البطاقات الائتمانية (فيزا/ماستركارد)، المحافظ الإلكترونية (فودافون كاش، اتصالات كاش، أورانج كاش)، والتحويل البنكي.",
+    question: "How can I cancel an order?",
+    answer: "To cancel the order, send a message to the support team on our official Facebook page.",
   },
   {
-    question: "هل يمكنني تتبع طلبي؟",
-    answer: "نعم، بعد شحن طلبك ستصلك رسالة برقم التتبع. يمكنك استخدامه في صفحة تتبع الطلب أو التواصل معنا للاستفسار.",
+    question: "What payment methods do you accept?",
+    answer: "Cash on Delivery or via InstaPay or electronic wallets *Cash services*.",
   },
   {
-    question: "ما هي رسوم الشحن؟",
-    answer: "رسوم الشحن تختلف حسب المنطقة. الشحن للقاهرة والجيزة يبدأ من 40 ج.م، والمحافظات الأخرى من 50 ج.م.",
-  },
-  {
-    question: "هل يوجد حد أدنى للطلب؟",
-    answer: "لا يوجد حد أدنى للطلب. يمكنك طلب أي كمية تحتاجها.",
-  },
-  {
-    question: "كيف أتواصل مع خدمة العملاء؟",
-    answer: "يمكنك التواصل معنا عبر واتساب على 01001049502، أو الاتصال على 01108383770، أو إرسال بريد إلكتروني إلى k.360store@gmail.com.",
+    question: "What is the return policy?",
+    answer: `In order to ensure that we at Resilience provide the best possible experience to our customers, we offer the possibility of returning the product within 14 days from the date of receipt, according to the following conditions:
+
+- The product must be unused and in its original condition exactly as it was received.
+- The outer cover and all labels must be intact and unopened.
+- The return process must be carried out using the same approved delivery method.
+- Please note that any product that has been opened or used cannot be returned to maintain safety and hygiene standards.
+- To apply for a return, please contact customer service from our social media page.
+
+Contact our support team on social media or at our email: Info@resilience-gold.com`,
   },
 ];
 
 const FAQ = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-[#1a0a2e] via-[#2d1b4e] to-[#1a0a2e]">
       <Header />
-      <main>
+      <main className="relative overflow-hidden">
+        {/* Decorative flowers */}
+        <div className="absolute top-20 right-10 text-4xl opacity-60 animate-pulse">🌸</div>
+        <div className="absolute bottom-20 left-10 text-3xl opacity-50 animate-pulse delay-500">🌸</div>
+        
+        {/* Background glow effects */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl" />
+
         {/* Page Header */}
-        <div className="bg-secondary py-16">
+        <div className="py-16 relative z-10">
           <div className="container mx-auto px-4 text-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-secondary-foreground mb-4">الأسئلة الشائعة</h1>
-            <p className="text-secondary-foreground/80 max-w-2xl mx-auto">
-              إجابات على أكثر الأسئلة شيوعاً
-            </p>
+            <div className="inline-block bg-[#8b5cf6]/80 backdrop-blur-sm px-12 py-4 rounded-full mb-8 shadow-lg shadow-purple-500/20">
+              <h1 className="text-2xl md:text-3xl font-bold text-white tracking-wider uppercase">
+                Frequently Asked Questions
+              </h1>
+            </div>
           </div>
         </div>
 
-        <section className="py-16">
-          <div className="container mx-auto px-4 max-w-3xl">
+        <section className="pb-20 relative z-10">
+          <div className="container mx-auto px-4 max-w-4xl">
             <Accordion type="single" collapsible className="space-y-4">
               {faqs.map((faq, index) => (
                 <AccordionItem
                   key={index}
                   value={`item-${index}`}
-                  className="bg-card rounded-xl px-6 shadow-soft border-none"
+                  className="bg-[#2d1b4e]/60 backdrop-blur-md rounded-2xl px-8 border border-purple-500/20 shadow-xl shadow-purple-900/20 overflow-hidden"
                 >
-                  <AccordionTrigger className="text-right hover:no-underline text-foreground font-semibold py-5">
-                    {faq.question}
+                  <AccordionTrigger className="text-left hover:no-underline text-purple-300 font-medium py-6 text-lg group">
+                    <span className="flex-1 pr-4">{faq.question}</span>
+                    <div className="w-10 h-10 rounded-full border border-purple-400/50 flex items-center justify-center group-hover:border-purple-300 transition-colors">
+                      <Eye className="w-5 h-5 text-purple-400 group-hover:text-purple-300 transition-colors" />
+                    </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                  <AccordionContent className="text-white/90 pb-6 text-base leading-relaxed whitespace-pre-line">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
 
-            {/* Still Have Questions */}
-            <div className="mt-12 text-center bg-muted/50 p-8 rounded-2xl">
-              <h3 className="text-xl font-bold text-foreground mb-2">لم تجد إجابة سؤالك؟</h3>
-              <p className="text-muted-foreground mb-4">تواصل معنا وسنرد عليك في أقرب وقت</p>
-              <a
-                href="https://wa.me/201001049502"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors"
-              >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                </svg>
-                تواصل عبر واتساب
-              </a>
+            {/* Contact Section */}
+            <div className="mt-16 text-center">
+              <div className="inline-flex items-center gap-2 text-purple-300/80 text-sm">
+                <span className="text-2xl">🌸</span>
+                <span>Have more questions? Reach out to us anytime</span>
+                <span className="text-2xl">🌸</span>
+              </div>
             </div>
           </div>
         </section>
