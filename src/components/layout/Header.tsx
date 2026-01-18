@@ -173,7 +173,7 @@ const Header = () => {
               src={logo}
             />
             <div className="hidden md:block">
-              <h1 className="font-serif text-xl font-bold text-primary leading-none">Resilience</h1>
+              <h1 className="font-serif text-xl font-bold text-primary leading-none">Reselience</h1>
               <p className="text-xs text-muted-foreground tracking-widest uppercase">Gold</p>
             </div>
           </Link>
