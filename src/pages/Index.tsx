@@ -2,10 +2,11 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/layout/WhatsAppButton";
 import HeroSection from "@/components/home/HeroSection";
-import FeaturesSection from "@/components/home/FeaturesSection";
-import ProductsShowcase from "@/components/home/ProductsShowcase";
+import StorySection from "@/components/home/StorySection";
+import BenefitsSection from "@/components/home/BenefitsSection";
+import ProductReveal from "@/components/home/ProductReveal";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
-import CTASection from "@/components/home/CTASection";
+import FinalCTA from "@/components/home/FinalCTA";
 
 const Index = () => {
   return (
@@ -13,10 +14,11 @@ const Index = () => {
       <Header />
       <main>
         <HeroSection />
-        <FeaturesSection />
-        <ProductsShowcase />
+        <StorySection />
+        <BenefitsSection />
+        <ProductReveal />
         <TestimonialsSection />
-        <CTASection />
+        <FinalCTA />
       </main>
       <Footer />
       <WhatsAppButton />
