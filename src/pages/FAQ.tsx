@@ -27,7 +27,7 @@ const faqs = [
   },
   {
     question: "What is the return policy?",
-    answer: `In order to ensure that we at Resilience provide the best possible experience to our customers, we offer the possibility of returning the product within 14 days from the date of receipt, according to the following conditions:
+    answer: `In order to ensure that we at Reselience provide the best possible experience to our customers, we offer the possibility of returning the product within 14 days from the date of receipt, according to the following conditions:
 
 - The product must be unused and in its original condition exactly as it was received.
 - The outer cover and all labels must be intact and unopened.
@@ -35,7 +35,7 @@ const faqs = [
 - Please note that any product that has been opened or used cannot be returned to maintain safety and hygiene standards.
 - To apply for a return, please contact customer service from our social media page.
 
-Contact our support team on social media or at our email: Info@resilience-gold.com`,
+Contact our support team on social media or at our email: Info@reselience-gold.com`,
   },
 ];
 
