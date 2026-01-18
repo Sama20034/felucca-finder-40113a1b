@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Search, ShoppingCart, User, Heart, LogOut, X, Menu } from "lucide-react";
+import { Search, ShoppingCart, User, Heart, LogOut, X, Menu, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { useAuth } from "@/contexts/AuthContext";
@@ -7,7 +7,7 @@ import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "./LanguageSwitcher";
-import logo from "@/assets/pink-wish-logo.png";
+import logo from "@/assets/resilience-logo.png";
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -30,22 +30,19 @@ const Header = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [hideSearchBar, setHideSearchBar] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
 
-  // Hide search bar when not at top of page
   useEffect(() => {
     const handleScroll = () => {
-      // Only show search bar when at the very top (scrollY < 10)
-      setHideSearchBar(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Fetch suggestions when search query changes
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (searchQuery.trim().length < 2) {
@@ -73,7 +70,6 @@ const Header = () => {
     return () => clearTimeout(debounce);
   }, [searchQuery]);
 
-  // Close suggestions when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -109,16 +105,15 @@ const Header = () => {
   };
 
   const navLinks = [
-    { name: t('home'), href: "/" },
-    { name: t('shop'), href: "/shop" },
-    { name: t('categories'), href: "/categories" },
-    { name: t('trackOrder'), href: "/track-order" },
-    { name: t('contact'), href: "/contact" },
+    { name: isRTL ? 'الرئيسية' : 'Home', href: "/" },
+    { name: isRTL ? 'المتجر' : 'Shop', href: "/shop" },
+    { name: isRTL ? 'الأسئلة الشائعة' : 'FAQ', href: "/faq" },
+    { name: isRTL ? 'تواصل معنا' : 'Contact', href: "/contact" },
   ];
 
   const SuggestionsDropdown = () => (
     showSuggestions && (searchQuery.trim().length >= 2) && (
-      <div className="absolute top-full left-0 right-0 mt-1 bg-card border border-border rounded-lg shadow-lg z-[100] max-h-80 overflow-y-auto">
+      <div className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-2xl shadow-xl z-[100] max-h-80 overflow-y-auto backdrop-blur-md">
         {isLoading ? (
           <div className="p-4 text-center text-muted-foreground text-sm">
             {isRTL ? 'جاري البحث...' : 'Searching...'}
@@ -129,28 +124,28 @@ const Header = () => {
               <button
                 key={product.id}
                 onClick={() => handleSuggestionClick(product.id)}
-                className="w-full flex items-center gap-3 p-3 hover:bg-accent transition-colors text-right"
+                className="w-full flex items-center gap-4 p-4 hover:bg-secondary/50 transition-colors text-right first:rounded-t-2xl"
               >
                 <img 
                   src={product.image_url} 
                   alt={isRTL ? product.name_ar : product.name}
-                  className="w-10 h-10 object-cover rounded"
+                  className="w-12 h-12 object-cover rounded-xl border border-border"
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate">
+                  <p className="text-sm font-medium text-card-foreground truncate">
                     {isRTL ? product.name_ar : product.name}
                   </p>
-                  <p className="text-xs text-primary font-bold">
-                    {product.price} {t('egp')}
+                  <p className="text-sm text-primary font-bold">
+                    {product.price} {isRTL ? 'ج.م' : 'EGP'}
                   </p>
                 </div>
               </button>
             ))}
             <button
               onClick={handleSearch}
-              className="w-full p-3 text-center text-sm text-primary hover:bg-accent transition-colors border-t border-border"
+              className="w-full p-4 text-center text-sm text-primary hover:bg-secondary/50 transition-colors border-t border-border rounded-b-2xl"
             >
-              {isRTL ? `عرض كل النتائج لـ "${searchQuery}"` : `View all results for "${searchQuery}"`}
+              {isRTL ? `عرض كل النتائج` : `View all results`}
             </button>
           </>
         ) : (
@@ -163,24 +158,45 @@ const Header = () => {
   );
 
   return (
-    <header className="sticky top-0 z-50 bg-card/98 backdrop-blur-md shadow-soft border-b border-border/50">
-
-      {/* Main Header */}
-      <div className="container mx-auto px-4 py-3">
-        <div className="flex items-center justify-between gap-4">
-          {/* Logo - Left side */}
-          <Link to="/" className="flex items-center gap-2 group">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      isScrolled 
+        ? 'bg-background/95 backdrop-blur-md shadow-lg border-b border-border/50' 
+        : 'bg-transparent'
+    }`}>
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between gap-6">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3 group">
             <img
-              alt="Pink Wish"
-              className="h-16 md:h-18 w-auto transition-transform duration-300 group-hover:scale-105"
+              alt="Resilience Gold"
+              className="h-12 md:h-14 w-auto transition-transform duration-500 group-hover:scale-105"
               src={logo}
             />
+            <div className="hidden md:block">
+              <h1 className="font-serif text-xl font-bold text-primary leading-none">Resilience</h1>
+              <p className="text-xs text-muted-foreground tracking-widest uppercase">Gold</p>
+            </div>
           </Link>
 
-          {/* Search Bar - Desktop (always visible) */}
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.href}
+                className="text-card-foreground/80 hover:text-primary font-medium transition-colors duration-300 relative py-2
+                  after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-primary after:rounded-full
+                  hover:after:w-full after:transition-all after:duration-300"
+              >
+                {link.name}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Search Bar - Desktop */}
           <div 
             ref={searchRef} 
-            className="hidden md:flex flex-1 max-w-xl mx-8 relative"
+            className="hidden md:flex flex-1 max-w-md relative"
           >
             <form onSubmit={handleSearch} className="w-full">
               <div className="relative w-full group">
@@ -192,22 +208,22 @@ const Header = () => {
                     setShowSuggestions(true);
                   }}
                   onFocus={() => setShowSuggestions(true)}
-                  placeholder={t('searchProducts')}
-                  className="w-full py-2 px-4 rounded-full border-2 border-border bg-background focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all placeholder:text-muted-foreground"
-                  style={{ paddingLeft: isRTL ? '2.5rem' : '1rem', paddingRight: isRTL ? '1rem' : '2.5rem' }}
+                  placeholder={isRTL ? 'ابحثي عن منتجاتك...' : 'Search products...'}
+                  className="w-full py-3 px-5 rounded-full border border-border bg-background/50 backdrop-blur-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-card-foreground placeholder:text-muted-foreground"
+                  style={{ paddingLeft: isRTL ? '3rem' : '1.25rem', paddingRight: isRTL ? '1.25rem' : '3rem' }}
                 />
                 {searchQuery && (
                   <button
                     type="button"
                     onClick={clearSearch}
-                    className={`absolute top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors ${isRTL ? 'left-10' : 'right-10'}`}
+                    className={`absolute top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors ${isRTL ? 'left-12' : 'right-12'}`}
                   >
                     <X className="w-4 h-4" />
                   </button>
                 )}
                 <button 
                   type="submit"
-                  className={`absolute top-1/2 -translate-y-1/2 bg-primary text-primary-foreground p-2 rounded-full hover:bg-primary/90 transition-all shadow-pink hover:shadow-pink-lg ${isRTL ? 'left-1' : 'right-1'}`}
+                  className={`absolute top-1/2 -translate-y-1/2 bg-primary text-primary-foreground p-2 rounded-full hover:bg-accent transition-all shadow-gold ${isRTL ? 'left-1' : 'right-1'}`}
                 >
                   <Search className="w-4 h-4" />
                 </button>
@@ -217,27 +233,45 @@ const Header = () => {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-1">
-            {/* Mobile Menu Button - Right side */}
+          <div className="flex items-center gap-2">
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-              <SheetTrigger asChild className="md:hidden">
-                <Button variant="ghost" size="icon" className="hover:bg-accent">
+              <SheetTrigger asChild className="lg:hidden">
+                <Button variant="ghost" size="icon" className="hover:bg-secondary text-card-foreground">
                   <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side={isRTL ? "right" : "left"} className="w-72">
+              <SheetContent side={isRTL ? "right" : "left"} className="w-80 bg-background border-border">
                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 <div className="flex flex-col h-full">
-                  <div className="flex items-center justify-center py-6 border-b border-border">
-                    <img src={logo} alt="Pink Wish" className="h-18" />
+                  <div className="flex items-center justify-center py-8 border-b border-border">
+                    <img src={logo} alt="Resilience Gold" className="h-16" />
                   </div>
-                  <nav className="flex flex-col gap-1 mt-6">
+                  
+                  {/* Mobile Search */}
+                  <div className="p-4 border-b border-border">
+                    <form onSubmit={handleSearch}>
+                      <div className="relative">
+                        <input
+                          type="text"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          placeholder={isRTL ? 'ابحثي...' : 'Search...'}
+                          className="w-full py-3 px-4 rounded-xl border border-border bg-secondary/30 focus:outline-none focus:border-primary text-card-foreground"
+                        />
+                        <button type="submit" className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'left-3' : 'right-3'}`}>
+                          <Search className="w-5 h-5 text-primary" />
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                  <nav className="flex flex-col gap-2 p-4">
                     {navLinks.map((link) => (
                       <Link
                         key={link.name}
                         to={link.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="px-4 py-3 text-foreground hover:text-primary hover:bg-accent rounded-lg font-medium transition-colors"
+                        className="px-4 py-3 text-card-foreground hover:text-primary hover:bg-secondary/50 rounded-xl font-medium transition-colors"
                       >
                         {link.name}
                       </Link>
@@ -246,39 +280,41 @@ const Header = () => {
                 </div>
               </SheetContent>
             </Sheet>
+
             <LanguageSwitcher />
+            
             <Button
               variant="ghost"
               size="icon"
-              className="relative hover:bg-accent hover:text-primary transition-colors"
+              className="relative hover:bg-secondary text-card-foreground hover:text-primary transition-colors"
               onClick={() => user ? navigate('/my-account?tab=wishlist') : navigate('/auth')}
-              title={t('wishlist')}
             >
               <Heart className="w-5 h-5" />
               {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold animate-pulse-pink">
+                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
                   {wishlistCount}
                 </span>
               )}
             </Button>
+            
             <Link to="/cart">
-              <Button variant="ghost" size="icon" className="relative hover:bg-accent hover:text-primary transition-colors" title={t('cart')}>
+              <Button variant="ghost" size="icon" className="relative hover:bg-secondary text-card-foreground hover:text-primary transition-colors">
                 <ShoppingCart className="w-5 h-5" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold animate-pulse-pink">
+                  <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
                     {cartCount}
                   </span>
                 )}
               </Button>
             </Link>
+            
             {user ? (
               <>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => navigate('/my-account')}
-                  title={t('myAccount')}
-                  className="hover:bg-accent hover:text-primary transition-colors"
+                  className="hover:bg-secondary text-card-foreground hover:text-primary transition-colors"
                 >
                   <User className="w-5 h-5" />
                 </Button>
@@ -286,8 +322,7 @@ const Header = () => {
                   variant="ghost"
                   size="icon"
                   onClick={signOut}
-                  title={t('logout')}
-                  className="hover:bg-destructive/10 hover:text-destructive transition-colors"
+                  className="hover:bg-destructive/20 text-card-foreground hover:text-destructive transition-colors"
                 >
                   <LogOut className="w-5 h-5" />
                 </Button>
@@ -297,60 +332,14 @@ const Header = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => navigate('/auth')}
-                className="hover:bg-accent hover:text-primary transition-colors"
-                title={t('login')}
+                className="hover:bg-secondary text-card-foreground hover:text-primary transition-colors"
               >
                 <User className="w-5 h-5" />
               </Button>
             )}
           </div>
         </div>
-
-        {/* Mobile Search Bar */}
-        <div 
-          ref={mobileSearchRef} 
-          className={`md:hidden relative w-full overflow-hidden transition-all duration-300 ${hideSearchBar ? 'max-h-0 mt-0 opacity-0' : 'max-h-14 mt-2 pb-1 opacity-100'}`}
-        >
-          <form onSubmit={handleSearch}>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setShowSuggestions(true);
-              }}
-              onFocus={() => setShowSuggestions(true)}
-              placeholder={t('searchProducts')}
-              className="w-full py-2 px-4 text-sm rounded-full border border-border bg-background focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
-              style={{ paddingLeft: isRTL ? '2.5rem' : '1rem', paddingRight: isRTL ? '1rem' : '2.5rem' }}
-            />
-            <button type="submit" className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'left-3' : 'right-3'}`}>
-              <Search className="w-4 h-4 text-muted-foreground hover:text-primary transition-colors" />
-            </button>
-          </form>
-          <SuggestionsDropdown />
-        </div>
       </div>
-
-      {/* Navigation - Desktop only */}
-      <nav className="hidden md:block border-t border-border/50 bg-gradient-to-r from-accent/30 via-transparent to-accent/30">
-        <div className="container mx-auto px-4">
-          <ul className="flex items-center justify-center gap-8 py-3">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <Link
-                  to={link.href}
-                  className="text-foreground hover:text-primary font-medium transition-all duration-300 relative py-2 px-1
-                    after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-primary after:rounded-full
-                    hover:after:w-full after:transition-all after:duration-300"
-                >
-                  {link.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
     </header>
   );
 };
