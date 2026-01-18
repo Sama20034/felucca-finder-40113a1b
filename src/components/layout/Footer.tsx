@@ -25,8 +25,8 @@ const Footer = () => {
         <div className="container mx-auto px-4 py-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="text-center md:text-right">
-              <h3 className="font-serif text-2xl font-bold text-primary mb-2">
-                {isRTL ? 'انضمي لعائلة Resilience Gold' : 'Join the Resilience Gold Family'}
+            <h3 className="font-serif text-2xl font-bold text-primary mb-2">
+                {isRTL ? 'انضمي لعائلة Reselience Gold' : 'Join the Reselience Gold Family'}
               </h3>
               <p className="text-muted-foreground">
                 {isRTL ? 'احصلي على عروض حصرية ونصائح للعناية بالشعر' : 'Get exclusive offers and hair care tips'}
