@@ -168,12 +168,12 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <img
-              alt="Reselience Gold"
+              alt="Resilience Gold"
               className="h-12 md:h-14 w-auto transition-transform duration-500 group-hover:scale-105"
               src={logo}
             />
             <div className="hidden md:block">
-              <h1 className="font-serif text-xl font-bold text-primary leading-none">Reselience</h1>
+              <h1 className="font-serif text-xl font-bold text-primary leading-none">Resilience</h1>
               <p className="text-xs text-muted-foreground tracking-widest uppercase">Gold</p>
             </div>
           </Link>

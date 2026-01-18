@@ -10,8 +10,8 @@ const TestimonialsSection = () => {
     {
       nameEn: "Sara Ahmed",
       nameAr: "سارة أحمد",
-      textEn: "I've tried countless products, but Reselience Gold is truly different. My hair has never looked this healthy and vibrant. It's like a complete transformation.",
-      textAr: "جربت منتجات لا تُحصى، لكن Reselience Gold مختلف حقاً. شعري لم يبدُ بهذه الصحة والحيوية من قبل. إنه تحول كامل.",
+      textEn: "I've tried countless products, but Resilience Gold is truly different. My hair has never looked this healthy and vibrant. It's like a complete transformation.",
+      textAr: "جربت منتجات لا تُحصى، لكن Resilience Gold مختلف حقاً. شعري لم يبدُ بهذه الصحة والحيوية من قبل. إنه تحول كامل.",
       rating: 5,
       avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop"
     },
