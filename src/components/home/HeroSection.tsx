@@ -19,12 +19,12 @@ const HeroSection = () => {
   }, []);
 
   useEffect(() => {
-    // Parallax scroll effect
+    // Strong parallax scroll effect
     const handleScroll = () => {
       if (sectionRef.current) {
         const rect = sectionRef.current.getBoundingClientRect();
         if (rect.bottom > 0) {
-          setScrollY(window.scrollY * 0.3);
+          setScrollY(window.scrollY * 0.5);
         }
       }
     };
@@ -77,10 +77,10 @@ const HeroSection = () => {
           {/* Cinematic tagline */}
           <div className="overflow-hidden mb-6">
             <p 
-              className={`text-primary/70 text-sm md:text-base tracking-[0.3em] uppercase font-light transition-all duration-1000 ease-out ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              className={`text-primary/70 text-sm md:text-base tracking-[0.3em] uppercase font-light transition-all duration-[1.2s] ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
               }`}
-              style={{ transitionDelay: '0.2s' }}
+              style={{ transitionDelay: '0.3s' }}
             >
               {isRTL ? 'اكتشفي سر الجمال الأبدي' : 'Discover The Secret of Eternal Beauty'}
             </p>
@@ -90,26 +90,26 @@ const HeroSection = () => {
           <div className="overflow-hidden mb-8">
             <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.9] tracking-tight">
               <span 
-                className={`block text-primary transition-all duration-1000 ease-out ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                className={`block text-primary transition-all duration-[1.4s] ease-out ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
                 }`}
-                style={{ transitionDelay: '0.4s' }}
+                style={{ transitionDelay: '0.5s' }}
               >
                 {isRTL ? 'قوة' : 'The'}
               </span>
               <span 
-                className={`block text-card-foreground/90 transition-all duration-1000 ease-out ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                className={`block text-card-foreground/90 transition-all duration-[1.4s] ease-out ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
                 }`}
-                style={{ transitionDelay: '0.6s' }}
+                style={{ transitionDelay: '0.8s' }}
               >
                 {isRTL ? 'اللمعان' : 'Power of'}
               </span>
               <span 
-                className={`block text-primary transition-all duration-1000 ease-out ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                className={`block text-primary transition-all duration-[1.4s] ease-out ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
                 }`}
-                style={{ transitionDelay: '0.8s' }}
+                style={{ transitionDelay: '1.1s' }}
               >
                 {isRTL ? 'الذهبي' : 'Radiance'}
               </span>
@@ -119,10 +119,10 @@ const HeroSection = () => {
           {/* Poetic description */}
           <div className="overflow-hidden mb-12">
             <p 
-              className={`text-xl md:text-2xl text-card-foreground/70 leading-relaxed font-light max-w-xl transition-all duration-1000 ease-out ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              className={`text-xl md:text-2xl text-card-foreground/70 leading-relaxed font-light max-w-xl transition-all duration-[1.4s] ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
               }`}
-              style={{ transitionDelay: '1s' }}
+              style={{ transitionDelay: '1.4s' }}
             >
               {isRTL 
                 ? 'كل خصلة تحكي قصة. دعي شعرك يروي حكاية القوة والجمال والثقة التي تستحقينها.' 
@@ -132,14 +132,14 @@ const HeroSection = () => {
 
           {/* CTA - elegant and minimal with glow */}
           <div 
-            className={`flex flex-wrap items-center gap-6 transition-all duration-1000 ease-out ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            className={`flex flex-wrap items-center gap-6 transition-all duration-[1.4s] ease-out ${
+              isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-16 scale-90'
             }`}
-            style={{ transitionDelay: '1.2s' }}
+            style={{ transitionDelay: '1.7s' }}
           >
             <Button 
               size="lg" 
-              className="group relative overflow-hidden bg-primary hover:bg-primary text-primary-foreground text-lg px-12 py-8 rounded-full font-medium transition-all duration-500 hover:shadow-gold-lg hover:scale-105 animate-[pulse-glow_3s_ease-in-out_infinite]"
+              className="group relative overflow-hidden bg-primary hover:bg-primary text-primary-foreground text-lg px-12 py-8 rounded-full font-medium transition-all duration-500 hover:shadow-gold-lg hover:scale-110 animate-hero-button-glow"
               onClick={() => navigate('/shop')}
             >
               <span className="relative z-10 flex items-center gap-3">
@@ -161,17 +161,19 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Scroll indicator - cinematic */}
+      {/* Scroll indicator - cinematic with bounce */}
       <div 
-        className={`absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 transition-all duration-1000 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+        className={`absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 transition-all duration-[1.4s] ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}
-        style={{ transitionDelay: '1.5s' }}
+        style={{ transitionDelay: '2.2s' }}
       >
-        <div className="w-px h-20 bg-gradient-to-b from-transparent via-primary/50 to-primary animate-pulse" />
-        <span className="text-[10px] text-primary/60 uppercase tracking-[0.4em] rotate-0">
-          {isRTL ? 'اسحبي للأسفل' : 'Scroll'}
-        </span>
+        <div className="w-px h-20 bg-gradient-to-b from-transparent via-primary/50 to-primary animate-scroll-pulse" />
+        <div className="animate-scroll-bounce">
+          <span className="text-[10px] text-primary/60 uppercase tracking-[0.4em] rotate-0">
+            {isRTL ? 'اسحبي للأسفل' : 'Scroll'}
+          </span>
+        </div>
       </div>
 
       {/* Side text - vertical */}
