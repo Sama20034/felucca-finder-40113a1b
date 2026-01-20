@@ -105,6 +105,11 @@ export default {
         glow: {
           '0%, 100%': { opacity: '0.5' },
           '50%': { opacity: '1' }
+        },
+        slowPan: {
+          '0%': { transform: 'translate(0%, 0%) scale(1.1)' },
+          '50%': { transform: 'translate(-2%, -1%) scale(1.15)' },
+          '100%': { transform: 'translate(1%, -2%) scale(1.1)' }
         }
       },
       animation: {
