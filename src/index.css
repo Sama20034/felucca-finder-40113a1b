@@ -276,77 +276,19 @@
 
   @keyframes glow {
     0%, 100% {
-      box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+      box-shadow: 0 0 20px hsl(51 100% 50% / 0.3);
     }
     50% {
-      box-shadow: 0 0 40px hsl(var(--primary) / 0.6);
+      box-shadow: 0 0 40px hsl(51 100% 50% / 0.5);
     }
   }
 
   @keyframes shimmer {
     0% {
-      background-position: -200% 0;
+      background-position: -200% center;
     }
     100% {
-      background-position: 200% 0;
+      background-position: 200% center;
     }
-  }
-
-  @keyframes pulse-glow {
-    0%, 100% {
-      box-shadow: 0 0 20px hsl(var(--primary) / 0.2), 0 0 40px hsl(var(--primary) / 0.1);
-    }
-    50% {
-      box-shadow: 0 0 30px hsl(var(--primary) / 0.35), 0 0 60px hsl(var(--primary) / 0.2);
-    }
-  }
-
-  /* Hero button strong glow animation */
-  @keyframes hero-button-glow {
-    0%, 100% {
-      box-shadow: 0 0 25px hsl(var(--primary) / 0.4), 0 0 50px hsl(var(--primary) / 0.25), 0 0 80px hsl(var(--primary) / 0.15);
-      transform: scale(1);
-    }
-    50% {
-      box-shadow: 0 0 40px hsl(var(--primary) / 0.6), 0 0 80px hsl(var(--primary) / 0.4), 0 0 120px hsl(var(--primary) / 0.25);
-      transform: scale(1.03);
-    }
-  }
-
-  .animate-hero-button-glow {
-    animation: hero-button-glow 2s ease-in-out infinite;
-  }
-
-  /* Scroll indicator bounce animation */
-  @keyframes scroll-bounce {
-    0%, 100% {
-      transform: translateY(0);
-      opacity: 0.6;
-    }
-    50% {
-      transform: translateY(8px);
-      opacity: 1;
-    }
-  }
-
-  .animate-scroll-bounce {
-    animation: scroll-bounce 1.5s ease-in-out infinite;
-  }
-
-  /* Scroll line pulse animation */
-  @keyframes scroll-pulse {
-    0%, 100% {
-      opacity: 0.5;
-      transform: scaleY(1);
-    }
-    50% {
-      opacity: 1;
-      transform: scaleY(1.1);
-    }
-  }
-
-  .animate-scroll-pulse {
-    animation: scroll-pulse 2s ease-in-out infinite;
-    transform-origin: bottom;
   }
 }
