@@ -14,15 +14,21 @@ const HeroSection = () => {
     setIsVisible(true);
   }, []);
 
+  // Animation classes based on language direction
+  const slideDirection = isRTL ? 'translate-x-20' : '-translate-x-20';
+  const slideIn = isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${slideDirection}`;
+
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Full screen background */}
-      <div className="absolute inset-0">
-        <img 
-          src={heroBg} 
-          alt="Luxury Hair" 
-          className="w-full h-full object-cover scale-105 animate-[scale_20s_ease-in-out_infinite_alternate]"
-        />
+      {/* Full screen background with slow pan animation */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-[-10%] w-[120%] h-[120%] animate-[slowPan_30s_ease-in-out_infinite_alternate]">
+          <img 
+            src={heroBg} 
+            alt="Luxury Hair" 
+            className="w-full h-full object-cover"
+          />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/30" />
         <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent" />
       </div>
@@ -45,11 +51,11 @@ const HeroSection = () => {
 
       {/* Main content */}
       <div className="relative container mx-auto px-4 min-h-screen flex items-center">
-        <div className={`max-w-3xl transition-all duration-1500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className="max-w-3xl">
           
           {/* Cinematic tagline */}
           <div className="overflow-hidden mb-6">
-            <p className="text-primary/70 text-sm md:text-base tracking-[0.3em] uppercase font-light animate-slide-up">
+            <p className={`text-primary/70 text-sm md:text-base tracking-[0.3em] uppercase font-light transition-all duration-700 ease-out ${slideIn}`}>
               {isRTL ? 'اكتشفي سر الجمال الأبدي' : 'Discover The Secret of Eternal Beauty'}
             </p>
           </div>
@@ -57,13 +63,19 @@ const HeroSection = () => {
           {/* Main headline - cinematic style */}
           <div className="overflow-hidden mb-8">
             <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.9] tracking-tight">
-              <span className="block text-primary animate-slide-up" style={{ animationDelay: '0.2s' }}>
+              <span 
+                className={`block text-primary transition-all duration-700 ease-out delay-200 ${slideIn}`}
+              >
                 {isRTL ? 'قوة' : 'The'}
               </span>
-              <span className="block text-card-foreground/90 animate-slide-up" style={{ animationDelay: '0.4s' }}>
+              <span 
+                className={`block text-card-foreground/90 transition-all duration-700 ease-out delay-[400ms] ${slideIn}`}
+              >
                 {isRTL ? 'اللمعان' : 'Power of'}
               </span>
-              <span className="block text-primary animate-slide-up" style={{ animationDelay: '0.6s' }}>
+              <span 
+                className={`block text-primary transition-all duration-700 ease-out delay-[600ms] ${slideIn}`}
+              >
                 {isRTL ? 'الذهبي' : 'Radiance'}
               </span>
             </h1>
@@ -71,7 +83,9 @@ const HeroSection = () => {
 
           {/* Poetic description */}
           <div className="overflow-hidden mb-12">
-            <p className="text-xl md:text-2xl text-card-foreground/70 leading-relaxed font-light max-w-xl animate-slide-up" style={{ animationDelay: '0.8s' }}>
+            <p 
+              className={`text-xl md:text-2xl text-card-foreground/70 leading-relaxed font-light max-w-xl transition-all duration-700 ease-out delay-[800ms] ${slideIn}`}
+            >
               {isRTL 
                 ? 'كل خصلة تحكي قصة. دعي شعرك يروي حكاية القوة والجمال والثقة التي تستحقينها.' 
                 : 'Every strand tells a story. Let your hair narrate the tale of strength, beauty, and confidence you deserve.'}
@@ -79,7 +93,7 @@ const HeroSection = () => {
           </div>
 
           {/* CTA - elegant and minimal */}
-          <div className="flex flex-wrap items-center gap-6 animate-slide-up" style={{ animationDelay: '1s' }}>
+          <div className={`flex flex-wrap items-center gap-6 transition-all duration-700 ease-out delay-1000 ${slideIn}`}>
             <Button 
               size="lg" 
               className="group relative overflow-hidden bg-primary hover:bg-primary text-primary-foreground text-lg px-12 py-8 rounded-full font-medium transition-all duration-500 hover:shadow-gold-lg hover:scale-105"
