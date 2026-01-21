@@ -181,8 +181,8 @@ const Header = () => {
               <Link
                 key={link.name}
                 to={link.href}
-                className="text-white/80 hover:text-white font-medium transition-colors duration-300 relative py-2
-                  after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-white after:rounded-full
+                className="text-[#D4AF37]/80 hover:text-[#D4AF37] font-medium transition-colors duration-300 relative py-2
+                  after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-[#D4AF37] after:rounded-full
                   hover:after:w-full after:transition-all after:duration-300"
               >
                 {link.name}
@@ -206,21 +206,21 @@ const Header = () => {
                   }}
                   onFocus={() => setShowSuggestions(true)}
                   placeholder={isRTL ? 'ابحثي عن منتجاتك...' : 'Search products...'}
-                  className="w-full py-3 px-5 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm focus:outline-none focus:border-white/40 focus:ring-2 focus:ring-white/20 transition-all text-white placeholder:text-white/60"
+                  className="w-full py-3 px-5 rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 backdrop-blur-sm focus:outline-none focus:border-[#D4AF37]/60 focus:ring-2 focus:ring-[#D4AF37]/20 transition-all text-[#D4AF37] placeholder:text-[#D4AF37]/60"
                   style={{ paddingLeft: isRTL ? '3rem' : '1.25rem', paddingRight: isRTL ? '1.25rem' : '3rem' }}
                 />
                 {searchQuery && (
                   <button
                     type="button"
                     onClick={clearSearch}
-                    className={`absolute top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors ${isRTL ? 'left-12' : 'right-12'}`}
+                    className={`absolute top-1/2 -translate-y-1/2 text-[#D4AF37]/60 hover:text-[#D4AF37] transition-colors ${isRTL ? 'left-12' : 'right-12'}`}
                   >
                     <X className="w-4 h-4" />
                   </button>
                 )}
                 <button 
                   type="submit"
-                  className={`absolute top-1/2 -translate-y-1/2 bg-white/20 text-white p-2 rounded-full hover:bg-white/30 transition-all ${isRTL ? 'left-1' : 'right-1'}`}
+                  className={`absolute top-1/2 -translate-y-1/2 bg-[#D4AF37]/20 text-[#D4AF37] p-2 rounded-full hover:bg-[#D4AF37]/30 transition-all ${isRTL ? 'left-1' : 'right-1'}`}
                 >
                   <Search className="w-4 h-4" />
                 </button>
@@ -233,7 +233,7 @@ const Header = () => {
           <div className="flex items-center gap-2">
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild className="lg:hidden">
-                <Button variant="ghost" size="icon" className="hover:bg-white/10 text-white">
+                <Button variant="ghost" size="icon" className="hover:bg-[#D4AF37]/10 text-[#D4AF37]">
                   <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>
@@ -283,22 +283,22 @@ const Header = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="relative hover:bg-white/10 text-white transition-colors"
+              className="relative hover:bg-[#D4AF37]/10 text-[#D4AF37] transition-colors"
               onClick={() => user ? navigate('/my-account?tab=wishlist') : navigate('/auth')}
             >
               <Heart className="w-5 h-5" />
               {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-white text-[#1C092F] text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                <span className="absolute -top-1 -right-1 bg-[#D4AF37] text-[#1C092F] text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
                   {wishlistCount}
                 </span>
               )}
             </Button>
             
             <Link to="/cart">
-              <Button variant="ghost" size="icon" className="relative hover:bg-white/10 text-white transition-colors">
+              <Button variant="ghost" size="icon" className="relative hover:bg-[#D4AF37]/10 text-[#D4AF37] transition-colors">
                 <ShoppingCart className="w-5 h-5" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-white text-[#1C092F] text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                  <span className="absolute -top-1 -right-1 bg-[#D4AF37] text-[#1C092F] text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
                     {cartCount}
                   </span>
                 )}
@@ -311,7 +311,7 @@ const Header = () => {
                   variant="ghost"
                   size="icon"
                   onClick={() => navigate('/my-account')}
-                  className="hover:bg-white/10 text-white transition-colors"
+                  className="hover:bg-[#D4AF37]/10 text-[#D4AF37] transition-colors"
                 >
                   <User className="w-5 h-5" />
                 </Button>
@@ -319,7 +319,7 @@ const Header = () => {
                   variant="ghost"
                   size="icon"
                   onClick={signOut}
-                  className="hover:bg-red-500/20 text-white hover:text-red-400 transition-colors"
+                  className="hover:bg-red-500/20 text-[#D4AF37] hover:text-red-400 transition-colors"
                 >
                   <LogOut className="w-5 h-5" />
                 </Button>
@@ -329,7 +329,7 @@ const Header = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => navigate('/auth')}
-                className="hover:bg-white/10 text-white transition-colors"
+                className="hover:bg-[#D4AF37]/10 text-[#D4AF37] transition-colors"
               >
                 <User className="w-5 h-5" />
               </Button>
