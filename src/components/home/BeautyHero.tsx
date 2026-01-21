@@ -32,7 +32,7 @@ const BeautyHero = () => {
           y: 0
         }} transition={{
           duration: 0.8
-        }} className={`space-y-8 ${isRTL ? 'text-right lg:order-2' : 'text-left'}`}>
+        }} className={`space-y-6 sm:space-y-8 text-center sm:text-right ${isRTL ? 'lg:order-2' : 'sm:text-left'}`}>
             {/* Logo - Prominent */}
             <motion.div initial={{
             opacity: 0,
@@ -57,7 +57,7 @@ const BeautyHero = () => {
           }} transition={{
             duration: 0.6,
             delay: 0.2
-          }} className="inline-block text-sm font-medium text-primary bg-primary/10 px-4 py-2 rounded-full">
+          }} className="inline-block text-xs sm:text-sm font-medium text-primary bg-primary/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
               {content.tagline}
             </motion.span>
 
@@ -71,7 +71,7 @@ const BeautyHero = () => {
           }} transition={{
             duration: 0.6,
             delay: 0.3
-          }} className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground leading-tight">
+          }} className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground leading-tight px-2 sm:px-0">
               {content.headline}
             </motion.h1>
 
@@ -85,7 +85,7 @@ const BeautyHero = () => {
           }} transition={{
             duration: 0.6,
             delay: 0.4
-          }} className="text-lg md:text-xl text-muted-foreground max-w-lg">
+          }} className="text-sm sm:text-lg md:text-xl text-muted-foreground max-w-lg mx-auto sm:mx-0 px-4 sm:px-0">
               {content.subheadline}
             </motion.p>
 
@@ -99,16 +99,16 @@ const BeautyHero = () => {
           }} transition={{
             duration: 0.6,
             delay: 0.5
-          }} className={`flex flex-wrap gap-4 ${isRTL ? 'justify-end' : 'justify-start'}`}>
-              <Link to="/shop">
-                <Button size="lg" className="btn-beauty text-base px-8 py-6 group shadow-lg shadow-primary/20">
-                  <ShoppingBag className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+          }} className={`flex flex-col sm:flex-row gap-3 sm:gap-4 ${isRTL ? 'items-end sm:justify-end' : 'items-start sm:justify-start'}`}>
+              <Link to="/shop" className="w-full sm:w-auto">
+                <Button size="lg" className="btn-beauty text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 group shadow-lg shadow-primary/20 w-full sm:w-auto">
+                  <ShoppingBag className={`w-4 h-4 sm:w-5 sm:h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
                   {content.cta}
                   {isRTL ? <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" /> : <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />}
                 </Button>
               </Link>
-              <Link to="/results">
-                <Button size="lg" variant="outline" className="btn-outline-beauty text-base px-8 py-6">
+              <Link to="/results" className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="btn-outline-beauty text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 w-full sm:w-auto">
                   {content.secondary}
                 </Button>
               </Link>
@@ -122,20 +122,20 @@ const BeautyHero = () => {
           }} transition={{
             duration: 0.6,
             delay: 0.6
-          }} className={`flex items-center gap-8 pt-6 ${isRTL ? 'justify-end' : 'justify-start'}`}>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">+5000</div>
-                <div className="text-xs text-muted-foreground">{isRTL ? 'عميلة سعيدة' : 'Happy Customers'}</div>
+          }} className="flex items-center justify-center sm:justify-start gap-4 sm:gap-8 pt-6 w-full">
+              <div className="text-center flex-1 sm:flex-none">
+                <div className="text-lg sm:text-2xl font-bold text-primary">+5000</div>
+                <div className="text-[10px] sm:text-xs text-muted-foreground">{isRTL ? 'عميلة سعيدة' : 'Happy Customers'}</div>
               </div>
-              <div className="w-px h-10 bg-border" />
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">100%</div>
-                <div className="text-xs text-muted-foreground">{isRTL ? 'طبيعي' : 'Natural'}</div>
+              <div className="w-px h-8 sm:h-10 bg-border" />
+              <div className="text-center flex-1 sm:flex-none">
+                <div className="text-lg sm:text-2xl font-bold text-primary">100%</div>
+                <div className="text-[10px] sm:text-xs text-muted-foreground">{isRTL ? 'طبيعي' : 'Natural'}</div>
               </div>
-              <div className="w-px h-10 bg-border" />
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">4.9⭐</div>
-                <div className="text-xs text-muted-foreground">{isRTL ? 'تقييم' : 'Rating'}</div>
+              <div className="w-px h-8 sm:h-10 bg-border" />
+              <div className="text-center flex-1 sm:flex-none">
+                <div className="text-lg sm:text-2xl font-bold text-primary">4.9⭐</div>
+                <div className="text-[10px] sm:text-xs text-muted-foreground">{isRTL ? 'تقييم' : 'Rating'}</div>
               </div>
             </motion.div>
           </motion.div>
