@@ -330,6 +330,54 @@ export const translations = {
   averageRating: { en: 'Average Rating', ar: 'متوسط التقييم' },
   basedOnReviews: { en: 'based on', ar: 'بناءً على' },
   reviewsCount: { en: 'reviews', ar: 'تقييم' },
+
+  // Results Page
+  results: { en: 'Results', ar: 'النتائج' },
+  realResults: { en: 'Real Results from Our Clients', ar: 'نتائج حقيقية من عملائنا' },
+  transformationJourney: { en: 'Transformation Journey', ar: 'رحلة التحوّل' },
+  resultsDescription: { en: 'See how Reselience Gold helped our clients restore their natural hair beauty', ar: 'شاهدي كيف ساعد Reselience Gold عملاءنا على استعادة جمال شعرهم الطبيعي' },
+  startYourJourney: { en: 'Start Your Journey Now', ar: 'ابدأي رحلتك الآن' },
+  joinHappyCustomers: { en: 'Join thousands of happy customers', ar: 'انضمي لآلاف العملاء السعداء' },
+  twoMonths: { en: '2 Months', ar: '2 شهور' },
+
+  // FAQ Page
+  frequentlyAskedQuestions: { en: 'Frequently Asked Questions', ar: 'الأسئلة الشائعة' },
+  haveMoreQuestions: { en: 'Have more questions? Reach out to us anytime', ar: 'لديك أسئلة أخرى؟ تواصل معنا في أي وقت' },
+  faqSafeQuestion: { en: 'Is the product safe for children or pregnant women?', ar: 'هل المنتج آمن للأطفال أو الحوامل؟' },
+  faqSafeAnswer: { en: 'Yes, it is completely safe because it is natural.', ar: 'نعم، آمن تماماً لأنه طبيعي.' },
+  faqUsageQuestion: { en: 'How many times do I use it a week?', ar: 'كم مرة أستخدمه في الأسبوع؟' },
+  faqUsageAnswer: { en: 'Use it 3 to 4 times a week.', ar: 'استخدميه من 3 إلى 4 مرات في الأسبوع.' },
+  faqResultsQuestion: { en: 'When do the results appear?', ar: 'متى تظهر النتائج؟' },
+  faqResultsAnswer: { en: 'Some people noticed a difference from the first week, and full results occurred within a month and a half to 3 months, depending on the case.', ar: 'لاحظ البعض فرقاً من الأسبوع الأول، وظهرت النتائج الكاملة خلال شهر ونصف إلى 3 أشهر، حسب الحالة.' },
+  faqCancelQuestion: { en: 'How can I cancel an order?', ar: 'كيف يمكنني إلغاء طلب؟' },
+  faqCancelAnswer: { en: 'To cancel the order, send a message to the support team on our official Facebook page.', ar: 'لإلغاء الطلب، أرسل رسالة لفريق الدعم على صفحتنا الرسمية على فيسبوك.' },
+  faqPaymentQuestion: { en: 'What payment methods do you accept?', ar: 'ما طرق الدفع المتاحة؟' },
+  faqPaymentAnswer: { en: 'Cash on Delivery or via InstaPay or electronic wallets *Cash services*.', ar: 'الدفع عند الاستلام أو عبر InstaPay أو المحافظ الإلكترونية *خدمات كاش*.' },
+  faqReturnQuestion: { en: 'What is the return policy?', ar: 'ما هي سياسة الاسترجاع؟' },
+  faqReturnAnswer: { 
+    en: `In order to ensure that we at Reselience provide the best possible experience to our customers, we offer the possibility of returning the product within 14 days from the date of receipt, according to the following conditions:
+
+- The product must be unused and in its original condition exactly as it was received.
+- The outer cover and all labels must be intact and unopened.
+- The return process must be carried out using the same approved delivery method.
+- Please note that any product that has been opened or used cannot be returned to maintain safety and hygiene standards.
+- To apply for a return, please contact customer service from our social media page.
+
+Contact our support team on social media or at our email: Info@reselience-gold.com`, 
+    ar: `لضمان تقديم أفضل تجربة ممكنة لعملائنا في Reselience، نوفر إمكانية إرجاع المنتج خلال 14 يوماً من تاريخ الاستلام، وفقاً للشروط التالية:
+
+- يجب أن يكون المنتج غير مستخدم وفي حالته الأصلية كما تم استلامه.
+- يجب أن يكون الغلاف الخارجي وجميع الملصقات سليمة وغير مفتوحة.
+- يجب إجراء عملية الإرجاع باستخدام نفس طريقة التوصيل المعتمدة.
+- يرجى ملاحظة أنه لا يمكن إرجاع أي منتج تم فتحه أو استخدامه للحفاظ على معايير السلامة والنظافة.
+- للتقدم بطلب إرجاع، يرجى التواصل مع خدمة العملاء من صفحتنا على وسائل التواصل الاجتماعي.
+
+تواصل مع فريق الدعم على وسائل التواصل الاجتماعي أو على بريدنا الإلكتروني: Info@reselience-gold.com`
+  },
+
+  // Terms & Conditions
+  termsAndConditions: { en: 'Terms & Conditions', ar: 'الشروط والأحكام' },
+  returnAndExchange: { en: 'Return & Exchange', ar: 'الاسترجاع والاستبدال' },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
