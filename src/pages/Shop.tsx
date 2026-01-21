@@ -19,105 +19,121 @@ const staticProducts = [
     id: "oil-1",
     name: "Golden Argan Elixir",
     name_ar: "إكسير الأرجان الذهبي",
-    description: "زيت أرجان نقي 100% للترطيب العميق",
+    description: "100% pure argan oil for deep hydration",
+    description_ar: "زيت أرجان نقي 100% للترطيب العميق",
     price: 450,
     original_price: 550,
     image_url: "/assets/products/product-1.jpg",
     category: "oils",
     rating: 4.9,
     reviews: 128,
-    benefits: ["ترطيب عميق", "لمعان طبيعي", "تقوية الجذور"]
+    benefits: ["Deep Hydration", "Natural Shine", "Root Strengthening"],
+    benefits_ar: ["ترطيب عميق", "لمعان طبيعي", "تقوية الجذور"]
   },
   {
     id: "oil-2",
     name: "Royal Castor Oil",
     name_ar: "زيت الخروع الملكي",
-    description: "زيت خروع عضوي لتطويل الشعر",
+    description: "Organic castor oil for hair lengthening",
+    description_ar: "زيت خروع عضوي لتطويل الشعر",
     price: 320,
     original_price: 400,
     image_url: "/assets/products/product-2.jpg",
     category: "oils",
     rating: 4.8,
     reviews: 95,
-    benefits: ["تطويل الشعر", "كثافة أكثر", "علاج التساقط"]
+    benefits: ["Hair Growth", "More Density", "Anti Hair Loss"],
+    benefits_ar: ["تطويل الشعر", "كثافة أكثر", "علاج التساقط"]
   },
   {
     id: "oil-3",
     name: "Coconut Gold Serum",
     name_ar: "سيروم جوز الهند الذهبي",
-    description: "سيروم مغذي بجوز الهند والذهب",
+    description: "Nourishing serum with coconut and gold",
+    description_ar: "سيروم مغذي بجوز الهند والذهب",
     price: 580,
     original_price: null,
     image_url: "/assets/products/product-3.jpg",
     category: "oils",
     rating: 5.0,
     reviews: 67,
-    benefits: ["تغذية مكثفة", "نعومة فائقة", "حماية حرارية"]
+    benefits: ["Intensive Nourishment", "Ultra Softness", "Heat Protection"],
+    benefits_ar: ["تغذية مكثفة", "نعومة فائقة", "حماية حرارية"]
   },
   {
     id: "oil-4",
     name: "Rosemary Growth Oil",
     name_ar: "زيت الروزماري للنمو",
-    description: "زيت روزماري لتحفيز نمو الشعر",
+    description: "Rosemary oil to stimulate hair growth",
+    description_ar: "زيت روزماري لتحفيز نمو الشعر",
     price: 380,
     original_price: 450,
     image_url: "/assets/products/product-4.jpg",
     category: "oils",
     rating: 4.7,
     reviews: 156,
-    benefits: ["تحفيز النمو", "تقوية البصيلات", "منع القشرة"]
+    benefits: ["Growth Stimulation", "Follicle Strengthening", "Anti Dandruff"],
+    benefits_ar: ["تحفيز النمو", "تقوية البصيلات", "منع القشرة"]
   },
   {
     id: "acc-1",
     name: "Silk Scrunchie Set",
     name_ar: "طقم ربطات الحرير",
-    description: "ربطات شعر حريرية فاخرة",
+    description: "Luxurious silk hair scrunchies",
+    description_ar: "ربطات شعر حريرية فاخرة",
     price: 180,
     original_price: 220,
     image_url: "/assets/products/product-5.jpg",
     category: "accessories",
     rating: 4.9,
     reviews: 89,
-    benefits: ["لا تكسر الشعر", "أناقة فاخرة", "راحة طوال اليوم"]
+    benefits: ["No Hair Breakage", "Luxurious Elegance", "All Day Comfort"],
+    benefits_ar: ["لا تكسر الشعر", "أناقة فاخرة", "راحة طوال اليوم"]
   },
   {
     id: "acc-2",
     name: "Golden Hair Claw",
     name_ar: "مشبك الشعر الذهبي",
-    description: "مشبك شعر ذهبي فاخر",
+    description: "Luxurious golden hair clip",
+    description_ar: "مشبك شعر ذهبي فاخر",
     price: 250,
     original_price: null,
     image_url: "/assets/products/product-6.jpg",
     category: "accessories",
     rating: 4.8,
     reviews: 72,
-    benefits: ["تصميم أنيق", "قبضة قوية", "لمسة ملكية"]
+    benefits: ["Elegant Design", "Strong Grip", "Royal Touch"],
+    benefits_ar: ["تصميم أنيق", "قبضة قوية", "لمسة ملكية"]
   },
   {
     id: "oil-5",
     name: "Lavender Dream Oil",
     name_ar: "زيت اللافندر الحالم",
-    description: "زيت لافندر للاسترخاء والتغذية",
+    description: "Lavender oil for relaxation and nourishment",
+    description_ar: "زيت لافندر للاسترخاء والتغذية",
     price: 420,
     original_price: 500,
     image_url: "/assets/products/product-1.jpg",
     category: "oils",
     rating: 4.6,
     reviews: 103,
-    benefits: ["استرخاء", "رائحة مميزة", "تغذية ليلية"]
+    benefits: ["Relaxation", "Distinctive Scent", "Night Nourishment"],
+    benefits_ar: ["استرخاء", "رائحة مميزة", "تغذية ليلية"]
   },
   {
     id: "acc-3",
     name: "Pearl Hair Pins",
     name_ar: "دبابيس اللؤلؤ",
-    description: "دبابيس شعر باللؤلؤ الطبيعي",
+    description: "Natural pearl hair pins",
+    description_ar: "دبابيس شعر باللؤلؤ الطبيعي",
     price: 320,
     original_price: 380,
     image_url: "/assets/products/product-2.jpg",
     category: "accessories",
     rating: 4.9,
     reviews: 45,
-    benefits: ["أناقة ملكية", "تثبيت مثالي", "لمسة كلاسيكية"]
+    benefits: ["Royal Elegance", "Perfect Hold", "Classic Touch"],
+    benefits_ar: ["أناقة ملكية", "تثبيت مثالي", "لمسة كلاسيكية"]
   }
 ];
 
@@ -450,7 +466,7 @@ const Shop = () => {
 
                               {/* Description */}
                               <p className="text-white/60 text-sm mb-4 line-clamp-1">
-                                {product.description}
+                                {isRTL ? product.description_ar : product.description}
                               </p>
 
                               {/* Price */}
@@ -472,7 +488,7 @@ const Shop = () => {
                             isHovered ? 'opacity-100' : 'opacity-90'
                           }`}>
                             <div className="flex flex-wrap gap-2">
-                              {product.benefits.map((benefit, i) => (
+                              {(isRTL ? product.benefits_ar : product.benefits).map((benefit, i) => (
                                 <span
                                   key={i}
                                   className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full border border-primary/20"
