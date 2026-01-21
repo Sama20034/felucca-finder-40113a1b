@@ -17,7 +17,7 @@ const LanguageSwitcher = () => {
         <Button
           variant="ghost"
           size="sm"
-          className="hover:bg-[#D4AF37]/10 text-[#D4AF37] transition-colors font-medium px-3 flex items-center gap-1"
+          className="hover:bg-white/10 text-white transition-colors font-medium px-3 flex items-center gap-1"
         >
           {language === 'ar' ? 'العربية' : 'English'}
           <ChevronDown className="w-4 h-4" />
