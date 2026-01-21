@@ -11,14 +11,14 @@ import result4 from "@/assets/results/result-4.png";
 import result5 from "@/assets/results/result-5.png";
 
 const Results = () => {
-  const { isRTL } = useLanguage();
+  const { t } = useLanguage();
 
   const results = [
-    { id: 1, image: result1, duration: "2 شهور" },
-    { id: 2, image: result2, duration: "2 شهور" },
-    { id: 3, image: result3, duration: "2 شهور" },
-    { id: 4, image: result4, duration: "2 شهور" },
-    { id: 5, image: result5, duration: "2 شهور" },
+    { id: 1, image: result1 },
+    { id: 2, image: result2 },
+    { id: 3, image: result3 },
+    { id: 4, image: result4 },
+    { id: 5, image: result5 },
   ];
 
   return (
@@ -43,18 +43,16 @@ const Results = () => {
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6">
               <Sparkles className="w-4 h-4 text-primary" />
               <span className="text-sm font-medium text-primary">
-                {isRTL ? "نتائج حقيقية من عملائنا" : "Real Results from Our Clients"}
+                {t('realResults')}
               </span>
             </div>
             
             <h1 className="font-playfair text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6">
-              {isRTL ? "رحلة التحوّل" : "Transformation Journey"}
+              {t('transformationJourney')}
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              {isRTL 
-                ? "شاهدي كيف ساعد Reselience Gold عملاءنا على استعادة جمال شعرهم الطبيعي"
-                : "See how Reselience Gold helped our clients restore their natural hair beauty"}
+              {t('resultsDescription')}
             </p>
           </motion.div>
 
@@ -99,7 +97,7 @@ const Results = () => {
                       >
                         <span className="text-sm font-semibold text-primary flex items-center gap-2">
                           <Star className="w-4 h-4 fill-primary" />
-                          {result.duration}
+                          {t('twoMonths')}
                         </span>
                       </motion.div>
                     </div>
@@ -124,16 +122,16 @@ const Results = () => {
           >
             <div className="inline-flex flex-col items-center gap-4 p-8 rounded-3xl bg-gradient-to-r from-primary/10 via-background to-gold/10 border border-primary/10">
               <h3 className="font-playfair text-2xl md:text-3xl font-bold text-foreground">
-                {isRTL ? "ابدأي رحلتك الآن" : "Start Your Journey Now"}
+                {t('startYourJourney')}
               </h3>
               <p className="text-muted-foreground">
-                {isRTL ? "انضمي لآلاف العملاء السعداء" : "Join thousands of happy customers"}
+                {t('joinHappyCustomers')}
               </p>
               <a
                 href="/shop"
                 className="px-8 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors duration-300 shadow-lg hover:shadow-primary/25"
               >
-                {isRTL ? "تسوقي الآن" : "Shop Now"}
+                {t('shopNow')}
               </a>
             </div>
           </motion.div>

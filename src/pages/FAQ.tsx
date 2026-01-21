@@ -1,5 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   Accordion,
   AccordionContent,
@@ -8,42 +9,36 @@ import {
 } from "@/components/ui/accordion";
 import { Eye } from "lucide-react";
 
-const faqs = [
-  {
-    question: "Is the product safe for children or pregnant women?",
-    answer: "Yes, it is completely safe because it is natural.",
-  },
-  {
-    question: "How many times do I use it a week?",
-    answer: "Use it 3 to 4 times a week.",
-  },
-  {
-    question: "When do the results appear?",
-    answer: "Some people noticed a difference from the first week, and full results occurred within a month and a half to 3 months, depending on the case.",
-  },
-  {
-    question: "How can I cancel an order?",
-    answer: "To cancel the order, send a message to the support team on our official Facebook page.",
-  },
-  {
-    question: "What payment methods do you accept?",
-    answer: "Cash on Delivery or via InstaPay or electronic wallets *Cash services*.",
-  },
-  {
-    question: "What is the return policy?",
-    answer: `In order to ensure that we at Reselience provide the best possible experience to our customers, we offer the possibility of returning the product within 14 days from the date of receipt, according to the following conditions:
-
-- The product must be unused and in its original condition exactly as it was received.
-- The outer cover and all labels must be intact and unopened.
-- The return process must be carried out using the same approved delivery method.
-- Please note that any product that has been opened or used cannot be returned to maintain safety and hygiene standards.
-- To apply for a return, please contact customer service from our social media page.
-
-Contact our support team on social media or at our email: Info@resilience-gold.com`,
-  },
-];
-
 const FAQ = () => {
+  const { t, isRTL } = useLanguage();
+
+  const faqs = [
+    {
+      question: t('faqSafeQuestion'),
+      answer: t('faqSafeAnswer'),
+    },
+    {
+      question: t('faqUsageQuestion'),
+      answer: t('faqUsageAnswer'),
+    },
+    {
+      question: t('faqResultsQuestion'),
+      answer: t('faqResultsAnswer'),
+    },
+    {
+      question: t('faqCancelQuestion'),
+      answer: t('faqCancelAnswer'),
+    },
+    {
+      question: t('faqPaymentQuestion'),
+      answer: t('faqPaymentAnswer'),
+    },
+    {
+      question: t('faqReturnQuestion'),
+      answer: t('faqReturnAnswer'),
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1a0a2e] via-[#2d1b4e] to-[#1a0a2e]">
       <Header />
@@ -61,7 +56,7 @@ const FAQ = () => {
           <div className="container mx-auto px-4 text-center">
             <div className="inline-block bg-[#8b5cf6]/80 backdrop-blur-sm px-12 py-4 rounded-full mb-8 shadow-lg shadow-purple-500/20">
               <h1 className="text-2xl md:text-3xl font-bold text-white tracking-wider uppercase">
-                Frequently Asked Questions
+                {t('frequentlyAskedQuestions')}
               </h1>
             </div>
           </div>
@@ -76,13 +71,13 @@ const FAQ = () => {
                   value={`item-${index}`}
                   className="bg-[#2d1b4e]/60 backdrop-blur-md rounded-2xl px-8 border border-purple-500/20 shadow-xl shadow-purple-900/20 overflow-hidden"
                 >
-                  <AccordionTrigger className="text-left hover:no-underline text-purple-300 font-medium py-6 text-lg group">
-                    <span className="flex-1 pr-4">{faq.question}</span>
+                  <AccordionTrigger className={`${isRTL ? 'text-right' : 'text-left'} hover:no-underline text-purple-300 font-medium py-6 text-lg group`}>
+                    <span className={`flex-1 ${isRTL ? 'pl-4' : 'pr-4'}`}>{faq.question}</span>
                     <div className="w-10 h-10 rounded-full border border-purple-400/50 flex items-center justify-center group-hover:border-purple-300 transition-colors">
                       <Eye className="w-5 h-5 text-purple-400 group-hover:text-purple-300 transition-colors" />
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-white/90 pb-6 text-base leading-relaxed whitespace-pre-line">
+                  <AccordionContent className={`text-white/90 pb-6 text-base leading-relaxed whitespace-pre-line ${isRTL ? 'text-right' : 'text-left'}`}>
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -93,7 +88,7 @@ const FAQ = () => {
             <div className="mt-16 text-center">
               <div className="inline-flex items-center gap-2 text-purple-300/80 text-sm">
                 <span className="text-2xl">🌸</span>
-                <span>Have more questions? Reach out to us anytime</span>
+                <span>{t('haveMoreQuestions')}</span>
                 <span className="text-2xl">🌸</span>
               </div>
             </div>
