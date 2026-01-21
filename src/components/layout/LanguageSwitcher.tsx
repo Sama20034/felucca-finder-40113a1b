@@ -17,22 +17,22 @@ const LanguageSwitcher = () => {
         <Button
           variant="ghost"
           size="sm"
-          className="hover:bg-accent hover:text-primary transition-colors font-medium px-3 flex items-center gap-1"
+          className="hover:bg-[#D4AF37]/10 text-[#D4AF37] transition-colors font-medium px-3 flex items-center gap-1"
         >
           {language === 'ar' ? 'العربية' : 'English'}
           <ChevronDown className="w-4 h-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-[120px]">
+      <DropdownMenuContent align="end" className="min-w-[120px] bg-[#1C092F] border-[#D4AF37]/20 z-50">
         <DropdownMenuItem
           onClick={() => setLanguage('en')}
-          className={`cursor-pointer ${language === 'en' ? 'bg-primary/10 text-primary' : ''}`}
+          className={`cursor-pointer text-[#D4AF37] hover:bg-[#D4AF37]/10 focus:bg-[#D4AF37]/10 focus:text-[#D4AF37] ${language === 'en' ? 'bg-[#D4AF37]/20' : ''}`}
         >
           English
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => setLanguage('ar')}
-          className={`cursor-pointer ${language === 'ar' ? 'bg-primary/10 text-primary' : ''}`}
+          className={`cursor-pointer text-[#D4AF37] hover:bg-[#D4AF37]/10 focus:bg-[#D4AF37]/10 focus:text-[#D4AF37] ${language === 'ar' ? 'bg-[#D4AF37]/20' : ''}`}
         >
           العربية
         </DropdownMenuItem>
