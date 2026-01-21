@@ -53,7 +53,7 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <img src={logo} alt="Resilience Gold" className="h-16 w-auto" />
+              <img src={logo} alt="Reselience Gold" className="h-16 w-auto" />
               <div>
                 <h2 className="font-serif text-xl font-bold text-primary">Reselience</h2>
                 <p className="text-xs text-muted-foreground tracking-widest uppercase">Gold</p>

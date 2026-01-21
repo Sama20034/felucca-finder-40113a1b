@@ -130,7 +130,7 @@ const HeroSection = () => {
       <div className="absolute left-8 top-1/2 -translate-y-1/2 hidden xl:flex flex-col items-center gap-4">
         <div className="w-px h-20 bg-primary/30" />
         <span className="text-[10px] text-primary/50 uppercase tracking-[0.3em] writing-mode-vertical rotate-180" style={{ writingMode: 'vertical-rl' }}>
-          Resilience Gold — 2026
+          Reselience Gold — 2026
         </span>
         <div className="w-px h-20 bg-primary/30" />
       </div>

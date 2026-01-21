@@ -51,7 +51,7 @@ const StorySection = () => {
             },
             {
               numberEn: "03",
-              titleEn: "Resilience",
+              titleEn: "Reselience",
               titleAr: "القوة",
               textEn: "Products that don't just beautify, but strengthen and transform from within.",
               textAr: "منتجات لا تُجمّل فحسب، بل تُقوّي وتُحوّل من الداخل."
