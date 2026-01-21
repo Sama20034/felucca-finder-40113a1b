@@ -161,8 +161,8 @@ const Header = () => {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
       isScrolled 
-        ? 'bg-background/95 backdrop-blur-md shadow-lg border-b border-border/50' 
-        : 'bg-transparent'
+        ? 'bg-background/98 backdrop-blur-md shadow-soft border-b border-border' 
+        : 'bg-background/80 backdrop-blur-sm'
     }`}>
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between gap-6">
@@ -185,7 +185,7 @@ const Header = () => {
               <Link
                 key={link.name}
                 to={link.href}
-                className="text-card-foreground/80 hover:text-primary font-medium transition-colors duration-300 relative py-2
+                className="text-foreground/70 hover:text-primary font-medium transition-colors duration-300 relative py-2
                   after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-primary after:rounded-full
                   hover:after:w-full after:transition-all after:duration-300"
               >
@@ -224,7 +224,7 @@ const Header = () => {
                 )}
                 <button 
                   type="submit"
-                  className={`absolute top-1/2 -translate-y-1/2 bg-primary text-primary-foreground p-2 rounded-full hover:bg-accent transition-all shadow-gold ${isRTL ? 'left-1' : 'right-1'}`}
+                  className={`absolute top-1/2 -translate-y-1/2 bg-primary text-primary-foreground p-2 rounded-full hover:opacity-90 transition-all shadow-soft ${isRTL ? 'left-1' : 'right-1'}`}
                 >
                   <Search className="w-4 h-4" />
                 </button>

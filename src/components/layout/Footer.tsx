@@ -39,7 +39,7 @@ const Footer = () => {
                 placeholder={isRTL ? 'بريدك الإلكتروني' : 'Your email'}
                 className="flex-1 md:w-72 px-5 py-3 rounded-full bg-background border border-border focus:outline-none focus:border-primary text-card-foreground"
               />
-              <button className="btn-gold px-8 py-3 rounded-full font-semibold flex items-center gap-2">
+              <button className="btn-beauty flex items-center gap-2">
                 <Sparkles className="w-4 h-4" />
                 {isRTL ? 'اشتركي' : 'Subscribe'}
               </button>
