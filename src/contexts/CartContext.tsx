@@ -34,6 +34,14 @@ interface LocalCartItem {
 interface AddToCartOptions {
   size?: string | null;
   color?: { name: string; name_ar: string; hex: string } | null;
+  // Allow passing product data directly for static products
+  productData?: {
+    name: string;
+    name_ar: string;
+    price: number;
+    image_url: string;
+    stock_quantity?: number;
+  };
 }
 
 interface CartContextType {
@@ -283,20 +291,36 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           setCartItems(updatedCart);
           saveLocalCart(updatedCart);
         } else {
-          // Fetch product details
-          const { data: product, error } = await supabase
-            .from('products')
-            .select('id, name, name_ar, price, image_url, stock_quantity')
-            .eq('id', productIdStr)
-            .single();
+          // Check if product data is provided directly (for static products)
+          let product: CartItem['product'];
+          
+          if (options?.productData) {
+            // Use provided product data
+            product = {
+              id: productIdStr,
+              name: options.productData.name,
+              name_ar: options.productData.name_ar,
+              price: options.productData.price,
+              image_url: options.productData.image_url,
+              stock_quantity: options.productData.stock_quantity || 999
+            };
+          } else {
+            // Fetch product details from database
+            const { data: fetchedProduct, error } = await supabase
+              .from('products')
+              .select('id, name, name_ar, price, image_url, stock_quantity')
+              .eq('id', productIdStr)
+              .maybeSingle();
 
-          if (error || !product) {
-            toast({
-              title: "خطأ في جلب بيانات المنتج",
-              description: "حدث خطأ أثناء إضافة المنتج للسلة.",
-              variant: "destructive"
-            });
-            return;
+            if (error || !fetchedProduct) {
+              toast({
+                title: "خطأ في جلب بيانات المنتج",
+                description: "حدث خطأ أثناء إضافة المنتج للسلة.",
+                variant: "destructive"
+              });
+              return;
+            }
+            product = fetchedProduct;
           }
 
           const newItem: CartItem = {
