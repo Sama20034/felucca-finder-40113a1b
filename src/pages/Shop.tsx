@@ -433,7 +433,15 @@ const Shop = () => {
                                 <Heart className={`w-6 h-6 ${inWishlist ? 'fill-current' : ''}`} />
                               </button>
                               <button
-                                onClick={() => addToCart(product.id, 1)}
+                                onClick={() => addToCart(product.id, 1, {
+                                  productData: {
+                                    name: product.name,
+                                    name_ar: product.name_ar,
+                                    price: product.price,
+                                    image_url: product.image_url,
+                                    stock_quantity: 999
+                                  }
+                                })}
                                 className="w-14 h-14 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:scale-110 transition-all duration-300 shadow-[0_0_30px_-5px_hsl(var(--primary)/0.5)]"
                               >
                                 <ShoppingCart className="w-6 h-6" />
