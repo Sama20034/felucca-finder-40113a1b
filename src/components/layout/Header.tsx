@@ -240,7 +240,7 @@ const Header = () => {
               <SheetContent side={isRTL ? "right" : "left"} className="w-80 bg-background border-border">
                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 <div className="flex flex-col h-full">
-                  <div className="flex items-center justify-center py-6 border-b border-border">
+                  <div className="flex items-center justify-center py-6 border-b border-[#D4AF37]/20 bg-[#1C092F]">
                     <img src={logo} alt="Reselience Gold" className="h-20" />
                   </div>
                   
