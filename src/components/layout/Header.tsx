@@ -164,13 +164,61 @@ const Header = () => {
         ? 'shadow-lg border-b border-[#D4AF37]/20' 
         : ''
     }`}>
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between gap-6">
+      <div className="container mx-auto px-4 py-3 md:py-4">
+        <div className="flex items-center justify-between gap-2 md:gap-6">
+          {/* Mobile Menu Button - First on mobile */}
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild className="lg:hidden">
+              <Button variant="ghost" size="icon" className="text-[#D4AF37] hover:bg-[#D4AF37]/10 border-0 bg-transparent">
+                <Menu className="w-6 h-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side={isRTL ? "right" : "left"} className="w-80 bg-background border-border">
+              <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+              <div className="flex flex-col h-full">
+                <div className="flex items-center justify-center py-6 border-b border-[#D4AF37]/20 bg-[#1C092F]">
+                  <img src={logo} alt="Reselience Gold" className="h-20" />
+                </div>
+                
+                {/* Mobile Search */}
+                <div className="p-4 border-b border-border">
+                  <form onSubmit={handleSearch}>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder={isRTL ? 'ابحثي...' : 'Search...'}
+                        className="w-full py-3 px-4 rounded-xl border border-border bg-secondary/30 focus:outline-none focus:border-primary text-card-foreground"
+                      />
+                      <button type="submit" className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'left-3' : 'right-3'}`}>
+                        <Search className="w-5 h-5 text-primary" />
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                <nav className="flex flex-col gap-2 p-4">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.name}
+                      to={link.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="px-4 py-3 text-card-foreground hover:text-primary hover:bg-secondary/50 rounded-xl font-medium transition-colors"
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+            </SheetContent>
+          </Sheet>
+
           {/* Logo */}
           <Link to="/" className="flex items-center group">
             <img
               alt="Reselience Gold"
-              className="h-14 md:h-20 w-auto transition-transform duration-500 group-hover:scale-105"
+              className="h-10 md:h-20 w-auto transition-transform duration-500 group-hover:scale-105"
               src={logo}
             />
           </Link>
@@ -230,75 +278,28 @@ const Header = () => {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-2">
-            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-              <SheetTrigger asChild className="lg:hidden">
-                <Button variant="ghost" size="icon" className="hover:bg-[#D4AF37]/10 text-[#D4AF37]">
-                  <Menu className="w-6 h-6" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side={isRTL ? "right" : "left"} className="w-80 bg-background border-border">
-                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                <div className="flex flex-col h-full">
-                  <div className="flex items-center justify-center py-6 border-b border-[#D4AF37]/20 bg-[#1C092F]">
-                    <img src={logo} alt="Reselience Gold" className="h-20" />
-                  </div>
-                  
-                  {/* Mobile Search */}
-                  <div className="p-4 border-b border-border">
-                    <form onSubmit={handleSearch}>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          placeholder={isRTL ? 'ابحثي...' : 'Search...'}
-                          className="w-full py-3 px-4 rounded-xl border border-border bg-secondary/30 focus:outline-none focus:border-primary text-card-foreground"
-                        />
-                        <button type="submit" className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'left-3' : 'right-3'}`}>
-                          <Search className="w-5 h-5 text-primary" />
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-
-                  <nav className="flex flex-col gap-2 p-4">
-                    {navLinks.map((link) => (
-                      <Link
-                        key={link.name}
-                        to={link.href}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="px-4 py-3 text-card-foreground hover:text-primary hover:bg-secondary/50 rounded-xl font-medium transition-colors"
-                      >
-                        {link.name}
-                      </Link>
-                    ))}
-                  </nav>
-                </div>
-              </SheetContent>
-            </Sheet>
-
+          <div className="flex items-center gap-1 md:gap-2">
             <LanguageSwitcher />
             
             <Button
               variant="ghost"
               size="icon"
-              className="relative hover:bg-[#D4AF37]/10 text-[#D4AF37] transition-colors"
+              className="relative hover:bg-[#D4AF37]/10 text-[#D4AF37] transition-colors h-9 w-9 md:h-10 md:w-10"
               onClick={() => user ? navigate('/my-account?tab=wishlist') : navigate('/auth')}
             >
               <Heart className="w-5 h-5" />
               {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#D4AF37] text-[#1C092F] text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                <span className="absolute -top-1 -right-1 bg-[#D4AF37] text-[#1C092F] text-xs w-4 h-4 md:w-5 md:h-5 rounded-full flex items-center justify-center font-bold text-[10px] md:text-xs">
                   {wishlistCount}
                 </span>
               )}
             </Button>
             
             <Link to="/cart">
-              <Button variant="ghost" size="icon" className="relative hover:bg-[#D4AF37]/10 text-[#D4AF37] transition-colors">
+              <Button variant="ghost" size="icon" className="relative hover:bg-[#D4AF37]/10 text-[#D4AF37] transition-colors h-9 w-9 md:h-10 md:w-10">
                 <ShoppingCart className="w-5 h-5" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-[#D4AF37] text-[#1C092F] text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                  <span className="absolute -top-1 -right-1 bg-[#D4AF37] text-[#1C092F] text-xs w-4 h-4 md:w-5 md:h-5 rounded-full flex items-center justify-center font-bold text-[10px] md:text-xs">
                     {cartCount}
                   </span>
                 )}
@@ -311,7 +312,7 @@ const Header = () => {
                   variant="ghost"
                   size="icon"
                   onClick={() => navigate('/my-account')}
-                  className="hover:bg-[#D4AF37]/10 text-[#D4AF37] transition-colors"
+                  className="hover:bg-[#D4AF37]/10 text-[#D4AF37] transition-colors h-9 w-9 md:h-10 md:w-10"
                 >
                   <User className="w-5 h-5" />
                 </Button>
@@ -319,7 +320,7 @@ const Header = () => {
                   variant="ghost"
                   size="icon"
                   onClick={signOut}
-                  className="hover:bg-red-500/20 text-[#D4AF37] hover:text-red-400 transition-colors"
+                  className="hidden md:flex hover:bg-red-500/20 text-[#D4AF37] hover:text-red-400 transition-colors h-9 w-9 md:h-10 md:w-10"
                 >
                   <LogOut className="w-5 h-5" />
                 </Button>
@@ -329,7 +330,7 @@ const Header = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => navigate('/auth')}
-                className="hover:bg-[#D4AF37]/10 text-[#D4AF37] transition-colors"
+                className="hover:bg-[#D4AF37]/10 text-[#D4AF37] transition-colors h-9 w-9 md:h-10 md:w-10"
               >
                 <User className="w-5 h-5" />
               </Button>
