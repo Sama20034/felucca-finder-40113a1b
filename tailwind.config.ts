@@ -14,10 +14,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        playfair: ['Playfair Display', 'serif'],
-        raleway: ['Raleway', 'sans-serif'],
-        sans: ['Raleway', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        serif: ['Playfair Display', 'Georgia', 'serif'],
+        cormorant: ['Cormorant Garamond', 'Georgia', 'serif'],
+        montserrat: ['Montserrat', 'sans-serif'],
+        sans: ['Montserrat', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -53,16 +53,21 @@ export default {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
         },
+        rose: {
+          DEFAULT: 'hsl(var(--rose))',
+          light: 'hsl(var(--rose-light))',
+          dark: 'hsl(var(--rose-dark))'
+        },
+        nude: {
+          DEFAULT: 'hsl(var(--nude))',
+          light: 'hsl(var(--nude-light))'
+        },
+        cream: 'hsl(var(--cream))',
         gold: {
-          DEFAULT: 'hsl(var(--gold))',
           soft: 'hsl(var(--gold-soft))',
-          dark: 'hsl(var(--gold-dark))'
+          warm: 'hsl(var(--gold-warm))'
         },
-        purple: {
-          deep: 'hsl(var(--purple-deep))',
-          light: 'hsl(var(--purple-light))',
-          glow: 'hsl(var(--purple-glow))'
-        },
+        blush: 'hsl(var(--blush))',
         sidebar: {
           DEFAULT: 'hsl(var(--sidebar-background))',
           foreground: 'hsl(var(--sidebar-foreground))',
@@ -78,8 +83,9 @@ export default {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
-        '2xl': '1.5rem',
-        '3xl': '2rem'
+        '2xl': '1rem',
+        '3xl': '1.5rem',
+        '4xl': '2rem'
       },
       keyframes: {
         'accordion-down': {
@@ -94,38 +100,32 @@ export default {
           '0%': { backgroundPosition: '-200% center' },
           '100%': { backgroundPosition: '200% center' }
         },
-        'pulse-gold': {
-          '0%, 100%': { boxShadow: '0 0 20px hsl(51 100% 50% / 0.3)' },
-          '50%': { boxShadow: '0 0 40px hsl(51 100% 50% / 0.5)' }
-        },
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-15px)' }
+          '50%': { transform: 'translateY(-10px)' }
         },
-        glow: {
-          '0%, 100%': { opacity: '0.5' },
-          '50%': { opacity: '1' }
+        fadeUp: {
+          from: { opacity: '0', transform: 'translateY(30px)' },
+          to: { opacity: '1', transform: 'translateY(0)' }
         },
-        slowPan: {
-          '0%': { transform: 'translate(0%, 0%) scale(1.1)' },
-          '50%': { transform: 'translate(-2%, -1%) scale(1.15)' },
-          '100%': { transform: 'translate(1%, -2%) scale(1.1)' }
+        scaleIn: {
+          from: { opacity: '0', transform: 'scale(0.95)' },
+          to: { opacity: '1', transform: 'scale(1)' }
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         shimmer: 'shimmer 3s linear infinite',
-        'pulse-gold': 'pulse-gold 3s ease-in-out infinite',
-        float: 'float 4s ease-in-out infinite',
-        glow: 'glow 3s ease-in-out infinite'
+        float: 'float 6s ease-in-out infinite',
+        'fade-up': 'fadeUp 0.8s ease-out',
+        'scale-in': 'scaleIn 0.6s ease-out'
       },
       boxShadow: {
-        soft: '0 2px 8px hsl(0 0% 0% / 0.15)',
-        medium: '0 4px 16px hsl(0 0% 0% / 0.2)',
-        large: '0 8px 32px hsl(0 0% 0% / 0.25)',
-        gold: '0 0 30px hsl(51 100% 50% / 0.3)',
-        'gold-lg': '0 0 50px hsl(51 100% 50% / 0.4)',
+        soft: '0 4px 20px -5px hsl(20 10% 20% / 0.08)',
+        medium: '0 8px 30px -8px hsl(20 10% 20% / 0.1)',
+        large: '0 15px 50px -12px hsl(20 10% 20% / 0.12)',
+        rose: '0 8px 30px -10px hsl(15 60% 55% / 0.2)',
         '2xs': 'var(--shadow-2xs)',
         xs: 'var(--shadow-xs)',
         sm: 'var(--shadow-sm)',
