@@ -7,7 +7,7 @@ import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "./LanguageSwitcher";
-import logo from "@/assets/resilience-logo.png";
+import logo from "@/assets/reselience-gold-logo.png";
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -167,16 +167,12 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between gap-6">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
+          <Link to="/" className="flex items-center group">
             <img
-              alt="Resilience Gold"
-              className="h-12 md:h-14 w-auto transition-transform duration-500 group-hover:scale-105"
+              alt="Reselience Gold"
+              className="h-14 md:h-20 w-auto transition-transform duration-500 group-hover:scale-105"
               src={logo}
             />
-            <div className="hidden md:block">
-              <h1 className="font-serif text-xl font-bold text-primary leading-none">Reselience</h1>
-              <p className="text-xs text-muted-foreground tracking-widest uppercase">Gold</p>
-            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -244,8 +240,8 @@ const Header = () => {
               <SheetContent side={isRTL ? "right" : "left"} className="w-80 bg-background border-border">
                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 <div className="flex flex-col h-full">
-                  <div className="flex items-center justify-center py-8 border-b border-border">
-                    <img src={logo} alt="Resilience Gold" className="h-16" />
+                  <div className="flex items-center justify-center py-6 border-b border-border">
+                    <img src={logo} alt="Reselience Gold" className="h-20" />
                   </div>
                   
                   {/* Mobile Search */}

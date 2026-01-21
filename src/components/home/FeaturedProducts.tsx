@@ -7,9 +7,9 @@ import { useCart } from '@/contexts/CartContext';
 
 const products = [
   {
-    id: 'oil-1',
+    id: 1,
     name: 'Golden Argan Elixir',
-    name_ar: 'إكسير الأرجان الذهبي',
+    nameAr: 'إكسير الأرجان الذهبي',
     price: 450,
     originalPrice: 550,
     rating: 4.9,
@@ -18,37 +18,37 @@ const products = [
     badge: { en: 'Best Seller', ar: 'الأكثر مبيعاً' },
   },
   {
-    id: 'oil-2',
-    name: 'Royal Castor Oil',
-    name_ar: 'زيت الخروع الملكي',
-    price: 320,
-    originalPrice: 400,
+    id: 2,
+    name: 'Rosemary Growth Oil',
+    nameAr: 'زيت الروزماري للنمو',
+    price: 380,
+    originalPrice: null,
     rating: 4.8,
     reviews: 95,
     image: '/assets/products/product-2.jpg',
-    badge: { en: 'Popular', ar: 'شائع' },
+    badge: null,
   },
   {
-    id: 'oil-3',
-    name: 'Coconut Gold Serum',
-    name_ar: 'سيروم جوز الهند الذهبي',
-    price: 580,
-    originalPrice: null,
-    rating: 5.0,
+    id: 3,
+    name: 'Silk Hair Scrunchie Set',
+    nameAr: 'مجموعة ربطات الحرير',
+    price: 220,
+    originalPrice: 280,
+    rating: 4.7,
     reviews: 67,
     image: '/assets/products/product-3.jpg',
-    badge: { en: 'New', ar: 'جديد' },
+    badge: { en: '-20%', ar: '-20%' },
   },
   {
-    id: 'oil-4',
-    name: 'Rosemary Growth Oil',
-    name_ar: 'زيت الروزماري للنمو',
-    price: 380,
-    originalPrice: 450,
-    rating: 4.7,
+    id: 4,
+    name: 'Castor Strengthening Oil',
+    nameAr: 'زيت الخروع المقوي',
+    price: 320,
+    originalPrice: null,
+    rating: 4.9,
     reviews: 156,
     image: '/assets/products/product-4.jpg',
-    badge: null,
+    badge: { en: 'New', ar: 'جديد' },
   },
 ];
 
@@ -57,32 +57,28 @@ const FeaturedProducts = () => {
   const { addToCart } = useCart();
 
   return (
-    <section className="section-padding bg-background">
+    <section className="py-20 bg-secondary/20">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12"
+          transition={{ duration: 0.5 }}
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12"
         >
           <div>
-            <span className="text-primary font-medium mb-4 block">
-              {isRTL ? 'الأكثر مبيعاً' : 'Best Sellers'}
-            </span>
-            <h2 className="heading-section text-foreground">
-              {isRTL ? 'منتجات مميزة' : 'Featured Products'}
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-2">
+              {isRTL ? 'منتجاتنا المميزة' : 'Featured Products'}
             </h2>
+            <p className="text-muted-foreground">
+              {isRTL ? 'الأكثر مبيعاً والمحبوبة من عملائنا' : 'Best sellers loved by our customers'}
+            </p>
           </div>
           <Link to="/shop">
-            <Button variant="outline" className="btn-outline-beauty group">
+            <Button variant="outline" className="btn-outline-beauty">
               {isRTL ? 'عرض الكل' : 'View All'}
-              {isRTL ? (
-                <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-              ) : (
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              )}
+              {isRTL ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
             </Button>
           </Link>
         </motion.div>
@@ -92,59 +88,70 @@ const FeaturedProducts = () => {
           {products.map((product, index) => (
             <motion.div
               key={product.id}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group"
             >
-              <div className="bg-card rounded-2xl overflow-hidden border border-border/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+              <div className="bg-card rounded-2xl overflow-hidden border border-border/50 hover:border-primary/30 hover:shadow-xl transition-all duration-300">
                 {/* Image */}
-                <div className="relative aspect-square overflow-hidden bg-secondary/30">
-                  <img
-                    src={product.image}
-                    alt={isRTL ? product.name_ar : product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  
-                  {/* Badge */}
-                  {product.badge && (
-                    <div className="absolute top-4 left-4 bg-primary text-primary-foreground text-xs font-medium px-3 py-1 rounded-full">
-                      {isRTL ? product.badge.ar : product.badge.en}
-                    </div>
-                  )}
+                <Link to={`/product/${product.id}`} className="block relative">
+                  <div className="relative h-56 overflow-hidden">
+                    <img 
+                      src={product.image} 
+                      alt={isRTL ? product.nameAr : product.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    
+                    {/* Badge */}
+                    {product.badge && (
+                      <div className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
+                        {isRTL ? product.badge.ar : product.badge.en}
+                      </div>
+                    )}
 
-                  {/* Quick Add */}
-                  <button
-                    onClick={() => addToCart(product.id, 1)}
-                    className="absolute bottom-4 right-4 w-10 h-10 bg-background rounded-full shadow-md flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
-                  >
-                    <ShoppingBag className="w-5 h-5" />
-                  </button>
-                </div>
+                    {/* Quick Add Button - Visible on hover */}
+                    <div className="absolute inset-0 bg-foreground/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <Button 
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addToCart(product.id, 1);
+                        }}
+                        size="sm" 
+                        className="btn-beauty shadow-lg"
+                      >
+                        <ShoppingBag className="w-4 h-4 mr-1" />
+                        {isRTL ? 'أضف للسلة' : 'Add to Cart'}
+                      </Button>
+                    </div>
+                  </div>
+                </Link>
 
                 {/* Content */}
-                <div className="p-5">
+                <div className="p-4">
                   {/* Rating */}
                   <div className="flex items-center gap-1 mb-2">
                     <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                    <span className="text-sm font-medium">{product.rating}</span>
-                    <span className="text-sm text-muted-foreground">({product.reviews})</span>
+                    <span className="text-sm font-medium text-foreground">{product.rating}</span>
+                    <span className="text-xs text-muted-foreground">({product.reviews})</span>
                   </div>
 
                   {/* Name */}
-                  <h3 className="font-serif font-semibold text-foreground mb-3 line-clamp-1">
-                    {isRTL ? product.name_ar : product.name}
-                  </h3>
+                  <Link to={`/product/${product.id}`}>
+                    <h3 className="font-semibold text-foreground hover:text-primary transition-colors line-clamp-1 mb-2">
+                      {isRTL ? product.nameAr : product.name}
+                    </h3>
+                  </Link>
 
                   {/* Price */}
-                  <div className="flex items-baseline gap-2">
+                  <div className="flex items-center gap-2">
                     <span className="text-lg font-bold text-primary">
                       {product.price} {isRTL ? 'ج.م' : 'EGP'}
                     </span>
                     {product.originalPrice && (
                       <span className="text-sm text-muted-foreground line-through">
-                        {product.originalPrice} {isRTL ? 'ج.م' : 'EGP'}
+                        {product.originalPrice}
                       </span>
                     )}
                   </div>
