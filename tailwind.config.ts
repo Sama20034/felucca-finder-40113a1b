@@ -53,19 +53,19 @@ export default {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
         },
-        rose: {
-          DEFAULT: 'hsl(var(--rose))',
-          light: 'hsl(var(--rose-light))',
-          dark: 'hsl(var(--rose-dark))'
+        purple: {
+          DEFAULT: 'hsl(var(--purple))',
+          light: 'hsl(var(--purple-light))',
+          dark: 'hsl(var(--purple-dark))'
         },
-        nude: {
-          DEFAULT: 'hsl(var(--nude))',
-          light: 'hsl(var(--nude-light))'
+        lavender: {
+          DEFAULT: 'hsl(var(--lavender))',
+          light: 'hsl(var(--lavender-light))'
         },
         cream: 'hsl(var(--cream))',
-        gold: {
-          soft: 'hsl(var(--gold-soft))',
-          warm: 'hsl(var(--gold-warm))'
+        plum: {
+          soft: 'hsl(var(--plum-soft))',
+          warm: 'hsl(var(--plum-warm))'
         },
         blush: 'hsl(var(--blush))',
         sidebar: {
@@ -122,10 +122,10 @@ export default {
         'scale-in': 'scaleIn 0.6s ease-out'
       },
       boxShadow: {
-        soft: '0 4px 20px -5px hsl(20 10% 20% / 0.08)',
-        medium: '0 8px 30px -8px hsl(20 10% 20% / 0.1)',
-        large: '0 15px 50px -12px hsl(20 10% 20% / 0.12)',
-        rose: '0 8px 30px -10px hsl(15 60% 55% / 0.2)',
+        soft: '0 4px 20px -5px hsl(281 20% 20% / 0.08)',
+        medium: '0 8px 30px -8px hsl(281 20% 20% / 0.1)',
+        large: '0 15px 50px -12px hsl(281 20% 20% / 0.12)',
+        purple: '0 8px 30px -10px hsl(281 33% 38% / 0.2)',
         '2xs': 'var(--shadow-2xs)',
         xs: 'var(--shadow-xs)',
         sm: 'var(--shadow-sm)',
