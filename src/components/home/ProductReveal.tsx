@@ -26,7 +26,7 @@ const ProductReveal = () => {
               <div className="relative rounded-3xl overflow-hidden border border-primary/20 shadow-2xl">
                 <img 
                   src={productImg}
-                  alt="Resilience Gold Signature Product"
+                  alt="Reselience Gold Signature Product"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"
                 />
                 
