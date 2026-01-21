@@ -161,8 +161,8 @@ const Header = () => {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
       isScrolled 
-        ? 'bg-background/98 backdrop-blur-md shadow-soft border-b border-border' 
-        : 'bg-background/80 backdrop-blur-sm'
+        ? 'bg-[#1C092F]/98 backdrop-blur-md shadow-soft border-b border-white/10' 
+        : 'bg-[#1C092F]'
     }`}>
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between gap-6">
@@ -181,8 +181,8 @@ const Header = () => {
               <Link
                 key={link.name}
                 to={link.href}
-                className="text-foreground/70 hover:text-primary font-medium transition-colors duration-300 relative py-2
-                  after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-primary after:rounded-full
+                className="text-white/80 hover:text-white font-medium transition-colors duration-300 relative py-2
+                  after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-white after:rounded-full
                   hover:after:w-full after:transition-all after:duration-300"
               >
                 {link.name}
@@ -206,21 +206,21 @@ const Header = () => {
                   }}
                   onFocus={() => setShowSuggestions(true)}
                   placeholder={isRTL ? 'ابحثي عن منتجاتك...' : 'Search products...'}
-                  className="w-full py-3 px-5 rounded-full border border-border bg-background/50 backdrop-blur-sm focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-card-foreground placeholder:text-muted-foreground"
+                  className="w-full py-3 px-5 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm focus:outline-none focus:border-white/40 focus:ring-2 focus:ring-white/20 transition-all text-white placeholder:text-white/60"
                   style={{ paddingLeft: isRTL ? '3rem' : '1.25rem', paddingRight: isRTL ? '1.25rem' : '3rem' }}
                 />
                 {searchQuery && (
                   <button
                     type="button"
                     onClick={clearSearch}
-                    className={`absolute top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors ${isRTL ? 'left-12' : 'right-12'}`}
+                    className={`absolute top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors ${isRTL ? 'left-12' : 'right-12'}`}
                   >
                     <X className="w-4 h-4" />
                   </button>
                 )}
                 <button 
                   type="submit"
-                  className={`absolute top-1/2 -translate-y-1/2 bg-primary text-primary-foreground p-2 rounded-full hover:opacity-90 transition-all shadow-soft ${isRTL ? 'left-1' : 'right-1'}`}
+                  className={`absolute top-1/2 -translate-y-1/2 bg-white/20 text-white p-2 rounded-full hover:bg-white/30 transition-all ${isRTL ? 'left-1' : 'right-1'}`}
                 >
                   <Search className="w-4 h-4" />
                 </button>
@@ -233,7 +233,7 @@ const Header = () => {
           <div className="flex items-center gap-2">
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild className="lg:hidden">
-                <Button variant="ghost" size="icon" className="hover:bg-secondary text-card-foreground">
+                <Button variant="ghost" size="icon" className="hover:bg-white/10 text-white">
                   <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>
@@ -283,22 +283,22 @@ const Header = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="relative hover:bg-secondary text-card-foreground hover:text-primary transition-colors"
+              className="relative hover:bg-white/10 text-white transition-colors"
               onClick={() => user ? navigate('/my-account?tab=wishlist') : navigate('/auth')}
             >
               <Heart className="w-5 h-5" />
               {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                <span className="absolute -top-1 -right-1 bg-white text-[#1C092F] text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
                   {wishlistCount}
                 </span>
               )}
             </Button>
             
             <Link to="/cart">
-              <Button variant="ghost" size="icon" className="relative hover:bg-secondary text-card-foreground hover:text-primary transition-colors">
+              <Button variant="ghost" size="icon" className="relative hover:bg-white/10 text-white transition-colors">
                 <ShoppingCart className="w-5 h-5" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                  <span className="absolute -top-1 -right-1 bg-white text-[#1C092F] text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
                     {cartCount}
                   </span>
                 )}
@@ -311,7 +311,7 @@ const Header = () => {
                   variant="ghost"
                   size="icon"
                   onClick={() => navigate('/my-account')}
-                  className="hover:bg-secondary text-card-foreground hover:text-primary transition-colors"
+                  className="hover:bg-white/10 text-white transition-colors"
                 >
                   <User className="w-5 h-5" />
                 </Button>
@@ -319,7 +319,7 @@ const Header = () => {
                   variant="ghost"
                   size="icon"
                   onClick={signOut}
-                  className="hover:bg-destructive/20 text-card-foreground hover:text-destructive transition-colors"
+                  className="hover:bg-red-500/20 text-white hover:text-red-400 transition-colors"
                 >
                   <LogOut className="w-5 h-5" />
                 </Button>
@@ -329,7 +329,7 @@ const Header = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => navigate('/auth')}
-                className="hover:bg-secondary text-card-foreground hover:text-primary transition-colors"
+                className="hover:bg-white/10 text-white transition-colors"
               >
                 <User className="w-5 h-5" />
               </Button>
