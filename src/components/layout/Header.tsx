@@ -215,10 +215,10 @@ const Header = () => {
           </Sheet>
 
           {/* Logo */}
-          <Link to="/" className="flex items-center group">
+          <Link to="/" className="flex items-center group flex-1 lg:flex-none justify-center lg:justify-start">
             <img
               alt="Reselience Gold"
-              className="h-14 md:h-20 w-auto transition-transform duration-500 group-hover:scale-105"
+              className="h-20 sm:h-24 md:h-28 lg:h-20 w-auto transition-transform duration-500 group-hover:scale-105"
               src={logo}
             />
           </Link>
