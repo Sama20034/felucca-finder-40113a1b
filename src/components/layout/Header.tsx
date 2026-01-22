@@ -164,25 +164,13 @@ const Header = () => {
         ? 'shadow-lg border-b border-[#D4AF37]/20' 
         : ''
     }`}>
-      {/* Mobile Header - Two rows layout */}
+      {/* Mobile Header - Single row layout */}
       <div className="lg:hidden">
-        {/* Top Row - Logo centered with maximum prominence */}
-        <div className="flex items-center justify-center py-4 px-4">
-          <Link to="/" className="flex items-center group">
-            <img
-              alt="Reselience Gold"
-              className="h-24 sm:h-28 w-auto transition-transform duration-500 group-hover:scale-105"
-              src={logo}
-            />
-          </Link>
-        </div>
-        
-        {/* Bottom Row - Icons smaller and subtle */}
-        <div className="flex items-center justify-between px-4 pb-3 border-t border-white/10 pt-2">
+        <div className="flex items-center justify-between px-4 py-3">
           {/* Menu Button */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="sm" className="text-white/70 hover:bg-white/10 border-0 bg-transparent h-8 w-8 p-0">
+              <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 border-0 bg-transparent h-9 w-9">
                 <Menu className="w-5 h-5" />
               </Button>
             </SheetTrigger>
@@ -227,30 +215,38 @@ const Header = () => {
             </SheetContent>
           </Sheet>
 
-          {/* Center - Language Switcher */}
-          <LanguageSwitcher />
+          {/* Logo - Centered and slightly larger */}
+          <Link to="/" className="flex items-center group flex-1 justify-center">
+            <img
+              alt="Reselience Gold"
+              className="h-16 sm:h-18 w-auto transition-transform duration-500 group-hover:scale-105"
+              src={logo}
+            />
+          </Link>
 
-          {/* Right - Action Icons (smaller) */}
-          <div className="flex items-center gap-1">
+          {/* Right - Action Icons */}
+          <div className="flex items-center gap-0.5">
+            <LanguageSwitcher />
+            
             <Button
               variant="ghost"
-              size="sm"
-              className="relative hover:bg-white/10 text-white/70 transition-colors h-8 w-8 p-0"
+              size="icon"
+              className="relative hover:bg-white/10 text-white transition-colors h-9 w-9"
               onClick={() => user ? navigate('/my-account?tab=wishlist') : navigate('/auth')}
             >
-              <Heart className="w-4 h-4" />
+              <Heart className="w-5 h-5" />
               {wishlistCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 bg-[#D4AF37] text-[#1C092F] text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-bold">
+                <span className="absolute -top-0.5 -right-0.5 bg-[#D4AF37] text-[#1C092F] text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
                   {wishlistCount}
                 </span>
               )}
             </Button>
             
             <Link to="/cart">
-              <Button variant="ghost" size="sm" className="relative hover:bg-white/10 text-white/70 transition-colors h-8 w-8 p-0">
-                <ShoppingCart className="w-4 h-4" />
+              <Button variant="ghost" size="icon" className="relative hover:bg-white/10 text-white transition-colors h-9 w-9">
+                <ShoppingCart className="w-5 h-5" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 bg-[#D4AF37] text-[#1C092F] text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-bold">
+                  <span className="absolute -top-0.5 -right-0.5 bg-[#D4AF37] text-[#1C092F] text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
                     {cartCount}
                   </span>
                 )}
@@ -259,11 +255,11 @@ const Header = () => {
             
             <Button
               variant="ghost"
-              size="sm"
+              size="icon"
               onClick={() => user ? navigate('/my-account') : navigate('/auth')}
-              className="hover:bg-white/10 text-white/70 transition-colors h-8 w-8 p-0"
+              className="hover:bg-white/10 text-white transition-colors h-9 w-9"
             >
-              <User className="w-4 h-4" />
+              <User className="w-5 h-5" />
             </Button>
           </div>
         </div>
