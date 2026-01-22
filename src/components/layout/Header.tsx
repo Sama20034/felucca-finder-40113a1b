@@ -164,13 +164,26 @@ const Header = () => {
         ? 'shadow-lg border-b border-[#D4AF37]/20' 
         : ''
     }`}>
-      <div className="container mx-auto px-4 py-3 md:py-4">
-        <div className="flex items-center justify-between gap-2 md:gap-6">
-          {/* Mobile Menu Button - First on mobile */}
+      {/* Mobile Header - Two rows layout */}
+      <div className="lg:hidden">
+        {/* Top Row - Logo centered with maximum prominence */}
+        <div className="flex items-center justify-center py-4 px-4">
+          <Link to="/" className="flex items-center group">
+            <img
+              alt="Reselience Gold"
+              className="h-24 sm:h-28 w-auto transition-transform duration-500 group-hover:scale-105"
+              src={logo}
+            />
+          </Link>
+        </div>
+        
+        {/* Bottom Row - Icons smaller and subtle */}
+        <div className="flex items-center justify-between px-4 pb-3 border-t border-white/10 pt-2">
+          {/* Menu Button */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-            <SheetTrigger asChild className="lg:hidden">
-              <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 border-0 bg-transparent">
-                <Menu className="w-6 h-6" />
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="sm" className="text-white/70 hover:bg-white/10 border-0 bg-transparent h-8 w-8 p-0">
+                <Menu className="w-5 h-5" />
               </Button>
             </SheetTrigger>
             <SheetContent side={isRTL ? "right" : "left"} className="w-80 bg-background border-border">
@@ -214,11 +227,56 @@ const Header = () => {
             </SheetContent>
           </Sheet>
 
+          {/* Center - Language Switcher */}
+          <LanguageSwitcher />
+
+          {/* Right - Action Icons (smaller) */}
+          <div className="flex items-center gap-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="relative hover:bg-white/10 text-white/70 transition-colors h-8 w-8 p-0"
+              onClick={() => user ? navigate('/my-account?tab=wishlist') : navigate('/auth')}
+            >
+              <Heart className="w-4 h-4" />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 bg-[#D4AF37] text-[#1C092F] text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-bold">
+                  {wishlistCount}
+                </span>
+              )}
+            </Button>
+            
+            <Link to="/cart">
+              <Button variant="ghost" size="sm" className="relative hover:bg-white/10 text-white/70 transition-colors h-8 w-8 p-0">
+                <ShoppingCart className="w-4 h-4" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 bg-[#D4AF37] text-[#1C092F] text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-bold">
+                    {cartCount}
+                  </span>
+                )}
+              </Button>
+            </Link>
+            
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => user ? navigate('/my-account') : navigate('/auth')}
+              className="hover:bg-white/10 text-white/70 transition-colors h-8 w-8 p-0"
+            >
+              <User className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Header */}
+      <div className="hidden lg:block container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between gap-6">
           {/* Logo */}
-          <Link to="/" className="flex items-center group flex-1 lg:flex-none justify-center lg:justify-start">
+          <Link to="/" className="flex items-center group">
             <img
               alt="Reselience Gold"
-              className="h-20 sm:h-24 md:h-28 lg:h-20 w-auto transition-transform duration-500 group-hover:scale-105"
+              className="h-20 w-auto transition-transform duration-500 group-hover:scale-105"
               src={logo}
             />
           </Link>
