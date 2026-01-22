@@ -164,14 +164,13 @@ const Header = () => {
         ? 'shadow-lg border-b border-[#D4AF37]/20' 
         : ''
     }`}>
-      {/* Mobile Header - Two rows: icons then full-width logo */}
+      {/* Mobile Header - Single row layout */}
       <div className="lg:hidden">
-        {/* Top Row - Navigation icons */}
-        <div className="flex items-center justify-between px-4 pt-2">
+        <div className="flex items-center justify-between px-4 py-4">
           {/* Menu Button */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 border-0 bg-transparent h-8 w-8">
+              <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 border-0 bg-transparent h-9 w-9">
                 <Menu className="w-5 h-5" />
               </Button>
             </SheetTrigger>
@@ -216,12 +215,21 @@ const Header = () => {
             </SheetContent>
           </Sheet>
 
+          {/* Logo - Centered and larger */}
+          <Link to="/" className="flex items-center group flex-1 justify-center">
+            <img
+              alt="Reselience Gold"
+              className="h-20 sm:h-22 w-auto transition-transform duration-500 group-hover:scale-105"
+              src={logo}
+            />
+          </Link>
+
           {/* Right - Minimal Icons */}
           <div className="flex items-center gap-1">
             <LanguageSwitcher />
             
             <Link to="/cart">
-              <Button variant="ghost" size="icon" className="relative hover:bg-white/10 text-white transition-colors h-8 w-8">
+              <Button variant="ghost" size="icon" className="relative hover:bg-white/10 text-white transition-colors h-9 w-9">
                 <ShoppingCart className="w-5 h-5" />
                 {cartCount > 0 && (
                   <span className="absolute -top-0.5 -right-0.5 bg-[#D4AF37] text-[#1C092F] text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
@@ -231,17 +239,6 @@ const Header = () => {
               </Button>
             </Link>
           </div>
-        </div>
-
-        {/* Bottom Row - Full-width Logo */}
-        <div className="px-2 pb-2">
-          <Link to="/" className="block w-full">
-            <img
-              alt="Reselience Gold"
-              className="w-full h-auto max-h-14 object-contain"
-              src={logo}
-            />
-          </Link>
         </div>
       </div>
 
