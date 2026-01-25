@@ -7,6 +7,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import { WishlistProvider } from "@/contexts/WishlistContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { useCartSync } from "@/hooks/useCartSync";
 import Index from "./pages/Index";
 import Shop from "./pages/Shop";
 import Contact from "./pages/Contact";
@@ -38,8 +39,15 @@ import Affiliate from "./pages/Affiliate";
 import TrackOrder from "./pages/TrackOrder";
 import About from "./pages/About";
 import Results from "./pages/Results";
+import ShopifyProductPage from "./pages/ShopifyProductPage";
 
 const queryClient = new QueryClient();
+
+// Cart sync wrapper component
+const CartSyncWrapper = ({ children }: { children: React.ReactNode }) => {
+  useCartSync();
+  return <>{children}</>;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -51,47 +59,49 @@ const App = () => (
           <AuthProvider>
             <WishlistProvider>
               <CartProvider>
-              <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/product/:id" element={<ProductDetail />} />
-              <Route path="/categories" element={<AllCategories />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/my-account" element={<MyAccount />} />
-              <Route path="/affiliate" element={<Affiliate />} />
-              <Route path="/track-order" element={<TrackOrder />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/results" element={<Results />} />
-              <Route path="/offers" element={<Shop />} />
-              <Route path="/gifts" element={<Shop />} />
-              <Route path="/gifts" element={<Shop />} />
-              
-              {/* Policy Pages */}
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/return-policy" element={<ReturnPolicy />} />
-              <Route path="/shipping-policy" element={<ShippingPolicy />} />
-              <Route path="/payment-methods" element={<PaymentMethods />} />
-              
-              {/* Admin Routes */}
-              <Route path="/admin" element={<ProtectedAdminRoute><Dashboard /></ProtectedAdminRoute>} />
-              <Route path="/admin/products" element={<ProtectedAdminRoute><Products /></ProtectedAdminRoute>} />
-              <Route path="/admin/categories" element={<ProtectedAdminRoute><AdminCategories /></ProtectedAdminRoute>} />
-              <Route path="/admin/orders" element={<ProtectedAdminRoute><Orders /></ProtectedAdminRoute>} />
-              <Route path="/admin/customers" element={<ProtectedAdminRoute><Customers /></ProtectedAdminRoute>} />
-              <Route path="/admin/coupons" element={<ProtectedAdminRoute><Coupons /></ProtectedAdminRoute>} />
-              <Route path="/admin/loyalty" element={<ProtectedAdminRoute><Loyalty /></ProtectedAdminRoute>} />
-              <Route path="/admin/affiliates" element={<ProtectedAdminRoute><AdminAffiliates /></ProtectedAdminRoute>} />
-              <Route path="/admin/shipping" element={<ProtectedAdminRoute><Shipping /></ProtectedAdminRoute>} />
-              <Route path="/admin/returns" element={<ProtectedAdminRoute><AdminReturns /></ProtectedAdminRoute>} />
-              <Route path="/admin/filters" element={<ProtectedAdminRoute><AdminFilters /></ProtectedAdminRoute>} />
-              
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-              </Routes>
+                <CartSyncWrapper>
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/shop" element={<Shop />} />
+                    <Route path="/product/:id" element={<ProductDetail />} />
+                    <Route path="/shopify-product/:handle" element={<ShopifyProductPage />} />
+                    <Route path="/categories" element={<AllCategories />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/my-account" element={<MyAccount />} />
+                    <Route path="/affiliate" element={<Affiliate />} />
+                    <Route path="/track-order" element={<TrackOrder />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/results" element={<Results />} />
+                    <Route path="/offers" element={<Shop />} />
+                    <Route path="/gifts" element={<Shop />} />
+                    
+                    {/* Policy Pages */}
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route path="/return-policy" element={<ReturnPolicy />} />
+                    <Route path="/shipping-policy" element={<ShippingPolicy />} />
+                    <Route path="/payment-methods" element={<PaymentMethods />} />
+                    
+                    {/* Admin Routes */}
+                    <Route path="/admin" element={<ProtectedAdminRoute><Dashboard /></ProtectedAdminRoute>} />
+                    <Route path="/admin/products" element={<ProtectedAdminRoute><Products /></ProtectedAdminRoute>} />
+                    <Route path="/admin/categories" element={<ProtectedAdminRoute><AdminCategories /></ProtectedAdminRoute>} />
+                    <Route path="/admin/orders" element={<ProtectedAdminRoute><Orders /></ProtectedAdminRoute>} />
+                    <Route path="/admin/customers" element={<ProtectedAdminRoute><Customers /></ProtectedAdminRoute>} />
+                    <Route path="/admin/coupons" element={<ProtectedAdminRoute><Coupons /></ProtectedAdminRoute>} />
+                    <Route path="/admin/loyalty" element={<ProtectedAdminRoute><Loyalty /></ProtectedAdminRoute>} />
+                    <Route path="/admin/affiliates" element={<ProtectedAdminRoute><AdminAffiliates /></ProtectedAdminRoute>} />
+                    <Route path="/admin/shipping" element={<ProtectedAdminRoute><Shipping /></ProtectedAdminRoute>} />
+                    <Route path="/admin/returns" element={<ProtectedAdminRoute><AdminReturns /></ProtectedAdminRoute>} />
+                    <Route path="/admin/filters" element={<ProtectedAdminRoute><AdminFilters /></ProtectedAdminRoute>} />
+                    
+                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </CartSyncWrapper>
               </CartProvider>
             </WishlistProvider>
           </AuthProvider>
