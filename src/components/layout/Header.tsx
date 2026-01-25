@@ -6,7 +6,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useCartStore } from "@/stores/cartStore";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { CartDrawer } from "@/components/shopify/CartDrawer";
 import logo from "@/assets/reselience-gold-logo.png";
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -24,6 +26,7 @@ const Header = () => {
   const { cartCount } = useCart();
   const { wishlistCount } = useWishlist();
   const { t, isRTL } = useLanguage();
+  const shopifyCartTotal = useCartStore(state => state.getTotalItems());
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState<ProductSuggestion[]>([]);
@@ -228,16 +231,8 @@ const Header = () => {
           <div className="flex items-center gap-1">
             <LanguageSwitcher />
             
-            <Link to="/cart">
-              <Button variant="ghost" size="icon" className="relative hover:bg-white/10 text-white transition-colors h-9 w-9">
-                <ShoppingCart className="w-5 h-5" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 bg-[#D4AF37] text-[#1C092F] text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                    {cartCount}
-                  </span>
-                )}
-              </Button>
-            </Link>
+            {/* Shopify Cart Drawer */}
+            <CartDrawer />
           </div>
         </div>
       </div>
@@ -326,16 +321,8 @@ const Header = () => {
               )}
             </Button>
             
-            <Link to="/cart">
-              <Button variant="ghost" size="icon" className="relative hover:bg-white/10 text-white transition-colors h-9 w-9 md:h-10 md:w-10">
-                <ShoppingCart className="w-5 h-5" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-[#D4AF37] text-[#1C092F] text-xs w-4 h-4 md:w-5 md:h-5 rounded-full flex items-center justify-center font-bold text-[10px] md:text-xs">
-                    {cartCount}
-                  </span>
-                )}
-              </Button>
-            </Link>
+            {/* Shopify Cart Drawer */}
+            <CartDrawer />
             
             {user ? (
               <>
