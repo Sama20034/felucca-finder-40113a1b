@@ -99,7 +99,7 @@ const BeautyHero = () => {
           }} transition={{
             duration: 0.6,
             delay: 0.5
-          }} className={`flex flex-col sm:flex-row gap-3 sm:gap-4 ${isRTL ? 'items-end sm:justify-end' : 'items-start sm:justify-start'}`}>
+          }} className={`flex flex-col sm:flex-row gap-3 sm:gap-4 ${isRTL ? 'items-end sm:justify-end flex-row-reverse' : 'items-start sm:justify-start'}`}>
               <Link to="/shop" className="w-full sm:w-auto">
                 <Button size="lg" className="btn-beauty text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 group shadow-lg shadow-primary/20 w-full sm:w-auto">
                   <ShoppingBag className={`w-4 h-4 sm:w-5 sm:h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
