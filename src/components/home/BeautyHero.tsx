@@ -32,7 +32,7 @@ const BeautyHero = () => {
           y: 0
         }} transition={{
           duration: 0.8
-        }} className={`space-y-6 sm:space-y-8 text-center sm:text-right ${isRTL ? 'lg:order-2' : 'sm:text-left'}`}>
+        }} className={`space-y-6 sm:space-y-8 ${isRTL ? 'text-center sm:text-right lg:order-2' : 'text-center sm:text-left'}`}>
             {/* Logo - Prominent */}
             <motion.div initial={{
             opacity: 0,
@@ -85,7 +85,7 @@ const BeautyHero = () => {
           }} transition={{
             duration: 0.6,
             delay: 0.4
-          }} className="text-sm sm:text-lg md:text-xl text-muted-foreground max-w-lg mx-auto sm:mx-0 px-4 sm:px-0">
+          }} className={`text-sm sm:text-lg md:text-xl text-muted-foreground max-w-lg px-4 sm:px-0 ${isRTL ? 'mx-auto sm:mr-0 sm:ml-auto' : 'mx-auto sm:ml-0 sm:mr-auto'}`}>
               {content.subheadline}
             </motion.p>
 
@@ -122,7 +122,7 @@ const BeautyHero = () => {
           }} transition={{
             duration: 0.6,
             delay: 0.6
-          }} className="flex items-center justify-center sm:justify-start gap-4 sm:gap-8 pt-6 w-full">
+          }} className={`flex items-center justify-center gap-4 sm:gap-8 pt-6 w-full ${isRTL ? 'sm:justify-end' : 'sm:justify-start'}`}>
               <div className="text-center flex-1 sm:flex-none">
                 <div className="text-lg sm:text-2xl font-bold text-primary">+5000</div>
                 <div className="text-[10px] sm:text-xs text-muted-foreground">{isRTL ? 'عميلة سعيدة' : 'Happy Customers'}</div>
