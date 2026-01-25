@@ -9,7 +9,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Filter, Search, X, Sparkles, Crown, Star, Heart, ShoppingCart, Droplet, Gem, Loader2, ShoppingBag } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCartStore } from "@/stores/cartStore";
-import { fetchShopifyProducts, ShopifyProduct } from "@/lib/shopify";
+import { fetchShopifyProducts, fetchProductsByCollection, ShopifyProduct } from "@/lib/shopify";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 
@@ -28,13 +28,23 @@ const Shop = () => {
   const [error, setError] = useState<string | null>(null);
   const [addingToCart, setAddingToCart] = useState<string | null>(null);
 
+  // Get collection filter from URL
+  const collectionHandle = searchParams.get('collection');
+
   // Fetch products from Shopify
   useEffect(() => {
     const loadProducts = async () => {
       setLoading(true);
       setError(null);
       try {
-        const data = await fetchShopifyProducts(50);
+        let data: ShopifyProduct[];
+        if (collectionHandle) {
+          // Fetch products from specific collection
+          data = await fetchProductsByCollection(collectionHandle, 50);
+        } else {
+          // Fetch all products
+          data = await fetchShopifyProducts(50);
+        }
         setProducts(data);
       } catch (err) {
         console.error('Failed to fetch products:', err);
@@ -45,7 +55,7 @@ const Shop = () => {
     };
 
     loadProducts();
-  }, [isRTL]);
+  }, [isRTL, collectionHandle]);
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
