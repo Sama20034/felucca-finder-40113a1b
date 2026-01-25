@@ -1,60 +1,92 @@
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Star, ShoppingBag, ArrowLeft, ArrowRight } from 'lucide-react';
+import { ShoppingBag, ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useCart } from '@/contexts/CartContext';
-
-const products = [
-  {
-    id: 1,
-    name: 'Golden Argan Elixir',
-    nameAr: 'إكسير الأرجان الذهبي',
-    price: 450,
-    originalPrice: 550,
-    rating: 4.9,
-    reviews: 128,
-    image: '/assets/products/product-1.jpg',
-    badge: { en: 'Best Seller', ar: 'الأكثر مبيعاً' },
-  },
-  {
-    id: 2,
-    name: 'Rosemary Growth Oil',
-    nameAr: 'زيت الروزماري للنمو',
-    price: 380,
-    originalPrice: null,
-    rating: 4.8,
-    reviews: 95,
-    image: '/assets/products/product-2.jpg',
-    badge: null,
-  },
-  {
-    id: 3,
-    name: 'Silk Hair Scrunchie Set',
-    nameAr: 'مجموعة ربطات الحرير',
-    price: 220,
-    originalPrice: 280,
-    rating: 4.7,
-    reviews: 67,
-    image: '/assets/products/product-3.jpg',
-    badge: { en: '-20%', ar: '-20%' },
-  },
-  {
-    id: 4,
-    name: 'Castor Strengthening Oil',
-    nameAr: 'زيت الخروع المقوي',
-    price: 320,
-    originalPrice: null,
-    rating: 4.9,
-    reviews: 156,
-    image: '/assets/products/product-4.jpg',
-    badge: { en: 'New', ar: 'جديد' },
-  },
-];
+import { useCartStore } from '@/stores/cartStore';
+import { fetchShopifyProducts, ShopifyProduct } from '@/lib/shopify';
+import { toast } from 'sonner';
 
 const FeaturedProducts = () => {
   const { isRTL } = useLanguage();
-  const { addToCart } = useCart();
+  const navigate = useNavigate();
+  const { addItem, isLoading: cartLoading } = useCartStore();
+  const [products, setProducts] = useState<ShopifyProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [addingToCart, setAddingToCart] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const data = await fetchShopifyProducts(8);
+        setProducts(data);
+      } catch (err) {
+        console.error('Failed to fetch products:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadProducts();
+  }, []);
+
+  const handleAddToCart = async (e: React.MouseEvent, product: ShopifyProduct) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const variant = product.node.variants.edges[0]?.node;
+    if (!variant) return;
+
+    setAddingToCart(product.node.id);
+    try {
+      await addItem({
+        product,
+        variantId: variant.id,
+        variantTitle: variant.title,
+        price: variant.price,
+        quantity: 1,
+        selectedOptions: variant.selectedOptions || []
+      });
+      toast.success(isRTL ? "تمت الإضافة للسلة" : "Added to cart");
+    } catch (error) {
+      toast.error(isRTL ? "حدث خطأ" : "Error adding to cart");
+    } finally {
+      setAddingToCart(null);
+    }
+  };
+
+  // Loading state
+  if (loading) {
+    return (
+      <section className="py-20 bg-secondary/20">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // No products
+  if (products.length === 0) {
+    return (
+      <section className="py-20 bg-secondary/20">
+        <div className="container mx-auto px-4 text-center">
+          <ShoppingBag className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
+          <h3 className="text-xl font-semibold text-foreground mb-2">
+            {isRTL ? "لا توجد منتجات بعد" : "No products yet"}
+          </h3>
+          <p className="text-muted-foreground">
+            {isRTL 
+              ? "سيتم عرض المنتجات هنا بمجرد إضافتها" 
+              : "Products will appear here once added"
+            }
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 bg-secondary/20">
@@ -72,7 +104,7 @@ const FeaturedProducts = () => {
               {isRTL ? 'منتجاتنا المميزة' : 'Featured Products'}
             </h2>
             <p className="text-muted-foreground">
-              {isRTL ? 'الأكثر مبيعاً والمحبوبة من عملائنا' : 'Best sellers loved by our customers'}
+              {isRTL ? 'اكتشفي منتجاتنا الفاخرة' : 'Discover our premium products'}
             </p>
           </div>
           <Link to="/shop">
@@ -85,80 +117,84 @@ const FeaturedProducts = () => {
 
         {/* Products Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product, index) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group"
-            >
-              <div className="bg-card rounded-2xl overflow-hidden border border-border/50 hover:border-primary/30 hover:shadow-xl transition-all duration-300">
-                {/* Image */}
-                <Link to={`/product/${product.id}`} className="block relative">
-                  <div className="relative h-56 overflow-hidden">
-                    <img 
-                      src={product.image} 
-                      alt={isRTL ? product.nameAr : product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    
-                    {/* Badge */}
-                    {product.badge && (
-                      <div className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
-                        {isRTL ? product.badge.ar : product.badge.en}
-                      </div>
-                    )}
+          {products.map((product, index) => {
+            const price = parseFloat(product.node.priceRange.minVariantPrice.amount);
+            const currency = product.node.priceRange.minVariantPrice.currencyCode;
+            const imageUrl = product.node.images.edges[0]?.node.url;
+            const isAddingThis = addingToCart === product.node.id;
 
-                    {/* Quick Add Button - Visible on hover */}
-                    <div className="absolute inset-0 bg-foreground/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <Button 
-                        onClick={(e) => {
-                          e.preventDefault();
-                          addToCart(product.id, 1);
-                        }}
-                        size="sm" 
-                        className="btn-beauty shadow-lg"
-                      >
-                        <ShoppingBag className="w-4 h-4 mr-1" />
-                        {isRTL ? 'أضف للسلة' : 'Add to Cart'}
-                      </Button>
+            return (
+              <motion.div
+                key={product.node.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group"
+              >
+                <div className="bg-card rounded-2xl overflow-hidden border border-border/50 hover:border-primary/30 hover:shadow-xl transition-all duration-300">
+                  {/* Image */}
+                  <div 
+                    onClick={() => navigate(`/product/${product.node.handle}`)}
+                    className="block relative cursor-pointer"
+                  >
+                    <div className="relative h-56 overflow-hidden">
+                      {imageUrl ? (
+                        <img 
+                          src={imageUrl} 
+                          alt={product.node.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-muted flex items-center justify-center">
+                          <ShoppingBag className="w-12 h-12 text-muted-foreground" />
+                        </div>
+                      )}
+
+                      {/* Quick Add Button - Visible on hover */}
+                      <div className="absolute inset-0 bg-foreground/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <Button 
+                          onClick={(e) => handleAddToCart(e, product)}
+                          disabled={isAddingThis || cartLoading}
+                          size="sm" 
+                          className="btn-beauty shadow-lg"
+                        >
+                          {isAddingThis ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : (
+                            <>
+                              <ShoppingBag className="w-4 h-4 mr-1" />
+                              {isRTL ? 'أضف للسلة' : 'Add to Cart'}
+                            </>
+                          )}
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                </Link>
 
-                {/* Content */}
-                <div className="p-4">
-                  {/* Rating */}
-                  <div className="flex items-center gap-1 mb-2">
-                    <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                    <span className="text-sm font-medium text-foreground">{product.rating}</span>
-                    <span className="text-xs text-muted-foreground">({product.reviews})</span>
-                  </div>
+                  {/* Content */}
+                  <div className="p-4">
+                    {/* Name */}
+                    <div 
+                      onClick={() => navigate(`/product/${product.node.handle}`)}
+                      className="cursor-pointer"
+                    >
+                      <h3 className="font-semibold text-foreground hover:text-primary transition-colors line-clamp-2 mb-2">
+                        {product.node.title}
+                      </h3>
+                    </div>
 
-                  {/* Name */}
-                  <Link to={`/product/${product.id}`}>
-                    <h3 className="font-semibold text-foreground hover:text-primary transition-colors line-clamp-1 mb-2">
-                      {isRTL ? product.nameAr : product.name}
-                    </h3>
-                  </Link>
-
-                  {/* Price */}
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg font-bold text-primary">
-                      {product.price} {isRTL ? 'ج.م' : 'EGP'}
-                    </span>
-                    {product.originalPrice && (
-                      <span className="text-sm text-muted-foreground line-through">
-                        {product.originalPrice}
+                    {/* Price */}
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg font-bold text-primary">
+                        {price.toFixed(0)} {currency === 'EGP' ? (isRTL ? 'ج.م' : 'EGP') : currency}
                       </span>
-                    )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
