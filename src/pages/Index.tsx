@@ -2,7 +2,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/layout/WhatsAppButton";
 import BeautyHero from "@/components/home/BeautyHero";
-import CategoriesShowcase from "@/components/home/CategoriesShowcase";
+import ShopifyCollectionsSection from "@/components/home/ShopifyCollectionsSection";
 import BenefitsShowcase from "@/components/home/BenefitsShowcase";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import AboutBrand from "@/components/home/AboutBrand";
@@ -15,7 +15,7 @@ const Index = () => {
       <Header />
       <main>
         <BeautyHero />
-        <CategoriesShowcase />
+        <ShopifyCollectionsSection />
         <FeaturedProducts />
         <BenefitsShowcase />
         <AboutBrand />
