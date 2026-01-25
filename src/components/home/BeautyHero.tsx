@@ -122,7 +122,7 @@ const BeautyHero = () => {
           }} transition={{
             duration: 0.6,
             delay: 0.6
-          }} className={`flex items-center justify-center gap-4 sm:gap-8 pt-6 w-full ${isRTL ? 'sm:justify-end' : 'sm:justify-start'}`}>
+          }} className={`flex items-center justify-center gap-4 sm:gap-8 pt-6 w-full ${isRTL ? 'flex-row-reverse sm:justify-start' : 'sm:justify-start'}`}>
               <div className="text-center flex-1 sm:flex-none">
                 <div className="text-lg sm:text-2xl font-bold text-primary">+5000</div>
                 <div className="text-[10px] sm:text-xs text-muted-foreground">{isRTL ? 'عميلة سعيدة' : 'Happy Customers'}</div>
