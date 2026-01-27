@@ -6,7 +6,7 @@ import { Upload, X, Image as ImageIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 // رابط سيرفر الرفع على Hostinger
-const UPLOAD_URL = 'https://pinkwish.shop/upload.php';
+const UPLOAD_URL = 'https://reselience-gold.com/upload.php';
 
 interface ImageUploadProps {
   bucket?: string;
