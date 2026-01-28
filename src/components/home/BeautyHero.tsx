@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ShoppingBag, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import logo from '@/assets/reselience-gold-logo.png';
+import flowerLogo from '@/assets/reselience-flowers-logo.png';
 import heroImage from '@/assets/hero-beauty.jpg';
 const BeautyHero = () => {
   const {
@@ -17,6 +17,20 @@ const BeautyHero = () => {
     secondary: isRTL ? 'شاهدي النتائج' : 'See Results'
   };
   return <section className="relative min-h-[90vh] flex items-center bg-gradient-to-b from-secondary/30 via-background to-background overflow-hidden pt-24">
+      {/* Flower Logo Decorative Element */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 0.15, scale: 1 }}
+        transition={{ duration: 1.2, delay: 0.3 }}
+        className="absolute top-10 right-0 w-[300px] sm:w-[400px] md:w-[500px] lg:w-[600px] pointer-events-none"
+      >
+        <img 
+          src={flowerLogo} 
+          alt="" 
+          className="w-full h-auto opacity-50"
+        />
+      </motion.div>
+      
       {/* Soft decorative elements */}
       <div className="absolute top-20 right-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
       <div className="absolute bottom-20 left-10 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
