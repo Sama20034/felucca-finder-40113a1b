@@ -84,14 +84,6 @@ const Results = () => {
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                       
-                      {/* Before/After Labels */}
-                      <div className="absolute bottom-6 left-6 px-4 py-2 bg-background/90 backdrop-blur-sm rounded-full border border-primary/20 shadow-lg">
-                        <span className="text-sm font-bold text-foreground">Before</span>
-                      </div>
-                      <div className="absolute bottom-6 right-6 px-4 py-2 bg-primary/90 backdrop-blur-sm rounded-full border border-primary shadow-lg">
-                        <span className="text-sm font-bold text-primary-foreground">After</span>
-                      </div>
-                      
                       {/* Gradient Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       
