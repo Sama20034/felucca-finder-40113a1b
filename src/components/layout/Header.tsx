@@ -9,7 +9,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useCartStore } from "@/stores/cartStore";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { CartDrawer } from "@/components/shopify/CartDrawer";
-import logo from "@/assets/reselience-gold-logo.png";
+import logo from "@/assets/reselience-flowers-logo.png";
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -222,7 +222,7 @@ const Header = () => {
           <Link to="/" className="flex items-center group flex-1 justify-center">
             <img
               alt="Reselience Gold"
-              className="h-20 sm:h-22 w-auto transition-transform duration-500 group-hover:scale-105"
+              className="h-24 sm:h-28 w-auto transition-transform duration-500 group-hover:scale-105"
               src={logo}
             />
           </Link>
@@ -244,7 +244,7 @@ const Header = () => {
           <Link to="/" className="flex items-center group">
             <img
               alt="Reselience Gold"
-              className="h-20 w-auto transition-transform duration-500 group-hover:scale-105"
+              className="h-28 w-auto transition-transform duration-500 group-hover:scale-105"
               src={logo}
             />
           </Link>
