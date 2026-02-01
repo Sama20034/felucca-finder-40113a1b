@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Search, ShoppingCart, User, Heart, LogOut, X, Menu, Crown } from "lucide-react";
+import { Search, ShoppingCart, User, Heart, LogOut, X, Menu, Crown, ChevronDown, Droplet, Sparkles, Gem } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { useAuth } from "@/contexts/AuthContext";
@@ -204,14 +204,53 @@ const Header = () => {
 
                 <nav className="flex flex-col gap-2 p-4">
                   {navLinks.map((link) => (
-                    <Link
-                      key={link.name}
-                      to={link.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="px-4 py-3 text-card-foreground hover:text-primary hover:bg-secondary/50 rounded-xl font-medium transition-colors"
-                    >
-                      {link.name}
-                    </Link>
+                    <div key={link.name}>
+                      <Link
+                        to={link.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="px-4 py-3 text-card-foreground hover:text-primary hover:bg-secondary/50 rounded-xl font-medium transition-colors block"
+                      >
+                        {link.name}
+                      </Link>
+                      
+                      {/* Categories Sub-menu under Shop */}
+                      {link.href === "/shop" && (
+                        <div className="ml-4 mt-1 flex flex-col gap-1 border-l-2 border-primary/20 pl-3">
+                          <Link
+                            to="/shop?collection=hair-care"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="flex items-center gap-3 px-3 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/30 rounded-lg transition-colors"
+                          >
+                            <Droplet className="w-4 h-4 text-primary" />
+                            {isRTL ? 'العناية بالشعر' : 'Hair Care'}
+                          </Link>
+                          <Link
+                            to="/shop?collection=flash-offers"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="flex items-center gap-3 px-3 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/30 rounded-lg transition-colors"
+                          >
+                            <Sparkles className="w-4 h-4 text-primary" />
+                            {isRTL ? 'عروض فلاش' : 'Flash Offers'}
+                          </Link>
+                          <Link
+                            to="/shop?collection=accessories"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="flex items-center gap-3 px-3 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/30 rounded-lg transition-colors"
+                          >
+                            <Gem className="w-4 h-4 text-primary" />
+                            {isRTL ? 'الإكسسوارات' : 'Accessories'}
+                          </Link>
+                          <Link
+                            to="/shop?collection=bundles"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="flex items-center gap-3 px-3 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/30 rounded-lg transition-colors"
+                          >
+                            <Crown className="w-4 h-4 text-primary" />
+                            {isRTL ? 'الباقات' : 'Bundles'}
+                          </Link>
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </nav>
               </div>
