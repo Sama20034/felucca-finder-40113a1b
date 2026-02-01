@@ -192,6 +192,103 @@ const Shop = () => {
         </div>
       </section>
 
+      {/* Categories Section */}
+      <section className="py-8 border-b border-border/30">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {/* Hair Care */}
+            <button
+              onClick={() => setSearchParams({ collection: 'hair-care' })}
+              className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
+                collectionHandle === 'hair-care' 
+                  ? 'bg-primary text-primary-foreground shadow-lg' 
+                  : 'bg-card border border-border/50 hover:border-primary/50'
+              }`}
+            >
+              <div className="flex flex-col items-center gap-3 text-center">
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                  collectionHandle === 'hair-care' ? 'bg-primary-foreground/20' : 'bg-primary/10'
+                }`}>
+                  <Droplet className={`w-6 h-6 ${collectionHandle === 'hair-care' ? 'text-primary-foreground' : 'text-primary'}`} />
+                </div>
+                <span className="font-semibold">{isRTL ? 'العناية بالشعر' : 'Hair Care'}</span>
+              </div>
+            </button>
+
+            {/* Flash Offers */}
+            <button
+              onClick={() => setSearchParams({ collection: 'flash-offers' })}
+              className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
+                collectionHandle === 'flash-offers' 
+                  ? 'bg-primary text-primary-foreground shadow-lg' 
+                  : 'bg-card border border-border/50 hover:border-primary/50'
+              }`}
+            >
+              <div className="flex flex-col items-center gap-3 text-center">
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                  collectionHandle === 'flash-offers' ? 'bg-primary-foreground/20' : 'bg-primary/10'
+                }`}>
+                  <Sparkles className={`w-6 h-6 ${collectionHandle === 'flash-offers' ? 'text-primary-foreground' : 'text-primary'}`} />
+                </div>
+                <span className="font-semibold">{isRTL ? 'عروض فلاش' : 'Flash Offers'}</span>
+              </div>
+            </button>
+
+            {/* Accessories */}
+            <button
+              onClick={() => setSearchParams({ collection: 'accessories' })}
+              className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
+                collectionHandle === 'accessories' 
+                  ? 'bg-primary text-primary-foreground shadow-lg' 
+                  : 'bg-card border border-border/50 hover:border-primary/50'
+              }`}
+            >
+              <div className="flex flex-col items-center gap-3 text-center">
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                  collectionHandle === 'accessories' ? 'bg-primary-foreground/20' : 'bg-primary/10'
+                }`}>
+                  <Gem className={`w-6 h-6 ${collectionHandle === 'accessories' ? 'text-primary-foreground' : 'text-primary'}`} />
+                </div>
+                <span className="font-semibold">{isRTL ? 'الإكسسوارات' : 'Accessories'}</span>
+              </div>
+            </button>
+
+            {/* Bundles */}
+            <button
+              onClick={() => setSearchParams({ collection: 'bundles' })}
+              className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
+                collectionHandle === 'bundles' 
+                  ? 'bg-primary text-primary-foreground shadow-lg' 
+                  : 'bg-card border border-border/50 hover:border-primary/50'
+              }`}
+            >
+              <div className="flex flex-col items-center gap-3 text-center">
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                  collectionHandle === 'bundles' ? 'bg-primary-foreground/20' : 'bg-primary/10'
+                }`}>
+                  <Crown className={`w-6 h-6 ${collectionHandle === 'bundles' ? 'text-primary-foreground' : 'text-primary'}`} />
+                </div>
+                <span className="font-semibold">{isRTL ? 'الباقات' : 'Bundles'}</span>
+              </div>
+            </button>
+          </div>
+
+          {/* Clear Filter Button */}
+          {collectionHandle && (
+            <div className="mt-4 text-center">
+              <Button
+                variant="ghost"
+                onClick={() => setSearchParams({})}
+                className="text-muted-foreground hover:text-primary"
+              >
+                <X className="w-4 h-4 mr-2" />
+                {isRTL ? 'عرض جميع المنتجات' : 'Show All Products'}
+              </Button>
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* Main Content */}
       <section className="py-16">
         <div className="container mx-auto px-4">
