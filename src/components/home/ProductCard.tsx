@@ -24,9 +24,10 @@ interface ProductCardProps {
   loyaltyPoints?: number;
   sizes?: string[] | null;
   colors?: ColorOption[] | null;
+  handle?: string;
 }
 
-const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, badge, rating = 4.5, loyaltyPoints, sizes, colors }: ProductCardProps) => {
+const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, badge, rating = 4.5, loyaltyPoints, sizes, colors, handle }: ProductCardProps) => {
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const navigate = useNavigate();
@@ -37,10 +38,8 @@ const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, ba
   const [isHovering, setIsHovering] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   
-  // Get all available images - main image first, then additional images
   const allImages = [image, ...(images || []).filter(img => img !== image)];
   
-  // Auto-cycle images on hover
   useEffect(() => {
     if (isHovering && allImages.length > 1) {
       intervalRef.current = setInterval(() => {
@@ -66,7 +65,16 @@ const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, ba
 
   const handleCartClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    addToCart(id, 1, { size: selectedSize, color: selectedColor });
+    addToCart(id, 1, { 
+      size: selectedSize, 
+      color: selectedColor,
+      productData: {
+        name,
+        name_ar: nameAr || name,
+        price,
+        image_url: image
+      }
+    });
   };
 
   const handleSizeSelect = (e: React.MouseEvent, size: string) => {
@@ -80,7 +88,11 @@ const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, ba
   };
 
   const handleViewProduct = () => {
-    navigate(`/product/${id}`);
+    if (handle) {
+      navigate(`/shopify-product/${handle}`);
+    } else {
+      navigate(`/product/${id}`);
+    }
   };
 
   const handleWishlistToggle = (e: React.MouseEvent) => {
@@ -88,7 +100,13 @@ const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, ba
     if (inWishlist) {
       removeFromWishlist(id);
     } else {
-      addToWishlist(id);
+      addToWishlist({
+        id,
+        title: isRTL ? (nameAr || name) : name,
+        price: `${price} ${t('egp')}`,
+        image,
+        handle
+      });
     }
   };
 
@@ -98,10 +116,8 @@ const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, ba
         hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.25)] hover:border-primary/40 hover:-translate-y-2"
       onClick={handleViewProduct}
     >
-      {/* Glow effect on hover */}
       <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
       
-      {/* Image Container - 3:4 aspect ratio */}
       <div 
         className="relative aspect-[3/4] overflow-hidden bg-gradient-to-br from-muted to-muted/50"
         onMouseEnter={() => setIsHovering(true)}
@@ -117,10 +133,8 @@ const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, ba
           }}
         />
         
-        {/* Overlay gradient on hover */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
         
-        {/* Image indicators */}
         {allImages.length > 1 && (
           <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
             {allImages.map((_, idx) => (
@@ -134,7 +148,6 @@ const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, ba
           </div>
         )}
         
-        {/* Discount Badge */}
         {discount > 0 && (
           <div className="absolute top-3 right-3 z-20">
             <div className="relative">
@@ -147,14 +160,12 @@ const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, ba
           </div>
         )}
 
-        {/* Custom Badge */}
         {badge && discount === 0 && (
           <div className="absolute top-3 right-3 bg-secondary/95 backdrop-blur-sm text-secondary-foreground text-xs font-semibold px-3 py-1.5 rounded-full shadow-md z-20">
             {badge}
           </div>
         )}
 
-        {/* Quick Actions */}
         <div className="absolute top-3 left-3 flex flex-col gap-2 z-20">
           <button
             onClick={handleWishlistToggle}
@@ -178,7 +189,6 @@ const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, ba
           </button>
         </div>
 
-        {/* Add to Cart Button */}
         <div className={`absolute bottom-3 ${isRTL ? 'right-3' : 'left-3'} z-20`}>
           <button
             onClick={handleCartClick}
@@ -191,9 +201,7 @@ const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, ba
         </div>
       </div>
 
-      {/* Product Info */}
       <div className="p-4 relative z-10">
-        {/* Rating with glow */}
         <div className="flex items-center gap-1.5 mb-2">
           <div className="flex items-center gap-0.5">
             {[1, 2, 3, 4, 5].map((star) => (
@@ -210,13 +218,11 @@ const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, ba
           <span className="text-xs text-muted-foreground font-medium">({rating})</span>
         </div>
 
-        {/* Name with hover effect */}
         <h3 className="text-sm font-semibold text-foreground line-clamp-2 mb-3 min-h-[2.5rem] leading-snug
           group-hover:text-primary transition-colors duration-300">
           {isRTL ? (nameAr || name) : name}
         </h3>
 
-        {/* Price with animation */}
         <div className="flex items-baseline gap-2 flex-wrap mb-3">
           <span className="text-lg font-bold text-primary group-hover:scale-105 transition-transform origin-right">
             {price.toFixed(0)} <span className="text-sm">{t('egp')}</span>
@@ -228,7 +234,6 @@ const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, ba
           )}
         </div>
 
-        {/* Colors with pop animation */}
         {colors && colors.length > 0 && (
           <div className="flex items-center gap-2 mb-2">
             {colors.slice(0, 5).map((color, idx) => (
@@ -255,7 +260,6 @@ const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, ba
           </div>
         )}
 
-        {/* Sizes with selection animation */}
         {sizes && sizes.length > 0 && (
           <div className="flex items-center gap-1.5 flex-wrap mb-2">
             {sizes.map((size, idx) => (
@@ -275,7 +279,6 @@ const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, ba
           </div>
         )}
 
-        {/* Loyalty Points with sparkle */}
         {loyaltyPoints && loyaltyPoints > 0 && (
           <div className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-accent-foreground bg-gradient-to-r from-accent/60 to-accent/40 px-3 py-1 rounded-full">
             <Sparkles className="w-3 h-3 text-primary" />

@@ -25,16 +25,6 @@ import ShippingPolicy from "./pages/ShippingPolicy";
 import PaymentMethods from "./pages/PaymentMethods";
 import ProtectedAdminRoute from "./components/admin/ProtectedAdminRoute";
 import Dashboard from "./pages/admin/Dashboard";
-import Products from "./pages/admin/Products";
-import AdminCategories from "./pages/admin/Categories";
-import Orders from "./pages/admin/Orders";
-import Customers from "./pages/admin/Customers";
-import Coupons from "./pages/admin/Coupons";
-import Loyalty from "./pages/admin/Loyalty";
-import Shipping from "./pages/admin/Shipping";
-import AdminAffiliates from "./pages/admin/Affiliates";
-import AdminReturns from "./pages/admin/Returns";
-import AdminFilters from "./pages/admin/Filters";
 import MyAccount from "./pages/MyAccount";
 import Affiliate from "./pages/Affiliate";
 import TrackOrder from "./pages/TrackOrder";
@@ -89,16 +79,7 @@ const App = () => (
                     
                     {/* Admin Routes */}
                     <Route path="/admin" element={<ProtectedAdminRoute><Dashboard /></ProtectedAdminRoute>} />
-                    <Route path="/admin/products" element={<ProtectedAdminRoute><Products /></ProtectedAdminRoute>} />
-                    <Route path="/admin/categories" element={<ProtectedAdminRoute><AdminCategories /></ProtectedAdminRoute>} />
-                    <Route path="/admin/orders" element={<ProtectedAdminRoute><Orders /></ProtectedAdminRoute>} />
-                    <Route path="/admin/customers" element={<ProtectedAdminRoute><Customers /></ProtectedAdminRoute>} />
-                    <Route path="/admin/coupons" element={<ProtectedAdminRoute><Coupons /></ProtectedAdminRoute>} />
-                    <Route path="/admin/loyalty" element={<ProtectedAdminRoute><Loyalty /></ProtectedAdminRoute>} />
-                    <Route path="/admin/affiliates" element={<ProtectedAdminRoute><AdminAffiliates /></ProtectedAdminRoute>} />
-                    <Route path="/admin/shipping" element={<ProtectedAdminRoute><Shipping /></ProtectedAdminRoute>} />
-                    <Route path="/admin/returns" element={<ProtectedAdminRoute><AdminReturns /></ProtectedAdminRoute>} />
-                    <Route path="/admin/filters" element={<ProtectedAdminRoute><AdminFilters /></ProtectedAdminRoute>} />
+                    <Route path="/admin/product-details" element={<ProtectedAdminRoute><Dashboard /></ProtectedAdminRoute>} />
                     
                     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                     <Route path="*" element={<NotFound />} />
