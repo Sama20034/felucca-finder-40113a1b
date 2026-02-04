@@ -91,8 +91,23 @@ const Results = () => {
               {isRTL ? 'اسحب لرؤية الفرق' : 'Slide to See the Difference'}
             </motion.h2>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-              {sliderResults.map((result) => (
+            {/* First row - 3 sliders */}
+            <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-6">
+              {sliderResults.slice(0, 3).map((result) => (
+                <motion.div key={result.id} variants={staggerItem}>
+                  <BeforeAfterSlider
+                    beforeImage={result.before}
+                    afterImage={result.after}
+                    beforeLabel={isRTL ? "قبل" : "Before"}
+                    afterLabel={isRTL ? "بعد" : "After"}
+                  />
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* Second row - 2 sliders centered */}
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {sliderResults.slice(3).map((result) => (
                 <motion.div key={result.id} variants={staggerItem}>
                   <BeforeAfterSlider
                     beforeImage={result.before}
