@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface BeforeAfterSliderProps {
   beforeImage: string;
@@ -17,7 +18,11 @@ const BeforeAfterSlider = ({
 }: BeforeAfterSliderProps) => {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
+  const [beforeLoaded, setBeforeLoaded] = useState(false);
+  const [afterLoaded, setAfterLoaded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  const imagesLoaded = beforeLoaded && afterLoaded;
 
   const handleMove = (clientX: number) => {
     if (!containerRef.current) return;
@@ -55,25 +60,36 @@ const BeforeAfterSlider = ({
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
     >
+      {/* Loading skeleton */}
+      {!imagesLoaded && (
+        <Skeleton className="absolute inset-0 w-full h-full" />
+      )}
+      
       {/* After Image (Background) */}
-      <div className="absolute inset-0">
+      <div className={`absolute inset-0 transition-opacity duration-500 ${imagesLoaded ? 'opacity-100' : 'opacity-0'}`}>
         <img
           src={afterImage}
           alt="After transformation"
           className="w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
+          onLoad={() => setAfterLoaded(true)}
           draggable={false}
         />
       </div>
 
       {/* Before Image (Clipped) */}
       <div 
-        className="absolute inset-0 overflow-hidden"
+        className={`absolute inset-0 overflow-hidden transition-opacity duration-500 ${imagesLoaded ? 'opacity-100' : 'opacity-0'}`}
         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
       >
         <img
           src={beforeImage}
           alt="Before transformation"
           className="w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
+          onLoad={() => setBeforeLoaded(true)}
           draggable={false}
         />
       </div>
