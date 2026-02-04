@@ -6,11 +6,6 @@ import { Sparkles, Star } from "lucide-react";
 import BeforeAfterSlider from "@/components/home/BeforeAfterSlider";
 import { staggerContainer, staggerItem, fadeInUp, viewportOnce } from "@/hooks/useAnimations";
 
-import result1 from "@/assets/results/result-1.png";
-import result2 from "@/assets/results/result-2.png";
-import result3 from "@/assets/results/result-3.png";
-import result4 from "@/assets/results/result-4.png";
-import result5 from "@/assets/results/result-5.png";
 import zBefore from "@/assets/results/z-before.jpeg";
 import zAfter from "@/assets/results/z-after.jpeg";
 import cBefore from "@/assets/results/c-before.jpg";
@@ -33,13 +28,6 @@ const Results = () => {
     { id: 5, before: xBefore, after: xAfter },
   ];
 
-  const staticResults = [
-    { id: 1, image: result1 },
-    { id: 2, image: result2 },
-    { id: 3, image: result3 },
-    { id: 4, image: result4 },
-    { id: 5, image: result5 },
-  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-primary/5 to-background">
@@ -120,82 +108,6 @@ const Results = () => {
             </div>
           </motion.div>
 
-          {/* Static Results Gallery */}
-          <motion.div
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={viewportOnce}
-            className="mb-12"
-          >
-            <h2 className="text-2xl md:text-3xl font-playfair font-bold text-center text-foreground mb-8">
-              {isRTL ? 'المزيد من النتائج المذهلة' : 'More Amazing Results'}
-            </h2>
-          </motion.div>
-
-          {/* Creative Gallery Grid */}
-          <div className="grid gap-8 md:gap-12">
-            {staticResults.map((result, index) => (
-              <motion.div
-                key={result.id}
-                initial={{ opacity: 0, y: 50, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ 
-                  duration: 0.8, 
-                  delay: index * 0.15,
-                  ease: [0.25, 0.46, 0.45, 0.94]
-                }}
-                className={`relative group ${
-                  index % 2 === 0 ? "md:ml-0 md:mr-auto" : "md:mr-0 md:ml-auto"
-                } md:w-[85%]`}
-              >
-                {/* Card Container */}
-                <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-primary/5 via-transparent to-gold/5 p-1">
-                  <div className="relative rounded-[22px] overflow-hidden bg-background">
-                    {/* Image */}
-                    <div className="relative aspect-[16/10] overflow-hidden">
-                      <img
-                        src={result.image}
-                        alt={`Transformation result ${result.id}`}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                      
-                      {/* Before/After Labels */}
-                      <div className="absolute bottom-6 left-6 px-4 py-2 bg-background/90 backdrop-blur-sm rounded-full border border-primary/20 shadow-lg">
-                        <span className="text-sm font-bold text-foreground">{isRTL ? "قبل" : "Before"}</span>
-                      </div>
-                      <div className="absolute bottom-6 right-6 px-4 py-2 bg-primary/90 backdrop-blur-sm rounded-full border border-primary shadow-lg">
-                        <span className="text-sm font-bold text-primary-foreground">{isRTL ? "بعد" : "After"}</span>
-                      </div>
-                      
-                      {/* Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      
-                      {/* Duration Badge */}
-                      <motion.div 
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3 + index * 0.1 }}
-                        className="absolute top-6 left-1/2 -translate-x-1/2 px-6 py-2 bg-background/90 backdrop-blur-sm rounded-full border border-primary/20 shadow-xl"
-                      >
-                        <span className="text-sm font-semibold text-primary flex items-center gap-2">
-                          <Star className="w-4 h-4 fill-primary" />
-                          {t('twoMonths')}
-                        </span>
-                      </motion.div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Floating Decoration */}
-                <div className={`absolute -z-10 ${
-                  index % 2 === 0 ? "-right-4 -bottom-4" : "-left-4 -bottom-4"
-                } w-32 h-32 bg-gradient-to-br from-primary/20 to-gold/20 rounded-full blur-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-500`} />
-              </motion.div>
-            ))}
-          </div>
 
           {/* Bottom CTA */}
           <motion.div
