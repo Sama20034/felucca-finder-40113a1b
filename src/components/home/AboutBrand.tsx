@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import aboutImage from '@/assets/about-beauty.jpg';
+import aboutImage from '@/assets/benefits-model.png';
 
 const AboutBrand = () => {
   const { isRTL } = useLanguage();
