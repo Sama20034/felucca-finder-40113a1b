@@ -17,6 +17,8 @@ import cBefore from "@/assets/results/c-before.jpg";
 import cAfter from "@/assets/results/c-after.jpg";
 import fBefore from "@/assets/results/f-before.jpeg";
 import fAfter from "@/assets/results/f-after.jpeg";
+import sBefore from "@/assets/results/s-before.jpeg";
+import sAfter from "@/assets/results/s-after.jpeg";
 
 const Results = () => {
   const { t, isRTL } = useLanguage();
@@ -25,6 +27,7 @@ const Results = () => {
     { id: 1, before: zBefore, after: zAfter },
     { id: 2, before: cBefore, after: cAfter },
     { id: 3, before: fBefore, after: fAfter },
+    { id: 4, before: sBefore, after: sAfter },
   ];
 
   const staticResults = [
@@ -85,7 +88,7 @@ const Results = () => {
               {isRTL ? 'اسحب لرؤية الفرق' : 'Slide to See the Difference'}
             </motion.h2>
             
-            <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
               {sliderResults.map((result) => (
                 <motion.div key={result.id} variants={staggerItem}>
                   <BeforeAfterSlider
