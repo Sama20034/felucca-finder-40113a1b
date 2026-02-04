@@ -4,7 +4,7 @@ import { ShoppingBag, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import logo from '@/assets/reselience-gold-logo.png';
-import heroImage from '@/assets/hero-beauty.jpg';
+import heroImage from '@/assets/hero-products.png';
 const BeautyHero = () => {
   const {
     isRTL
