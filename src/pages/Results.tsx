@@ -3,17 +3,25 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { motion } from "framer-motion";
 import { Sparkles, Star } from "lucide-react";
+import BeforeAfterSlider from "@/components/home/BeforeAfterSlider";
+import { staggerContainer, staggerItem, fadeInUp, viewportOnce } from "@/hooks/useAnimations";
 
 import result1 from "@/assets/results/result-1.png";
 import result2 from "@/assets/results/result-2.png";
 import result3 from "@/assets/results/result-3.png";
 import result4 from "@/assets/results/result-4.png";
 import result5 from "@/assets/results/result-5.png";
+import zBefore from "@/assets/results/z-before.jpeg";
+import zAfter from "@/assets/results/z-after.jpeg";
 
 const Results = () => {
-  const { t } = useLanguage();
+  const { t, isRTL } = useLanguage();
 
-  const results = [
+  const sliderResults = [
+    { id: 1, before: zBefore, after: zAfter },
+  ];
+
+  const staticResults = [
     { id: 1, image: result1 },
     { id: 2, image: result2 },
     { id: 3, image: result3 },
@@ -56,9 +64,51 @@ const Results = () => {
             </p>
           </motion.div>
 
+          {/* Interactive Before/After Sliders */}
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
+            className="mb-20"
+          >
+            <motion.h2 
+              variants={fadeInUp}
+              className="text-2xl md:text-3xl font-playfair font-bold text-center text-foreground mb-8"
+            >
+              {isRTL ? 'اسحب لرؤية الفرق' : 'Slide to See the Difference'}
+            </motion.h2>
+            
+            <div className="grid md:grid-cols-1 lg:grid-cols-1 gap-8 max-w-lg mx-auto">
+              {sliderResults.map((result) => (
+                <motion.div key={result.id} variants={staggerItem}>
+                  <BeforeAfterSlider
+                    beforeImage={result.before}
+                    afterImage={result.after}
+                    beforeLabel={isRTL ? "قبل" : "Before"}
+                    afterLabel={isRTL ? "بعد" : "After"}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Static Results Gallery */}
+          <motion.div
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
+            className="mb-12"
+          >
+            <h2 className="text-2xl md:text-3xl font-playfair font-bold text-center text-foreground mb-8">
+              {isRTL ? 'المزيد من النتائج المذهلة' : 'More Amazing Results'}
+            </h2>
+          </motion.div>
+
           {/* Creative Gallery Grid */}
           <div className="grid gap-8 md:gap-12">
-            {results.map((result, index) => (
+            {staticResults.map((result, index) => (
               <motion.div
                 key={result.id}
                 initial={{ opacity: 0, y: 50, scale: 0.95 }}
@@ -86,10 +136,10 @@ const Results = () => {
                       
                       {/* Before/After Labels */}
                       <div className="absolute bottom-6 left-6 px-4 py-2 bg-background/90 backdrop-blur-sm rounded-full border border-primary/20 shadow-lg">
-                        <span className="text-sm font-bold text-foreground">Before</span>
+                        <span className="text-sm font-bold text-foreground">{isRTL ? "قبل" : "Before"}</span>
                       </div>
                       <div className="absolute bottom-6 right-6 px-4 py-2 bg-primary/90 backdrop-blur-sm rounded-full border border-primary shadow-lg">
-                        <span className="text-sm font-bold text-primary-foreground">After</span>
+                        <span className="text-sm font-bold text-primary-foreground">{isRTL ? "بعد" : "After"}</span>
                       </div>
                       
                       {/* Gradient Overlay */}
