@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Edit, Save, X, Package } from 'lucide-react';
+import { Plus, Edit, Save, X, Package, Loader2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { fetchShopifyProducts, ShopifyProduct } from '@/lib/shopify';
 
 interface ProductDetail {
   id: string;
@@ -23,7 +23,9 @@ interface ProductDetail {
 
 const Dashboard = () => {
   const [productDetails, setProductDetails] = useState<ProductDetail[]>([]);
+  const [shopifyProducts, setShopifyProducts] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingProducts, setLoadingProducts] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<ProductDetail | null>(null);
   const [formData, setFormData] = useState({
@@ -37,7 +39,20 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchProductDetails();
+    loadShopifyProducts();
   }, []);
+
+  const loadShopifyProducts = async () => {
+    setLoadingProducts(true);
+    try {
+      const products = await fetchShopifyProducts(100);
+      setShopifyProducts(products);
+    } catch (error) {
+      console.error('Error loading Shopify products:', error);
+    } finally {
+      setLoadingProducts(false);
+    }
+  };
 
   const fetchProductDetails = async () => {
     try {
@@ -73,9 +88,18 @@ const Dashboard = () => {
     setDialogOpen(true);
   };
 
+  const handleProductSelect = (handle: string) => {
+    const selectedProduct = shopifyProducts.find(p => p.node.handle === handle);
+    setFormData({
+      ...formData,
+      shopify_handle: handle,
+      product_title: selectedProduct?.node.title || ''
+    });
+  };
+
   const handleSave = async () => {
     if (!formData.shopify_handle.trim()) {
-      toast({ title: 'خطأ', description: 'يرجى إدخال Handle المنتج', variant: 'destructive' });
+      toast({ title: 'خطأ', description: 'يرجى اختيار منتج', variant: 'destructive' });
       return;
     }
 
@@ -112,6 +136,11 @@ const Dashboard = () => {
     }
   };
 
+  // Filter out products that already have details (when adding new)
+  const availableProducts = editingItem 
+    ? shopifyProducts 
+    : shopifyProducts.filter(p => !productDetails.some(d => d.shopify_handle === p.node.handle));
+
   if (loading) {
     return (
       <AdminLayout>
@@ -147,16 +176,16 @@ const Dashboard = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Handle</TableHead>
                     <TableHead>اسم المنتج</TableHead>
+                    <TableHead>Handle</TableHead>
                     <TableHead>الإجراءات</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {productDetails.map((item) => (
                     <TableRow key={item.id}>
-                      <TableCell className="font-mono text-sm">{item.shopify_handle}</TableCell>
                       <TableCell>{item.product_title || '-'}</TableCell>
+                      <TableCell className="font-mono text-sm">{item.shopify_handle}</TableCell>
                       <TableCell>
                         <Button variant="ghost" size="icon" onClick={() => handleEdit(item)}>
                           <Edit className="w-4 h-4" />
@@ -178,21 +207,51 @@ const Dashboard = () => {
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label>Shopify Handle *</Label>
-              <Input
-                value={formData.shopify_handle}
-                onChange={(e) => setFormData({ ...formData, shopify_handle: e.target.value })}
-                disabled={!!editingItem}
-                placeholder="product-handle"
-                dir="ltr"
-              />
-            </div>
-            <div>
-              <Label>اسم المنتج</Label>
-              <Input
-                value={formData.product_title}
-                onChange={(e) => setFormData({ ...formData, product_title: e.target.value })}
-              />
+              <Label>اختر المنتج *</Label>
+              {loadingProducts ? (
+                <div className="flex items-center gap-2 py-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span className="text-sm text-muted-foreground">جاري تحميل المنتجات...</span>
+                </div>
+              ) : (
+                <Select
+                  value={formData.shopify_handle}
+                  onValueChange={handleProductSelect}
+                  disabled={!!editingItem}
+                >
+                  <SelectTrigger className="w-full bg-background">
+                    <SelectValue placeholder="اختر منتج من Shopify" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border border-border z-50 max-h-[300px]">
+                    {availableProducts.map((product) => (
+                      <SelectItem 
+                        key={product.node.id} 
+                        value={product.node.handle}
+                        className="cursor-pointer"
+                      >
+                        <div className="flex items-center gap-3">
+                          {product.node.images.edges[0] && (
+                            <img 
+                              src={product.node.images.edges[0].node.url} 
+                              alt={product.node.title}
+                              className="w-8 h-8 object-cover rounded"
+                            />
+                          )}
+                          <span>{product.node.title}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                    {availableProducts.length === 0 && (
+                      <div className="p-4 text-center text-muted-foreground">
+                        لا توجد منتجات متاحة
+                      </div>
+                    )}
+                  </SelectContent>
+                </Select>
+              )}
+              {formData.shopify_handle && (
+                <p className="text-xs text-muted-foreground mt-1">Handle: {formData.shopify_handle}</p>
+              )}
             </div>
             <div>
               <Label>طريقة الاستخدام (How to Use)</Label>
@@ -200,6 +259,7 @@ const Dashboard = () => {
                 value={formData.how_to_use}
                 onChange={(e) => setFormData({ ...formData, how_to_use: e.target.value })}
                 rows={4}
+                placeholder="اكتب طريقة استخدام المنتج..."
               />
             </div>
             <div>
@@ -208,6 +268,7 @@ const Dashboard = () => {
                 value={formData.how_it_works}
                 onChange={(e) => setFormData({ ...formData, how_it_works: e.target.value })}
                 rows={4}
+                placeholder="اكتب كيف يعمل المنتج..."
               />
             </div>
             <div>
@@ -216,6 +277,7 @@ const Dashboard = () => {
                 value={formData.ingredients}
                 onChange={(e) => setFormData({ ...formData, ingredients: e.target.value })}
                 rows={4}
+                placeholder="اكتب مكونات المنتج..."
               />
             </div>
             <div className="flex gap-2 pt-4">
