@@ -8,7 +8,6 @@ const Footer = () => {
 
   const quickLinks = [
     { nameEn: "Shop", nameAr: "المتجر", href: "/shop" },
-    { nameEn: "Results", nameAr: "النتائج", href: "/results" },
     { nameEn: "FAQ", nameAr: "الأسئلة الشائعة", href: "/faq" },
     { nameEn: "Contact Us", nameAr: "تواصل معنا", href: "/contact" },
   ];
