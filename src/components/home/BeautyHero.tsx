@@ -4,7 +4,7 @@ import { ShoppingBag, ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import heroImage from '@/assets/hero-products.png';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { 
   fadeInUp, 
   staggerContainer, 
@@ -13,10 +13,12 @@ import {
   imageReveal,
   viewportOnce 
 } from '@/hooks/useAnimations';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const BeautyHero = () => {
   const { isRTL } = useLanguage();
   const containerRef = useRef<HTMLElement>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
   
   // Parallax effect on scroll
   const { scrollYProgress } = useScroll({
@@ -227,10 +229,17 @@ const BeautyHero = () => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.4 }}
               >
+                {/* Skeleton placeholder */}
+                {!imageLoaded && (
+                  <Skeleton className="absolute inset-0 w-full h-[500px] md:h-[600px]" />
+                )}
                 <motion.img 
                   src={heroImage} 
                   alt={isRTL ? 'منتجات العناية بالشعر' : 'Hair Care Products'} 
-                  className="w-full h-[500px] md:h-[600px] object-cover"
+                  className={`w-full h-[500px] md:h-[600px] object-cover transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  loading="eager"
+                  decoding="async"
+                  onLoad={() => setImageLoaded(true)}
                   initial={{ scale: 1.1 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 1.2, ease: 'easeOut' }}

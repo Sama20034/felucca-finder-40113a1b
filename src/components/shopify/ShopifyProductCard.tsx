@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useCartStore } from "@/stores/cartStore";
 import { ShopifyProduct } from "@/lib/shopify";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -14,6 +15,7 @@ interface ShopifyProductCardProps {
 export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
   const { isRTL } = useLanguage();
   const [isAdding, setIsAdding] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const addItem = useCartStore(state => state.addItem);
   
   const firstVariant = product.node.variants.edges[0]?.node;
@@ -53,11 +55,19 @@ export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
     >
       <div className="relative aspect-square overflow-hidden">
         {firstImage ? (
-          <img
-            src={firstImage.url}
-            alt={firstImage.altText || product.node.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
+          <>
+            {!imageLoaded && (
+              <Skeleton className="absolute inset-0 w-full h-full" />
+            )}
+            <img
+              src={firstImage.url}
+              alt={firstImage.altText || product.node.title}
+              loading="lazy"
+              decoding="async"
+              onLoad={() => setImageLoaded(true)}
+              className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+            />
+          </>
         ) : (
           <div className="w-full h-full bg-muted flex items-center justify-center">
             <ShoppingCart className="w-12 h-12 text-muted-foreground" />
