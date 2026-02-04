@@ -29,7 +29,6 @@ import MyAccount from "./pages/MyAccount";
 import Affiliate from "./pages/Affiliate";
 import TrackOrder from "./pages/TrackOrder";
 import About from "./pages/About";
-import Results from "./pages/Results";
 import ShopifyProductPage from "./pages/ShopifyProductPage";
 
 const queryClient = new QueryClient();
@@ -67,7 +66,6 @@ const App = () => (
                     <Route path="/affiliate" element={<Affiliate />} />
                     <Route path="/track-order" element={<TrackOrder />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/results" element={<Results />} />
                     <Route path="/offers" element={<Shop />} />
                     <Route path="/gifts" element={<Shop />} />
                     
