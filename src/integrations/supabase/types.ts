@@ -53,6 +53,39 @@ export type Database = {
         }
         Relationships: []
       }
+      product_details: {
+        Row: {
+          created_at: string
+          how_it_works: string | null
+          how_to_use: string | null
+          id: string
+          ingredients: string | null
+          product_title: string | null
+          shopify_handle: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          how_it_works?: string | null
+          how_to_use?: string | null
+          id?: string
+          ingredients?: string | null
+          product_title?: string | null
+          shopify_handle: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          how_it_works?: string | null
+          how_to_use?: string | null
+          id?: string
+          ingredients?: string | null
+          product_title?: string | null
+          shopify_handle?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           address: string | null
