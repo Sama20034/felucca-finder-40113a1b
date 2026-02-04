@@ -76,16 +76,23 @@ const ShopifyProductPage = () => {
       if (!handle) return;
       setLoading(true);
       try {
-        const [shopifyData, { data: detailsData }] = await Promise.all([
-          fetchProductByHandle(handle),
-          supabase.from('product_details').select('how_to_use, how_it_works, ingredients').eq('shopify_handle', handle).single()
-        ]);
-        
+        // Fetch Shopify product
+        const shopifyData = await fetchProductByHandle(handle);
         setProduct(shopifyData);
-        setProductDetails(detailsData);
         
         if (shopifyData?.variants?.edges?.[0]) {
           setSelectedVariant(shopifyData.variants.edges[0].node.id);
+        }
+
+        // Fetch product details from Supabase (don't throw if not found)
+        const { data: detailsData, error } = await supabase
+          .from('product_details')
+          .select('how_to_use, how_it_works, ingredients')
+          .eq('shopify_handle', handle)
+          .maybeSingle();
+        
+        if (!error && detailsData) {
+          setProductDetails(detailsData);
         }
       } catch (err) {
         console.error('Failed to fetch product:', err);
