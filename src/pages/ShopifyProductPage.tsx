@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ShoppingCart, Loader2, Minus, Plus } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Loader2, Minus, Plus, Beaker, Sparkles, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { fetchProductByHandle } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
@@ -8,6 +8,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ProductData {
   id: string;
@@ -51,15 +52,23 @@ interface ProductData {
   }>;
 }
 
+interface ProductDetails {
+  how_to_use: string | null;
+  how_it_works: string | null;
+  ingredients: string | null;
+}
+
 const ShopifyProductPage = () => {
   const { handle } = useParams<{ handle: string }>();
   const { isRTL } = useLanguage();
   const [product, setProduct] = useState<ProductData | null>(null);
+  const [productDetails, setProductDetails] = useState<ProductDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
+  const [activeTab, setActiveTab] = useState<'description' | 'how_to_use' | 'how_it_works' | 'ingredients'>('description');
   const addItem = useCartStore(state => state.addItem);
 
   useEffect(() => {
@@ -67,10 +76,16 @@ const ShopifyProductPage = () => {
       if (!handle) return;
       setLoading(true);
       try {
-        const data = await fetchProductByHandle(handle);
-        setProduct(data);
-        if (data?.variants?.edges?.[0]) {
-          setSelectedVariant(data.variants.edges[0].node.id);
+        const [shopifyData, { data: detailsData }] = await Promise.all([
+          fetchProductByHandle(handle),
+          supabase.from('product_details').select('how_to_use, how_it_works, ingredients').eq('shopify_handle', handle).single()
+        ]);
+        
+        setProduct(shopifyData);
+        setProductDetails(detailsData);
+        
+        if (shopifyData?.variants?.edges?.[0]) {
+          setSelectedVariant(shopifyData.variants.edges[0].node.id);
         }
       } catch (err) {
         console.error('Failed to fetch product:', err);
@@ -109,6 +124,26 @@ const ShopifyProductPage = () => {
   };
 
   const currentVariant = product?.variants.edges.find(v => v.node.id === selectedVariant)?.node;
+
+  const tabs = [
+    { id: 'description' as const, label: isRTL ? 'الوصف' : 'Description', icon: null },
+    ...(productDetails?.how_to_use ? [{ id: 'how_to_use' as const, label: isRTL ? 'طريقة الاستخدام' : 'How to Use', icon: Beaker }] : []),
+    ...(productDetails?.how_it_works ? [{ id: 'how_it_works' as const, label: isRTL ? 'كيف يعمل' : 'How it Works', icon: Sparkles }] : []),
+    ...(productDetails?.ingredients ? [{ id: 'ingredients' as const, label: isRTL ? 'المكونات' : 'Ingredients', icon: Leaf }] : []),
+  ];
+
+  const getTabContent = () => {
+    switch (activeTab) {
+      case 'how_to_use':
+        return productDetails?.how_to_use;
+      case 'how_it_works':
+        return productDetails?.how_it_works;
+      case 'ingredients':
+        return productDetails?.ingredients;
+      default:
+        return product?.description;
+    }
+  };
 
   if (loading) {
     return (
@@ -202,7 +237,29 @@ const ShopifyProductPage = () => {
               {parseFloat(currentVariant?.price.amount || product.priceRange.minVariantPrice.amount).toFixed(2)}
             </div>
 
-            <p className="text-muted-foreground">{product.description}</p>
+            {/* Tabs */}
+            <div className="space-y-4">
+              <div className="flex flex-wrap gap-2">
+                {tabs.map((tab) => (
+                  <Button
+                    key={tab.id}
+                    variant={activeTab === tab.id ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setActiveTab(tab.id)}
+                    className="gap-2"
+                  >
+                    {tab.icon && <tab.icon className="w-4 h-4" />}
+                    {tab.label}
+                  </Button>
+                ))}
+              </div>
+              
+              <div className="bg-muted/50 rounded-lg p-4 min-h-[100px]">
+                <p className="text-muted-foreground whitespace-pre-wrap">
+                  {getTabContent() || (isRTL ? 'لا توجد معلومات' : 'No information available')}
+                </p>
+              </div>
+            </div>
 
             {/* Variants */}
             {product.options.map((option) => (

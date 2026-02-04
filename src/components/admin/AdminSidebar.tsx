@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Package, FolderTree, ShoppingBag, Users, Ticket, Gift, Truck, LogOut, RotateCcw, SlidersHorizontal } from 'lucide-react';
+import { LayoutDashboard, LogOut } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 
@@ -8,17 +8,7 @@ const AdminSidebar = () => {
   const { signOut } = useAuth();
 
   const menuItems = [
-    { name: 'لوحة التحكم', href: '/admin', icon: LayoutDashboard },
-    { name: 'المنتجات', href: '/admin/products', icon: Package },
-    { name: 'الفئات', href: '/admin/categories', icon: FolderTree },
-    { name: 'فلاتر المتجر', href: '/admin/filters', icon: SlidersHorizontal },
-    { name: 'الطلبات', href: '/admin/orders', icon: ShoppingBag },
-    { name: 'العملاء', href: '/admin/customers', icon: Users },
-    { name: 'الكوبونات', href: '/admin/coupons', icon: Ticket },
-    { name: 'نظام الولاء', href: '/admin/loyalty', icon: Gift },
-    { name: 'الشركاء', href: '/admin/affiliates', icon: Users },
-    { name: 'الشحن', href: '/admin/shipping', icon: Truck },
-    { name: 'الاسترجاع', href: '/admin/returns', icon: RotateCcw },
+    { name: 'إدارة بيانات المنتجات', href: '/admin', icon: LayoutDashboard },
   ];
 
   return (
