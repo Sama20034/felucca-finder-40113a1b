@@ -7,6 +7,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useCartStore } from '@/stores/cartStore';
 import { fetchShopifyProducts, ShopifyProduct } from '@/lib/shopify';
 import { toast } from 'sonner';
+import { staggerContainer, staggerItem, fadeInUp, viewportOnce } from '@/hooks/useAnimations';
 
 const FeaturedProducts = () => {
   const { isRTL } = useLanguage();
@@ -89,34 +90,57 @@ const FeaturedProducts = () => {
   }
 
   return (
-    <section className="py-20 bg-secondary/20">
+    <section className="py-20 bg-secondary/20 overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
           className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12"
         >
           <div>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-2">
+            <motion.h2 
+              className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-2"
+              initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.5 }}
+            >
               {isRTL ? 'منتجاتنا المميزة' : 'Featured Products'}
-            </h2>
-            <p className="text-muted-foreground">
+            </motion.h2>
+            <motion.p 
+              className="text-muted-foreground"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={viewportOnce}
+              transition={{ delay: 0.2 }}
+            >
               {isRTL ? 'اكتشفي منتجاتنا الفاخرة' : 'Discover our premium products'}
-            </p>
+            </motion.p>
           </div>
-          <Link to="/shop">
-            <Button variant="outline" className="btn-outline-beauty">
-              {isRTL ? 'عرض الكل' : 'View All'}
-              {isRTL ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
-            </Button>
-          </Link>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Link to="/shop">
+              <Button variant="outline" className="btn-outline-beauty">
+                {isRTL ? 'عرض الكل' : 'View All'}
+                {isRTL ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
+              </Button>
+            </Link>
+          </motion.div>
         </motion.div>
 
         {/* Products Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div 
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
           {products.map((product, index) => {
             const price = parseFloat(product.node.priceRange.minVariantPrice.amount);
             const currency = product.node.priceRange.minVariantPrice.currencyCode;
@@ -126,24 +150,27 @@ const FeaturedProducts = () => {
             return (
               <motion.div
                 key={product.node.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                variants={staggerItem}
+                whileHover={{ y: -8 }}
                 className="group"
               >
-                <div className="bg-card rounded-2xl overflow-hidden border border-border/50 hover:border-primary/30 hover:shadow-xl transition-all duration-300">
+                <motion.div 
+                  className="bg-card rounded-2xl overflow-hidden border border-border/50 hover:border-primary/30 transition-all duration-300"
+                  whileHover={{ boxShadow: '0 20px 40px -15px rgba(109, 65, 129, 0.2)' }}
+                >
                   {/* Image */}
                   <div 
                     onClick={() => navigate(`/product/${product.node.handle}`)}
-                    className="block relative cursor-pointer"
+                    className="block relative cursor-pointer overflow-hidden"
                   >
                     <div className="relative h-56 overflow-hidden">
                       {imageUrl ? (
-                        <img 
+                        <motion.img 
                           src={imageUrl} 
                           alt={product.node.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover"
+                          whileHover={{ scale: 1.08 }}
+                          transition={{ duration: 0.4 }}
                         />
                       ) : (
                         <div className="w-full h-full bg-muted flex items-center justify-center">
@@ -151,24 +178,35 @@ const FeaturedProducts = () => {
                         </div>
                       )}
 
-                      {/* Quick Add Button - Visible on hover */}
-                      <div className="absolute inset-0 bg-foreground/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <Button 
-                          onClick={(e) => handleAddToCart(e, product)}
-                          disabled={isAddingThis || cartLoading}
-                          size="sm" 
-                          className="btn-beauty shadow-lg"
+                      {/* Quick Add Button */}
+                      <motion.div 
+                        className="absolute inset-0 bg-foreground/10 flex items-center justify-center"
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <motion.div
+                          initial={{ y: 20, opacity: 0 }}
+                          whileHover={{ y: 0, opacity: 1 }}
+                          transition={{ duration: 0.2 }}
                         >
-                          {isAddingThis ? (
-                            <Loader2 className="w-4 h-4 animate-spin" />
-                          ) : (
-                            <>
-                              <ShoppingBag className="w-4 h-4 mr-1" />
-                              {isRTL ? 'أضف للسلة' : 'Add to Cart'}
-                            </>
-                          )}
-                        </Button>
-                      </div>
+                          <Button 
+                            onClick={(e) => handleAddToCart(e, product)}
+                            disabled={isAddingThis || cartLoading}
+                            size="sm" 
+                            className="btn-beauty shadow-lg"
+                          >
+                            {isAddingThis ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              <>
+                                <ShoppingBag className="w-4 h-4 mr-1" />
+                                {isRTL ? 'أضف للسلة' : 'Add to Cart'}
+                              </>
+                            )}
+                          </Button>
+                        </motion.div>
+                      </motion.div>
                     </div>
                   </div>
 
@@ -185,17 +223,22 @@ const FeaturedProducts = () => {
                     </div>
 
                     {/* Price */}
-                    <div className="flex items-center gap-2">
+                    <motion.div 
+                      className="flex items-center gap-2"
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                    >
                       <span className="text-lg font-bold text-primary">
                         {price.toFixed(0)} {currency === 'EGP' ? (isRTL ? 'ج.م' : 'EGP') : currency}
                       </span>
-                    </div>
+                    </motion.div>
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

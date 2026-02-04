@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import aboutImage from '@/assets/benefits-model.png';
+import { fadeInUp, imageReveal, staggerContainer, staggerItem, viewportOnce } from '@/hooks/useAnimations';
 
 const AboutBrand = () => {
   const { isRTL } = useLanguage();
@@ -23,70 +24,102 @@ const AboutBrand = () => {
   };
 
   return (
-    <section className="py-20 bg-background">
+    <section className="py-20 bg-background overflow-hidden">
       <div className="container mx-auto px-4">
         <div className={`grid lg:grid-cols-2 gap-12 items-center ${isRTL ? '' : ''}`}>
           {/* Image */}
           <motion.div
-            initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            variants={imageReveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
             className={isRTL ? 'lg:order-2' : ''}
           >
-            <div className="relative rounded-3xl overflow-hidden shadow-xl">
-              <img 
+            <motion.div 
+              className="relative rounded-3xl overflow-hidden shadow-xl"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.4 }}
+            >
+              <motion.img 
                 src={aboutImage} 
                 alt={isRTL ? 'قصتنا' : 'Our Story'}
                 className="w-full h-[400px] object-cover"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.6 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
-            </div>
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              />
+            </motion.div>
           </motion.div>
 
           {/* Content */}
           <motion.div
-            initial={{ opacity: 0, x: isRTL ? -30 : 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
             className={`space-y-6 ${isRTL ? 'text-right lg:order-1' : 'text-left'}`}
           >
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground">
+            <motion.h2 
+              variants={fadeInUp}
+              className="text-3xl md:text-4xl font-serif font-bold text-foreground"
+            >
               {content.title}
-            </h2>
+            </motion.h2>
             
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <motion.p 
+              variants={fadeInUp}
+              className="text-lg text-muted-foreground leading-relaxed"
+            >
               {content.description}
-            </p>
+            </motion.p>
 
             {/* Features List */}
-            <ul className="space-y-3">
+            <motion.ul 
+              variants={staggerContainer}
+              className="space-y-3"
+            >
               {content.features.map((feature, index) => (
                 <motion.li
                   key={index}
-                  initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  variants={staggerItem}
+                  whileHover={{ x: isRTL ? -10 : 10 }}
                   className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
-                  <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={viewportOnce}
+                    transition={{ delay: 0.3 + index * 0.1, type: 'spring' }}
+                  >
+                    <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                  </motion.div>
                   <span className="text-foreground">{feature}</span>
                 </motion.li>
               ))}
-            </ul>
+            </motion.ul>
 
-            <Link to="/about">
-              <Button size="lg" className="btn-beauty mt-4">
-                {content.cta}
-                {isRTL ? (
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                ) : (
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                )}
-              </Button>
-            </Link>
+            <motion.div variants={staggerItem}>
+              <Link to="/about">
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Button size="lg" className="btn-beauty mt-4">
+                    {content.cta}
+                    {isRTL ? (
+                      <ArrowLeft className="w-4 h-4 mr-2" />
+                    ) : (
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    )}
+                  </Button>
+                </motion.div>
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
       </div>

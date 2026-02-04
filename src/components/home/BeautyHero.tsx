@@ -1,14 +1,32 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ShoppingBag, ArrowLeft, ArrowRight } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ShoppingBag, ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import logo from '@/assets/reselience-gold-logo.png';
 import heroImage from '@/assets/hero-products.png';
+import { useRef } from 'react';
+import { 
+  fadeInUp, 
+  staggerContainer, 
+  staggerItem, 
+  scaleInBounce,
+  imageReveal,
+  viewportOnce 
+} from '@/hooks/useAnimations';
+
 const BeautyHero = () => {
-  const {
-    isRTL
-  } = useLanguage();
+  const { isRTL } = useLanguage();
+  const containerRef = useRef<HTMLElement>(null);
+  
+  // Parallax effect on scroll
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end start']
+  });
+  
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3]);
+
   const content = {
     tagline: isRTL ? 'منتجات طبيعية 100%' : '100% Natural Products',
     headline: isRTL ? 'شعر صحي ولامع يبدأ هنا' : 'Healthy & Shiny Hair Starts Here',
@@ -16,164 +34,237 @@ const BeautyHero = () => {
     cta: isRTL ? 'تسوقي الآن' : 'Shop Now',
     secondary: isRTL ? 'شاهدي النتائج' : 'See Results'
   };
-  return <section className="relative min-h-[90vh] flex items-center bg-gradient-to-b from-secondary/30 via-background to-background overflow-hidden pt-24">
-      {/* Soft decorative elements */}
-      <div className="absolute top-20 right-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-10 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
+
+  // Text reveal animation for headline
+  const headlineWords = content.headline.split(' ');
+
+  return (
+    <section 
+      ref={containerRef}
+      className="relative min-h-[90vh] flex items-center bg-gradient-to-b from-secondary/30 via-background to-background overflow-hidden pt-24"
+    >
+      {/* Animated decorative elements */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, delay: 0.5 }}
+        className="absolute top-20 right-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl" 
+      />
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, delay: 0.7 }}
+        className="absolute bottom-20 left-10 w-80 h-80 bg-accent/5 rounded-full blur-3xl" 
+      />
+
+      {/* Floating particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute"
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ 
+              opacity: [0, 0.6, 0],
+              y: [-20, -100],
+              x: [0, Math.random() * 40 - 20]
+            }}
+            transition={{
+              duration: 4 + Math.random() * 2,
+              repeat: Infinity,
+              delay: i * 0.8,
+              ease: 'easeOut'
+            }}
+            style={{
+              left: `${10 + i * 12}%`,
+              bottom: '10%'
+            }}
+          >
+            <Sparkles className="w-4 h-4 text-primary/40" />
+          </motion.div>
+        ))}
+      </div>
       
       <div className="container mx-auto px-4">
         <div className={`grid lg:grid-cols-2 gap-12 lg:gap-8 items-center ${isRTL ? 'lg:flex-row-reverse' : ''}`}>
           {/* Content Side */}
-          <motion.div initial={{
-          opacity: 0,
-          y: 30
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.8
-        }} className={`space-y-6 sm:space-y-8 ${isRTL ? 'text-center sm:text-right lg:order-2' : 'text-center sm:text-left'}`}>
-            {/* Logo - Prominent */}
-            <motion.div initial={{
-            opacity: 0,
-            scale: 0.9
-          }} animate={{
-            opacity: 1,
-            scale: 1
-          }} transition={{
-            duration: 0.6,
-            delay: 0.1
-          }} className="mb-8">
-              
-            </motion.div>
-
+          <motion.div 
+            style={{ y, opacity }}
+            className={`space-y-6 sm:space-y-8 ${isRTL ? 'text-center sm:text-right lg:order-2' : 'text-center sm:text-left'}`}
+          >
             {/* Tagline */}
-            <motion.span initial={{
-            opacity: 0,
-            y: 20
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            duration: 0.6,
-            delay: 0.2
-          }} className="inline-block text-xs sm:text-sm font-medium text-primary bg-primary/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
+            <motion.span 
+              variants={fadeInUp}
+              initial="hidden"
+              animate="visible"
+              className="inline-block text-xs sm:text-sm font-medium text-primary bg-primary/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full"
+            >
               {content.tagline}
             </motion.span>
 
-            {/* Headline - Clear & Direct */}
-            <motion.h1 initial={{
-            opacity: 0,
-            y: 20
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            duration: 0.6,
-            delay: 0.3
-          }} className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground leading-tight px-2 sm:px-0">
-              {content.headline}
+            {/* Headline with word-by-word animation */}
+            <motion.h1 
+              className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground leading-tight px-2 sm:px-0"
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
+            >
+              {headlineWords.map((word, index) => (
+                <motion.span 
+                  key={index} 
+                  variants={staggerItem}
+                  className="inline-block mx-1"
+                >
+                  {word}
+                </motion.span>
+              ))}
             </motion.h1>
 
             {/* Subheadline */}
-            <motion.p initial={{
-            opacity: 0,
-            y: 20
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            duration: 0.6,
-            delay: 0.4
-          }} className={`text-sm sm:text-lg md:text-xl text-muted-foreground max-w-lg px-4 sm:px-0 ${isRTL ? 'mx-auto sm:mr-0 sm:ml-auto' : 'mx-auto sm:ml-0 sm:mr-auto'}`}>
+            <motion.p 
+              variants={fadeInUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: 0.4 }}
+              className={`text-sm sm:text-lg md:text-xl text-muted-foreground max-w-lg px-4 sm:px-0 ${isRTL ? 'mx-auto sm:mr-0 sm:ml-auto' : 'mx-auto sm:ml-0 sm:mr-auto'}`}
+            >
               {content.subheadline}
             </motion.p>
 
-            {/* CTAs - Clear Funnel */}
-            <motion.div initial={{
-            opacity: 0,
-            y: 20
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            duration: 0.6,
-            delay: 0.5
-          }} className={`flex flex-col sm:flex-row gap-3 sm:gap-4 w-full ${isRTL ? 'items-start sm:items-center sm:justify-start' : 'items-start sm:justify-start'}`}>
-              <Link to="/shop" className="w-full sm:w-auto">
-                <Button size="lg" className="btn-beauty text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 group shadow-lg shadow-primary/20 w-full sm:w-auto">
-                  <ShoppingBag className={`w-4 h-4 sm:w-5 sm:h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
-                  {content.cta}
-                  {isRTL ? <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" /> : <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />}
-                </Button>
-              </Link>
-              <Link to="/results" className="w-full sm:w-auto">
-                <Button size="lg" variant="outline" className="btn-outline-beauty text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 w-full sm:w-auto">
-                  {content.secondary}
-                </Button>
-              </Link>
+            {/* CTAs */}
+            <motion.div 
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
+              className={`flex flex-col sm:flex-row gap-3 sm:gap-4 w-full ${isRTL ? 'items-start sm:items-center sm:justify-start' : 'items-start sm:justify-start'}`}
+            >
+              <motion.div variants={staggerItem}>
+                <Link to="/shop" className="w-full sm:w-auto block">
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Button size="lg" className="btn-beauty text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 group shadow-lg shadow-primary/20 w-full sm:w-auto">
+                      <ShoppingBag className={`w-4 h-4 sm:w-5 sm:h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+                      {content.cta}
+                      {isRTL ? (
+                        <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+                      ) : (
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                      )}
+                    </Button>
+                  </motion.div>
+                </Link>
+              </motion.div>
+              
+              <motion.div variants={staggerItem}>
+                <Link to="/results" className="w-full sm:w-auto block">
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Button size="lg" variant="outline" className="btn-outline-beauty text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 w-full sm:w-auto">
+                      {content.secondary}
+                    </Button>
+                  </motion.div>
+                </Link>
+              </motion.div>
             </motion.div>
 
-            {/* Trust Indicators - Simple */}
-            <motion.div initial={{
-            opacity: 0
-          }} animate={{
-            opacity: 1
-          }} transition={{
-            duration: 0.6,
-            delay: 0.6
-          }} className={`flex items-center gap-4 sm:gap-8 pt-6 w-full ${isRTL ? 'justify-start' : 'justify-start'}`}>
-              <div className="text-center flex-1 sm:flex-none">
-                <div className="text-lg sm:text-2xl font-bold text-primary">+5000</div>
-                <div className="text-[10px] sm:text-xs text-muted-foreground">{isRTL ? 'عميلة سعيدة' : 'Happy Customers'}</div>
-              </div>
-              <div className="w-px h-8 sm:h-10 bg-border" />
-              <div className="text-center flex-1 sm:flex-none">
-                <div className="text-lg sm:text-2xl font-bold text-primary">100%</div>
-                <div className="text-[10px] sm:text-xs text-muted-foreground">{isRTL ? 'طبيعي' : 'Natural'}</div>
-              </div>
-              <div className="w-px h-8 sm:h-10 bg-border" />
-              <div className="text-center flex-1 sm:flex-none">
-                <div className="text-lg sm:text-2xl font-bold text-primary">4.9⭐</div>
-                <div className="text-[10px] sm:text-xs text-muted-foreground">{isRTL ? 'تقييم' : 'Rating'}</div>
-              </div>
+            {/* Trust Indicators with stagger */}
+            <motion.div 
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
+              className={`flex items-center gap-4 sm:gap-8 pt-6 w-full ${isRTL ? 'justify-start' : 'justify-start'}`}
+            >
+              {[
+                { value: '+5000', label: isRTL ? 'عميلة سعيدة' : 'Happy Customers' },
+                { value: '100%', label: isRTL ? 'طبيعي' : 'Natural' },
+                { value: '4.9⭐', label: isRTL ? 'تقييم' : 'Rating' }
+              ].map((stat, index) => (
+                <motion.div 
+                  key={index}
+                  variants={scaleInBounce}
+                  className="text-center flex-1 sm:flex-none"
+                >
+                  <motion.div 
+                    className="text-lg sm:text-2xl font-bold text-primary"
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ 
+                      delay: 0.8 + index * 0.1,
+                      type: 'spring',
+                      stiffness: 200
+                    }}
+                  >
+                    {stat.value}
+                  </motion.div>
+                  <div className="text-[10px] sm:text-xs text-muted-foreground">{stat.label}</div>
+                </motion.div>
+              ))}
+              {/* Dividers */}
+              <motion.div 
+                initial={{ scaleY: 0 }}
+                animate={{ scaleY: 1 }}
+                transition={{ delay: 0.9 }}
+                className="w-px h-8 sm:h-10 bg-border absolute left-1/3 hidden"
+              />
             </motion.div>
           </motion.div>
 
           {/* Image Side */}
-          <motion.div initial={{
-          opacity: 0,
-          scale: 0.95
-        }} animate={{
-          opacity: 1,
-          scale: 1
-        }} transition={{
-          duration: 0.8,
-          delay: 0.2
-        }} className={`relative ${isRTL ? 'lg:order-1' : ''}`}>
+          <motion.div
+            variants={imageReveal}
+            initial="hidden"
+            animate="visible"
+            className={`relative ${isRTL ? 'lg:order-1' : ''}`}
+          >
             <div className="relative">
-              {/* Main Image */}
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-primary/10">
-                <img src={heroImage} alt={isRTL ? 'منتجات العناية بالشعر' : 'Hair Care Products'} className="w-full h-[500px] md:h-[600px] object-cover" />
-                {/* Subtle overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-transparent" />
-              </div>
+              {/* Main Image with hover effect */}
+              <motion.div 
+                className="relative rounded-3xl overflow-hidden shadow-2xl shadow-primary/10"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.4 }}
+              >
+                <motion.img 
+                  src={heroImage} 
+                  alt={isRTL ? 'منتجات العناية بالشعر' : 'Hair Care Products'} 
+                  className="w-full h-[500px] md:h-[600px] object-cover"
+                  initial={{ scale: 1.1 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 1.2, ease: 'easeOut' }}
+                />
+                {/* Animated overlay */}
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-transparent"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                />
+              </motion.div>
 
-              {/* Floating Badge */}
-              <motion.div initial={{
-              opacity: 0,
-              y: 20
-            }} animate={{
-              opacity: 1,
-              y: 0
-            }} transition={{
-              duration: 0.6,
-              delay: 0.8
-            }} className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-background rounded-2xl p-4 shadow-lg border border-border">
+              {/* Floating Badge with bounce animation */}
+              <motion.div 
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ 
+                  delay: 1,
+                  type: 'spring',
+                  stiffness: 200,
+                  damping: 15
+                }}
+                whileHover={{ y: -5, scale: 1.05 }}
+                className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-background rounded-2xl p-4 shadow-lg border border-border cursor-pointer"
+              >
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <motion.div 
+                    className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center"
+                    animate={{ rotate: [0, 5, -5, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                  >
                     <span className="text-2xl">✨</span>
-                  </div>
+                  </motion.div>
                   <div>
                     <div className="font-semibold text-foreground text-sm">
                       {isRTL ? 'نتائج مضمونة' : 'Guaranteed Results'}
@@ -188,6 +279,8 @@ const BeautyHero = () => {
           </motion.div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default BeautyHero;
