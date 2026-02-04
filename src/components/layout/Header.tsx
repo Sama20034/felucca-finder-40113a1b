@@ -47,7 +47,6 @@ const Header = () => {
   const navLinks = [
     { name: isRTL ? 'الرئيسية' : 'Home', href: "/" },
     { name: isRTL ? 'المتجر' : 'Shop', href: "/shop" },
-    { name: isRTL ? 'النتائج' : 'Results', href: "/results" },
     { name: isRTL ? 'الأسئلة الشائعة' : 'FAQ', href: "/faq" },
     { name: isRTL ? 'تواصل معنا' : 'Contact', href: "/contact" },
   ];
