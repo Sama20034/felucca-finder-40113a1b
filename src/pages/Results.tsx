@@ -19,6 +19,8 @@ import fBefore from "@/assets/results/f-before.jpeg";
 import fAfter from "@/assets/results/f-after.jpeg";
 import sBefore from "@/assets/results/s-before.jpeg";
 import sAfter from "@/assets/results/s-after.jpeg";
+import xBefore from "@/assets/results/x-before.jpeg";
+import xAfter from "@/assets/results/x-after.jpeg";
 
 const Results = () => {
   const { t, isRTL } = useLanguage();
@@ -28,6 +30,7 @@ const Results = () => {
     { id: 2, before: cBefore, after: cAfter },
     { id: 3, before: fBefore, after: fAfter },
     { id: 4, before: sBefore, after: sAfter },
+    { id: 5, before: xBefore, after: xAfter },
   ];
 
   const staticResults = [
