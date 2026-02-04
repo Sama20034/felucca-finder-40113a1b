@@ -120,6 +120,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             description: "السيرفر يعمل على HTTP وموقعك على HTTPS. اتصل بمدير السيرفر لتفعيل HTTPS",
             variant: "destructive"
           });
+        } else if (error.message.includes('User already registered')) {
+          toast({
+            title: "هذا الإيميل مسجل مسبقاً",
+            description: "جربي تسجيل الدخول بدلاً من إنشاء حساب جديد",
+            variant: "destructive"
+          });
         } else {
           toast({
             title: "خطأ في التسجيل",
