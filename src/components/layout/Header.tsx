@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Search, ShoppingCart, User, Heart, LogOut, X, Menu, Crown, ChevronDown, Droplet, Sparkles, Gem } from "lucide-react";
+import { Search, ShoppingCart, User, Heart, LogOut, X, Menu, Crown, ChevronDown, Scissors, Zap, Brush, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { useAuth } from "@/contexts/AuthContext";
@@ -221,7 +221,7 @@ const Header = () => {
                             onClick={() => setMobileMenuOpen(false)}
                             className="flex items-center gap-3 px-3 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/30 rounded-lg transition-colors"
                           >
-                            <Droplet className="w-4 h-4 text-primary" />
+                            <Scissors className="w-4 h-4 text-primary" />
                             {isRTL ? 'العناية بالشعر' : 'Hair Care'}
                           </Link>
                           <Link
@@ -229,7 +229,7 @@ const Header = () => {
                             onClick={() => setMobileMenuOpen(false)}
                             className="flex items-center gap-3 px-3 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/30 rounded-lg transition-colors"
                           >
-                            <Sparkles className="w-4 h-4 text-primary" />
+                            <Zap className="w-4 h-4 text-primary" />
                             {isRTL ? 'عروض فلاش' : 'Flash Offers'}
                           </Link>
                           <Link
@@ -237,7 +237,7 @@ const Header = () => {
                             onClick={() => setMobileMenuOpen(false)}
                             className="flex items-center gap-3 px-3 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/30 rounded-lg transition-colors"
                           >
-                            <Gem className="w-4 h-4 text-primary" />
+                            <Brush className="w-4 h-4 text-primary" />
                             {isRTL ? 'الإكسسوارات' : 'Accessories'}
                           </Link>
                           <Link
@@ -245,7 +245,7 @@ const Header = () => {
                             onClick={() => setMobileMenuOpen(false)}
                             className="flex items-center gap-3 px-3 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/30 rounded-lg transition-colors"
                           >
-                            <Crown className="w-4 h-4 text-primary" />
+                            <Package className="w-4 h-4 text-primary" />
                             {isRTL ? 'الباقات' : 'Bundles'}
                           </Link>
                         </div>

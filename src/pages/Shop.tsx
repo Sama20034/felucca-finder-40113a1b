@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Filter, Search, X, Sparkles, Crown, Star, Heart, ShoppingCart, Droplet, Gem, Loader2, ShoppingBag } from "lucide-react";
+import { Filter, Search, X, Sparkles, Crown, Star, Heart, ShoppingCart, Loader2, ShoppingBag, Scissors, Zap, Brush, Package } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCartStore } from "@/stores/cartStore";
 import { fetchShopifyProducts, fetchProductsByCollection, ShopifyProduct } from "@/lib/shopify";
@@ -209,7 +209,7 @@ const Shop = () => {
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
                   collectionHandle === 'hair-care' ? 'bg-primary-foreground/20' : 'bg-primary/10'
                 }`}>
-                  <Droplet className={`w-6 h-6 ${collectionHandle === 'hair-care' ? 'text-primary-foreground' : 'text-primary'}`} />
+                  <Scissors className={`w-6 h-6 ${collectionHandle === 'hair-care' ? 'text-primary-foreground' : 'text-primary'}`} />
                 </div>
                 <span className="font-semibold">{isRTL ? 'العناية بالشعر' : 'Hair Care'}</span>
               </div>
@@ -228,7 +228,7 @@ const Shop = () => {
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
                   collectionHandle === 'flash-offers' ? 'bg-primary-foreground/20' : 'bg-primary/10'
                 }`}>
-                  <Sparkles className={`w-6 h-6 ${collectionHandle === 'flash-offers' ? 'text-primary-foreground' : 'text-primary'}`} />
+                  <Zap className={`w-6 h-6 ${collectionHandle === 'flash-offers' ? 'text-primary-foreground' : 'text-primary'}`} />
                 </div>
                 <span className="font-semibold">{isRTL ? 'عروض فلاش' : 'Flash Offers'}</span>
               </div>
@@ -247,7 +247,7 @@ const Shop = () => {
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
                   collectionHandle === 'accessories' ? 'bg-primary-foreground/20' : 'bg-primary/10'
                 }`}>
-                  <Gem className={`w-6 h-6 ${collectionHandle === 'accessories' ? 'text-primary-foreground' : 'text-primary'}`} />
+                  <Brush className={`w-6 h-6 ${collectionHandle === 'accessories' ? 'text-primary-foreground' : 'text-primary'}`} />
                 </div>
                 <span className="font-semibold">{isRTL ? 'الإكسسوارات' : 'Accessories'}</span>
               </div>
@@ -266,7 +266,7 @@ const Shop = () => {
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
                   collectionHandle === 'bundles' ? 'bg-primary-foreground/20' : 'bg-primary/10'
                 }`}>
-                  <Crown className={`w-6 h-6 ${collectionHandle === 'bundles' ? 'text-primary-foreground' : 'text-primary'}`} />
+                  <Package className={`w-6 h-6 ${collectionHandle === 'bundles' ? 'text-primary-foreground' : 'text-primary'}`} />
                 </div>
                 <span className="font-semibold">{isRTL ? 'الباقات' : 'Bundles'}</span>
               </div>
