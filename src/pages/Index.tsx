@@ -3,7 +3,6 @@ import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/layout/WhatsAppButton";
 import BeautyHero from "@/components/home/BeautyHero";
 import ShopifyCollectionsSection from "@/components/home/ShopifyCollectionsSection";
-import BenefitsShowcase from "@/components/home/BenefitsShowcase";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import AboutBrand from "@/components/home/AboutBrand";
 import BeautyTestimonials from "@/components/home/BeautyTestimonials";
@@ -17,7 +16,6 @@ const Index = () => {
         <BeautyHero />
         <ShopifyCollectionsSection />
         <FeaturedProducts />
-        <BenefitsShowcase />
         <AboutBrand />
         <BeautyTestimonials />
         <BeautyCTA />
