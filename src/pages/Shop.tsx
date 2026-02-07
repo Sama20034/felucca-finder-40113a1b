@@ -13,6 +13,7 @@ import { fetchShopifyProducts, fetchProductsByCollection, fetchShopifyCollection
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import homeCollectionBg from "@/assets/home-collection-bg.png";
 
 const Shop = () => {
   const navigate = useNavigate();
@@ -281,6 +282,14 @@ const Shop = () => {
                       <motion.img
                         src={collection.node.image.url}
                         alt={collection.node.image.altText || collection.node.title}
+                        className="w-full h-full object-cover"
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.5 }}
+                      />
+                    ) : isHomePage ? (
+                      <motion.img
+                        src={homeCollectionBg}
+                        alt="Home Page"
                         className="w-full h-full object-cover"
                         whileHover={{ scale: 1.1 }}
                         transition={{ duration: 0.5 }}
