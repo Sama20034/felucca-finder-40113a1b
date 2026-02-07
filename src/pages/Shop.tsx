@@ -253,12 +253,25 @@ const Shop = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {collections.map((collection) => {
                 const isActive = collectionHandle === collection.node.handle;
+                const isHomePage = collection.node.title.toLowerCase().includes('home');
+                const displayTitle = isHomePage 
+                  ? (isRTL ? 'الصفحة الرئيسية' : 'Home Page')
+                  : collection.node.title;
+                
+                const handleClick = () => {
+                  if (isHomePage) {
+                    navigate('/');
+                  } else {
+                    setSearchParams({ collection: collection.node.handle });
+                  }
+                };
+
                 return (
                   <motion.button
                     key={collection.node.id}
                     whileHover={{ y: -5 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => setSearchParams({ collection: collection.node.handle })}
+                    onClick={handleClick}
                     className={`group relative aspect-square rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 ${
                       isActive ? 'ring-2 ring-primary ring-offset-2' : ''
                     }`}
@@ -288,7 +301,7 @@ const Shop = () => {
                     {/* Collection Name */}
                     <div className="absolute inset-0 flex items-center justify-center p-3">
                       <h3 className="text-white font-semibold text-sm md:text-base lg:text-lg text-center drop-shadow-lg">
-                        {collection.node.title}
+                        {displayTitle}
                       </h3>
                     </div>
 
