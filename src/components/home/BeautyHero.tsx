@@ -94,15 +94,6 @@ const BeautyHero = () => {
             style={{ y, opacity }}
             className={`space-y-6 sm:space-y-8 ${isRTL ? 'text-center sm:text-right lg:order-2' : 'text-center sm:text-left'}`}
           >
-            {/* Tagline */}
-            <motion.span 
-              variants={fadeInUp}
-              initial="hidden"
-              animate="visible"
-              className="inline-block text-xs sm:text-sm font-medium text-primary bg-primary/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full"
-            >
-              {content.tagline}
-            </motion.span>
 
             {/* Headline with word-by-word animation */}
             <motion.h1 
