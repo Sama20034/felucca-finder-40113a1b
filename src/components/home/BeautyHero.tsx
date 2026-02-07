@@ -32,7 +32,7 @@ const BeautyHero = () => {
   const content = {
     tagline: isRTL ? 'منتجات طبيعية 100%' : '100% Natural Products',
     headline: isRTL ? 'شعر صحي ولامع يبدأ هنا' : 'Healthy & Shiny Hair Starts Here',
-    subheadline: isRTL ? 'زيوت طبيعية ومنتجات عناية بالشعر لنتائج مضمونة خلال أسابيع' : 'Natural oils & hair care products for guaranteed results within weeks',
+    subheadline: isRTL ? 'زيوت ومنتجات عناية بالشعر لنتائج مضمونة خلال أسابيع' : 'Oils & hair care products for guaranteed results within weeks',
     cta: isRTL ? 'تسوقي الآن' : 'Shop Now',
     secondary: isRTL ? 'شاهدي النتائج' : 'See Results'
   };
