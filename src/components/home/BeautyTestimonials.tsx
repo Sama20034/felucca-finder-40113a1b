@@ -14,10 +14,15 @@ import review6 from '@/assets/testimonials/review-6.png';
 import review7 from '@/assets/testimonials/review-7.png';
 import review8 from '@/assets/testimonials/review-8.png';
 import review9 from '@/assets/testimonials/review-9.png';
+import review10 from '@/assets/testimonials/review-10.jpg';
+import review11 from '@/assets/testimonials/review-11.png';
+import review12 from '@/assets/testimonials/review-12.png';
+import review13 from '@/assets/testimonials/review-13.png';
 
 const testimonialImages = [
   review1, review2, review3, review4, review5, 
-  review6, review7, review8, review9
+  review6, review7, review8, review9, review10,
+  review11, review12, review13
 ];
 
 const BeautyTestimonials = () => {
