@@ -15,7 +15,6 @@ const AboutBrand = () => {
       ? 'نؤمن بأن كل امرأة تستحق شعراً صحياً ولامعاً. منتجاتنا مصنوعة بعناية من أجود المكونات الطبيعية لتمنحك نتائج حقيقية.'
       : 'We believe every woman deserves healthy, shiny hair. Our products are carefully crafted from the finest natural ingredients to give you real results.',
     features: [
-      isRTL ? 'مكونات طبيعية 100%' : '100% natural ingredients',
       isRTL ? 'بدون كيماويات ضارة' : 'No harmful chemicals',
       isRTL ? 'نتائج مضمونة ومثبتة' : 'Guaranteed proven results',
       isRTL ? 'شحن سريع لجميع أنحاء مصر' : 'Fast shipping across Egypt',
