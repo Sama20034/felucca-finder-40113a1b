@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { fetchShopifyCollections, ShopifyCollection } from "@/lib/shopify";
 import { staggerContainer, staggerItem, viewportOnce } from '@/hooks/useAnimations';
+import shopCollectionBg from "@/assets/shop-collection-bg.png";
 
 const ShopifyCollectionsSection = () => {
   const [collections, setCollections] = useState<ShopifyCollection[]>([]);
@@ -100,6 +101,14 @@ const ShopifyCollectionsSection = () => {
                 <motion.img
                   src={collection.node.image.url}
                   alt={collection.node.image.altText || collection.node.title}
+                  className="w-full h-full object-cover"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.5 }}
+                />
+              ) : collection.node.title.toLowerCase().includes('home') ? (
+                <motion.img
+                  src={shopCollectionBg}
+                  alt="Shop Page"
                   className="w-full h-full object-cover"
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.5 }}
