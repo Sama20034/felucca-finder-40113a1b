@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ShoppingCart, Loader2, Minus, Plus, Beaker, Sparkles, Leaf } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Loader2, Minus, Plus, Beaker, Sparkles, Leaf, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { fetchProductByHandle } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
@@ -68,8 +68,10 @@ const ShopifyProductPage = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
+  const [isBuyingNow, setIsBuyingNow] = useState(false);
   const [activeTab, setActiveTab] = useState<'description' | 'how_to_use' | 'how_it_works' | 'ingredients'>('description');
   const addItem = useCartStore(state => state.addItem);
+  const getCheckoutUrl = useCartStore(state => state.getCheckoutUrl);
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -127,6 +129,37 @@ const ShopifyProductPage = () => {
       toast.error(isRTL ? "حدث خطأ" : "Failed to add to cart");
     } finally {
       setIsAdding(false);
+    }
+  };
+
+  const handleBuyNow = async () => {
+    if (!product || !selectedVariant) return;
+    
+    const variant = product.variants.edges.find(v => v.node.id === selectedVariant)?.node;
+    if (!variant) return;
+
+    setIsBuyingNow(true);
+    try {
+      await addItem({
+        product: { node: product },
+        variantId: variant.id,
+        variantTitle: variant.title,
+        price: variant.price,
+        quantity,
+        selectedOptions: variant.selectedOptions || []
+      });
+      
+      // Wait a moment for the cart to be created/updated
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const checkoutUrl = getCheckoutUrl();
+      if (checkoutUrl) {
+        window.open(checkoutUrl, '_blank');
+      }
+    } catch (error) {
+      toast.error(isRTL ? "حدث خطأ" : "Failed to proceed to checkout");
+    } finally {
+      setIsBuyingNow(false);
     }
   };
 
@@ -322,22 +355,43 @@ const ShopifyProductPage = () => {
               </div>
             </div>
 
-            {/* Add to Cart */}
-            <Button
-              onClick={handleAddToCart}
-              disabled={isAdding || !currentVariant?.availableForSale}
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-6 text-lg"
-              size="lg"
-            >
-              {isAdding ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <>
-                  <ShoppingCart className="w-5 h-5 mr-2" />
-                  {isRTL ? "أضف للسلة" : "Add to Cart"}
-                </>
-              )}
-            </Button>
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              {/* Add to Cart */}
+              <Button
+                onClick={handleAddToCart}
+                disabled={isAdding || isBuyingNow || !currentVariant?.availableForSale}
+                className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground py-6 text-lg rounded-full"
+                size="lg"
+              >
+                {isAdding ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <>
+                    <ShoppingCart className="w-5 h-5 mr-2" />
+                    {isRTL ? "أضف للسلة" : "ADD TO CART"}
+                  </>
+                )}
+              </Button>
+
+              {/* Buy Now */}
+              <Button
+                onClick={handleBuyNow}
+                disabled={isAdding || isBuyingNow || !currentVariant?.availableForSale}
+                variant="outline"
+                className="flex-1 border-2 border-foreground text-foreground hover:bg-foreground hover:text-background py-6 text-lg rounded-full"
+                size="lg"
+              >
+                {isBuyingNow ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <>
+                    <Zap className="w-5 h-5 mr-2" />
+                    {isRTL ? "اشتري الآن" : "BUY IT NOW"}
+                  </>
+                )}
+              </Button>
+            </div>
 
             {!currentVariant?.availableForSale && (
               <p className="text-destructive text-center">
