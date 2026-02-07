@@ -215,7 +215,7 @@ const Shop = () => {
                 }`}>
                   <Scissors className={`w-6 h-6 transition-all duration-300 group-hover:scale-110 ${collectionHandle === 'hair-care' ? 'text-primary-foreground' : 'text-primary'}`} />
                 </div>
-                <span className="font-semibold transition-colors duration-300 group-hover:text-primary">{isRTL ? 'العناية بالشعر' : 'Hair Care'}</span>
+                <span className={`font-semibold transition-colors duration-300 ${collectionHandle === 'hair-care' ? '' : 'group-hover:text-primary'}`}>{isRTL ? 'العناية بالشعر' : 'Hair Care'}</span>
               </div>
             </button>
 
@@ -238,7 +238,7 @@ const Shop = () => {
                 }`}>
                   <Zap className={`w-6 h-6 transition-all duration-300 group-hover:scale-125 group-hover:animate-pulse ${collectionHandle === 'flash-offers' ? 'text-primary-foreground' : 'text-primary'}`} />
                 </div>
-                <span className="font-semibold transition-colors duration-300 group-hover:text-primary">{isRTL ? 'عروض فلاش' : 'Flash Offers'}</span>
+                <span className={`font-semibold transition-colors duration-300 ${collectionHandle === 'flash-offers' ? '' : 'group-hover:text-primary'}`}>{isRTL ? 'عروض فلاش' : 'Flash Offers'}</span>
               </div>
             </button>
 
@@ -261,7 +261,7 @@ const Shop = () => {
                 }`}>
                   <Brush className={`w-6 h-6 transition-all duration-300 group-hover:scale-110 ${collectionHandle === 'accessories' ? 'text-primary-foreground' : 'text-primary'}`} />
                 </div>
-                <span className="font-semibold transition-colors duration-300 group-hover:text-primary">{isRTL ? 'الإكسسوارات' : 'Accessories'}</span>
+                <span className={`font-semibold transition-colors duration-300 ${collectionHandle === 'accessories' ? '' : 'group-hover:text-primary'}`}>{isRTL ? 'الإكسسوارات' : 'Accessories'}</span>
               </div>
             </button>
 
@@ -284,7 +284,7 @@ const Shop = () => {
                 }`}>
                   <Package className={`w-6 h-6 transition-all duration-300 group-hover:scale-110 ${collectionHandle === 'bundles' ? 'text-primary-foreground' : 'text-primary'}`} />
                 </div>
-                <span className="font-semibold transition-colors duration-300 group-hover:text-primary">{isRTL ? 'الباقات' : 'Bundles'}</span>
+                <span className={`font-semibold transition-colors duration-300 ${collectionHandle === 'bundles' ? '' : 'group-hover:text-primary'}`}>{isRTL ? 'الباقات' : 'Bundles'}</span>
               </div>
             </button>
           </div>
