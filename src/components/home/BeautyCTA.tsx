@@ -11,8 +11,8 @@ const BeautyCTA = () => {
   const content = {
     title: isRTL ? 'ابدئي رحلة جمال شعرك اليوم' : 'Start Your Hair Beauty Journey Today',
     description: isRTL 
-      ? 'احصلي على شعر صحي ولامع مع منتجاتنا الطبيعية'
-      : 'Get healthy, shiny hair with our natural products',
+      ? 'احصلي على شعر صحي ولامع مع منتجاتنا'
+      : 'Get healthy, shiny hair with our products',
     cta: isRTL ? 'تسوقي الآن' : 'Shop Now',
   };
 
