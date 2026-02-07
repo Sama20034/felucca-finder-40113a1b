@@ -106,7 +106,7 @@ const ShopifyCollectionsSection = () => {
                 />
               ) : (
                 <div className="w-full h-full bg-gradient-to-br from-primary/30 via-primary/20 to-secondary flex items-center justify-center">
-                  <span className="text-4xl md:text-5xl">🏠</span>
+                  <span className="text-4xl md:text-5xl">🛍️</span>
                 </div>
               )}
 
