@@ -27,8 +27,14 @@ const ShopifyCollectionsSection = () => {
     loadCollections();
   }, []);
 
-  const handleCollectionClick = (handle: string) => {
-    navigate(`/shop?collection=${handle}`);
+  const handleCollectionClick = (handle: string, title: string) => {
+    // If the collection is "Home page" or similar, go directly to shop
+    const homePageHandles = ['home-page', 'homepage', 'frontpage', 'home'];
+    if (homePageHandles.includes(handle.toLowerCase()) || title.toLowerCase().includes('home')) {
+      navigate('/shop');
+    } else {
+      navigate(`/shop?collection=${handle}`);
+    }
   };
 
   if (loading) {
@@ -80,7 +86,7 @@ const ShopifyCollectionsSection = () => {
               variants={staggerItem}
               whileHover={{ y: -8 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => handleCollectionClick(collection.node.handle)}
+              onClick={() => handleCollectionClick(collection.node.handle, collection.node.title)}
               className="group relative aspect-square rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
             >
               {/* Collection Image */}
