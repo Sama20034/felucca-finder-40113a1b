@@ -130,7 +130,7 @@ export const CartDrawer = () => {
                   ) : (
                     <>
                       <ExternalLink className="w-4 h-4 mr-2" />
-                      {isRTL ? "إتمام الشراء" : "Checkout with Shopify"}
+                      {isRTL ? "إتمام الشراء" : "Checkout"}
                     </>
                   )}
                 </Button>
