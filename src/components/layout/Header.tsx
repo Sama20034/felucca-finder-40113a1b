@@ -71,7 +71,7 @@ const Header = () => {
               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
               <div className="flex flex-col h-full">
                 <div className="flex items-center justify-center py-6 border-b border-[#D4AF37]/20 bg-[#1C092F]">
-                  <img src={logo} alt="Reselience Gold" className="h-20" />
+                  <img src={logo} alt="Reselience Gold" className="h-14" />
                 </div>
                 
                 {/* Mobile Search */}
@@ -151,7 +151,7 @@ const Header = () => {
           <Link to="/" className="flex items-center group flex-1 justify-center">
             <img
               alt="Reselience Gold"
-              className="h-24 sm:h-28 w-auto transition-transform duration-500 group-hover:scale-105"
+              className="h-14 sm:h-16 w-auto transition-transform duration-500 group-hover:scale-105"
               src={logo}
             />
           </Link>
@@ -173,7 +173,7 @@ const Header = () => {
           <Link to="/" className="flex items-center group">
             <img
               alt="Reselience Gold"
-              className="h-28 w-auto transition-transform duration-500 group-hover:scale-105"
+              className="h-16 w-auto transition-transform duration-500 group-hover:scale-105"
               src={logo}
             />
           </Link>
