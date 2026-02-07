@@ -6,12 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Filter, Search, X, Sparkles, Crown, Star, Heart, ShoppingCart, Loader2, ShoppingBag } from "lucide-react";
+import { Filter, Search, X, Sparkles, Crown, Star, Heart, ShoppingCart, Loader2, ShoppingBag, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCartStore } from "@/stores/cartStore";
-import { fetchShopifyProducts, fetchProductsByCollection, ShopifyProduct } from "@/lib/shopify";
+import { fetchShopifyProducts, fetchProductsByCollection, fetchShopifyCollections, ShopifyProduct, ShopifyCollection } from "@/lib/shopify";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 const Shop = () => {
   const navigate = useNavigate();
@@ -24,12 +25,30 @@ const Shop = () => {
   
   // Shopify products state
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
+  const [collections, setCollections] = useState<ShopifyCollection[]>([]);
   const [loading, setLoading] = useState(true);
+  const [collectionsLoading, setCollectionsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [addingToCart, setAddingToCart] = useState<string | null>(null);
 
   // Get collection filter from URL
   const collectionHandle = searchParams.get('collection');
+
+  // Fetch collections from Shopify
+  useEffect(() => {
+    const loadCollections = async () => {
+      setCollectionsLoading(true);
+      try {
+        const data = await fetchShopifyCollections(20);
+        setCollections(data);
+      } catch (err) {
+        console.error('Failed to fetch collections:', err);
+      } finally {
+        setCollectionsLoading(false);
+      }
+    };
+    loadCollections();
+  }, []);
 
   // Fetch products from Shopify
   useEffect(() => {
@@ -56,6 +75,13 @@ const Shop = () => {
 
     loadProducts();
   }, [isRTL, collectionHandle]);
+
+  // Get current collection name
+  const currentCollectionName = useMemo(() => {
+    if (!collectionHandle) return null;
+    const collection = collections.find(c => c.node.handle === collectionHandle);
+    return collection?.node.title || collectionHandle;
+  }, [collectionHandle, collections]);
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
@@ -192,6 +218,91 @@ const Shop = () => {
         </div>
       </section>
 
+      {/* Categories Section */}
+      {!collectionsLoading && collections.length > 0 && (
+        <section className="py-10 bg-secondary/20">
+          <div className="container mx-auto px-4">
+            {/* Section Header */}
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl md:text-2xl font-serif font-bold text-foreground">
+                {isRTL ? 'تصفحي حسب الفئة' : 'Shop by Category'}
+              </h2>
+              {collectionHandle && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSearchParams({})}
+                  className="text-primary hover:text-primary/80"
+                >
+                  <X className="w-4 h-4 mr-1" />
+                  {isRTL ? 'عرض الكل' : 'Show All'}
+                </Button>
+              )}
+            </div>
+
+            {/* Current Collection Badge */}
+            {currentCollectionName && (
+              <div className="mb-6">
+                <Badge variant="secondary" className="text-sm px-4 py-2 bg-primary/10 text-primary border-primary/20">
+                  {isRTL ? 'الفئة الحالية:' : 'Current Category:'} {currentCollectionName}
+                </Badge>
+              </div>
+            )}
+
+            {/* Categories Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+              {collections.map((collection) => {
+                const isActive = collectionHandle === collection.node.handle;
+                return (
+                  <motion.button
+                    key={collection.node.id}
+                    whileHover={{ y: -5 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setSearchParams({ collection: collection.node.handle })}
+                    className={`group relative aspect-square rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 ${
+                      isActive ? 'ring-2 ring-primary ring-offset-2' : ''
+                    }`}
+                  >
+                    {/* Collection Image */}
+                    {collection.node.image ? (
+                      <motion.img
+                        src={collection.node.image.url}
+                        alt={collection.node.image.altText || collection.node.title}
+                        className="w-full h-full object-cover"
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.5 }}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-primary/30 via-primary/20 to-secondary flex items-center justify-center">
+                        <span className="text-3xl md:text-4xl">🛍️</span>
+                      </div>
+                    )}
+
+                    {/* Overlay */}
+                    <div className={`absolute inset-0 transition-all duration-300 ${
+                      isActive 
+                        ? 'bg-primary/60' 
+                        : 'bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-primary/70'
+                    }`} />
+
+                    {/* Collection Name */}
+                    <div className="absolute inset-0 flex items-center justify-center p-3">
+                      <h3 className="text-white font-semibold text-sm md:text-base lg:text-lg text-center drop-shadow-lg">
+                        {collection.node.title}
+                      </h3>
+                    </div>
+
+                    {/* Active Indicator */}
+                    {isActive && (
+                      <div className="absolute top-2 right-2 w-3 h-3 bg-white rounded-full shadow-lg" />
+                    )}
+                  </motion.button>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Main Content */}
       <section className="py-16">
