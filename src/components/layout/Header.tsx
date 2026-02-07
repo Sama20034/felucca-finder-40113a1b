@@ -9,6 +9,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useCartStore } from "@/stores/cartStore";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { CartDrawer } from "@/components/shopify/CartDrawer";
+import CategoriesBar from "./CategoriesBar";
 import logo from "@/assets/reselience-flowers-logo.png";
 import { useState, useEffect, useRef } from "react";
 
@@ -280,6 +281,9 @@ const Header = () => {
           </div>
         </div>
       </div>
+
+      {/* Categories Bar - Below Header */}
+      <CategoriesBar />
     </header>
   );
 };
