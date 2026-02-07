@@ -249,8 +249,8 @@ const Shop = () => {
               </div>
             )}
 
-            {/* Categories Grid - New Design */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+            {/* Categories Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {collections.map((collection) => {
                 const isActive = collectionHandle === collection.node.handle;
                 const isHomePage = collection.node.title.toLowerCase().includes('home');
@@ -269,37 +269,40 @@ const Shop = () => {
                 return (
                   <motion.button
                     key={collection.node.id}
-                    whileHover={{ y: -5, scale: 1.02 }}
+                    whileHover={{ y: -5 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={handleClick}
-                    className={`group text-left transition-all duration-300 ${
-                      isActive ? 'ring-2 ring-primary ring-offset-2 rounded-2xl' : ''
+                    className={`group relative aspect-square rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 ${
+                      isActive ? 'ring-2 ring-primary ring-offset-2' : ''
                     }`}
                   >
-                    {/* Card Container */}
-                    <div className="bg-primary rounded-t-2xl p-4">
-                      <h3 className="text-white font-bold text-sm md:text-base lg:text-lg text-center">
+                    {/* Collection Image */}
+                    {collection.node.image ? (
+                      <motion.img
+                        src={collection.node.image.url}
+                        alt={collection.node.image.altText || collection.node.title}
+                        className="w-full h-full object-cover"
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.5 }}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-primary/30 via-primary/20 to-secondary flex items-center justify-center">
+                        <span className="text-3xl md:text-4xl">🛍️</span>
+                      </div>
+                    )}
+
+                    {/* Overlay */}
+                    <div className={`absolute inset-0 transition-all duration-300 ${
+                      isActive 
+                        ? 'bg-primary/60' 
+                        : 'bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-primary/70'
+                    }`} />
+
+                    {/* Collection Name */}
+                    <div className="absolute inset-0 flex items-center justify-center p-3">
+                      <h3 className="text-white font-semibold text-sm md:text-base lg:text-lg text-center drop-shadow-lg">
                         {displayTitle}
                       </h3>
-                    </div>
-                    
-                    {/* Image Container */}
-                    <div className="bg-card rounded-b-2xl p-3 shadow-lg border border-t-0 border-border/30">
-                      <div className="aspect-square rounded-xl overflow-hidden bg-muted">
-                        {collection.node.image ? (
-                          <motion.img
-                            src={collection.node.image.url}
-                            alt={collection.node.image.altText || collection.node.title}
-                            className="w-full h-full object-cover"
-                            whileHover={{ scale: 1.1 }}
-                            transition={{ duration: 0.5 }}
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-primary/20 via-secondary to-primary/10 flex items-center justify-center">
-                            <span className="text-4xl md:text-5xl">🛍️</span>
-                          </div>
-                        )}
-                      </div>
                     </div>
 
                     {/* Active Indicator */}
