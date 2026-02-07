@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Search, ShoppingCart, User, Heart, LogOut, X, Menu, Crown, ChevronDown, Scissors, Zap, Brush, Package } from "lucide-react";
+import { Search, ShoppingCart, User, Heart, LogOut, X, Menu, Crown, ChevronDown, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { useAuth } from "@/contexts/AuthContext";
@@ -7,6 +7,8 @@ import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCartStore } from "@/stores/cartStore";
+import { useQuery } from "@tanstack/react-query";
+import { fetchShopifyCollections, ShopifyCollection } from "@/lib/shopify";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { CartDrawer } from "@/components/shopify/CartDrawer";
 import CategoriesBar from "./CategoriesBar";
@@ -24,6 +26,18 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+
+  // Fetch Shopify collections for mobile menu
+  const { data: collections = [] } = useQuery({
+    queryKey: ['shopify-collections-menu'],
+    queryFn: () => fetchShopifyCollections(10),
+    staleTime: 1000 * 60 * 5,
+  });
+
+  // Filter out "home" collection
+  const menuCollections = collections.filter(
+    (col: ShopifyCollection) => !col.node.title.toLowerCase().includes('home')
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -104,41 +118,20 @@ const Header = () => {
                         {link.name}
                       </Link>
                       
-                      {/* Categories Sub-menu under Shop */}
-                      {link.href === "/shop" && (
-                        <div className="ml-4 mt-1 flex flex-col gap-1 border-l-2 border-primary/20 pl-3">
-                          <Link
-                            to="/shop?collection=hair-care"
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="flex items-center gap-3 px-3 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/30 rounded-lg transition-colors"
-                          >
-                            <Scissors className="w-4 h-4 text-primary" />
-                            {isRTL ? 'العناية بالشعر' : 'Hair Care'}
-                          </Link>
-                          <Link
-                            to="/shop?collection=flash-offers"
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="flex items-center gap-3 px-3 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/30 rounded-lg transition-colors"
-                          >
-                            <Zap className="w-4 h-4 text-primary" />
-                            {isRTL ? 'عروض فلاش' : 'Flash Offers'}
-                          </Link>
-                          <Link
-                            to="/shop?collection=accessories"
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="flex items-center gap-3 px-3 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/30 rounded-lg transition-colors"
-                          >
-                            <Brush className="w-4 h-4 text-primary" />
-                            {isRTL ? 'الإكسسوارات' : 'Accessories'}
-                          </Link>
-                          <Link
-                            to="/shop?collection=bundles"
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="flex items-center gap-3 px-3 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/30 rounded-lg transition-colors"
-                          >
-                            <Package className="w-4 h-4 text-primary" />
-                            {isRTL ? 'الباقات' : 'Bundles'}
-                          </Link>
+                      {/* Dynamic Categories Sub-menu under Shop */}
+                      {link.href === "/shop" && menuCollections.length > 0 && (
+                        <div className={`mt-1 flex flex-col gap-1 border-primary/20 ${isRTL ? 'mr-4 border-r-2 pr-3' : 'ml-4 border-l-2 pl-3'}`}>
+                          {menuCollections.map((collection: ShopifyCollection) => (
+                            <Link
+                              key={collection.node.id}
+                              to={`/shop?collection=${collection.node.handle}`}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="flex items-center gap-3 px-3 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/30 rounded-lg transition-colors"
+                            >
+                              <span className="text-primary">•</span>
+                              {collection.node.title}
+                            </Link>
+                          ))}
                         </div>
                       )}
                     </div>
