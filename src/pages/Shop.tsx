@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Filter, Search, X, Sparkles, Crown, Star, Heart, ShoppingCart, Loader2, ShoppingBag, Scissors, Zap, Brush, Package } from "lucide-react";
+import { Filter, Search, X, Sparkles, Crown, Star, Heart, ShoppingCart, Loader2, ShoppingBag } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCartStore } from "@/stores/cartStore";
 import { fetchShopifyProducts, fetchProductsByCollection, ShopifyProduct } from "@/lib/shopify";
@@ -192,118 +192,6 @@ const Shop = () => {
         </div>
       </section>
 
-      {/* Categories Section */}
-      <section className="py-8 border-b border-border/30">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {/* Hair Care */}
-            <button
-              onClick={() => setSearchParams({ collection: 'hair-care' })}
-              className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl ${
-                collectionHandle === 'hair-care' 
-                  ? 'bg-primary text-primary-foreground shadow-lg scale-[1.02]' 
-                  : 'bg-card border border-border/50 hover:border-primary hover:shadow-primary/20'
-              }`}
-            >
-              {/* Animated background gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.1),transparent_70%)] scale-0 group-hover:scale-150 transition-transform duration-700" />
-              
-              <div className="relative flex flex-col items-center gap-3 text-center">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 ${
-                  collectionHandle === 'hair-care' ? 'bg-primary-foreground/20' : 'bg-primary/10 group-hover:bg-primary/20'
-                }`}>
-                  <Scissors className={`w-6 h-6 transition-all duration-300 group-hover:scale-110 ${collectionHandle === 'hair-care' ? 'text-primary-foreground' : 'text-primary'}`} />
-                </div>
-                <span className={`font-semibold transition-colors duration-300 ${collectionHandle === 'hair-care' ? '' : 'group-hover:text-primary'}`}>{isRTL ? 'العناية بالشعر' : 'Hair Care'}</span>
-              </div>
-            </button>
-
-            {/* Flash Offers */}
-            <button
-              onClick={() => setSearchParams({ collection: 'flash-offers' })}
-              className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl ${
-                collectionHandle === 'flash-offers' 
-                  ? 'bg-primary text-primary-foreground shadow-lg scale-[1.02]' 
-                  : 'bg-card border border-border/50 hover:border-primary hover:shadow-primary/20'
-              }`}
-            >
-              {/* Animated background gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.1),transparent_70%)] scale-0 group-hover:scale-150 transition-transform duration-700" />
-              
-              <div className="relative flex flex-col items-center gap-3 text-center">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110 ${
-                  collectionHandle === 'flash-offers' ? 'bg-primary-foreground/20' : 'bg-primary/10 group-hover:bg-primary/20'
-                }`}>
-                  <Zap className={`w-6 h-6 transition-all duration-300 group-hover:scale-125 group-hover:animate-pulse ${collectionHandle === 'flash-offers' ? 'text-primary-foreground' : 'text-primary'}`} />
-                </div>
-                <span className={`font-semibold transition-colors duration-300 ${collectionHandle === 'flash-offers' ? '' : 'group-hover:text-primary'}`}>{isRTL ? 'عروض فلاش' : 'Flash Offers'}</span>
-              </div>
-            </button>
-
-            {/* Accessories */}
-            <button
-              onClick={() => setSearchParams({ collection: 'accessories' })}
-              className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl ${
-                collectionHandle === 'accessories' 
-                  ? 'bg-primary text-primary-foreground shadow-lg scale-[1.02]' 
-                  : 'bg-card border border-border/50 hover:border-primary hover:shadow-primary/20'
-              }`}
-            >
-              {/* Animated background gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.1),transparent_70%)] scale-0 group-hover:scale-150 transition-transform duration-700" />
-              
-              <div className="relative flex flex-col items-center gap-3 text-center">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:-rotate-12 ${
-                  collectionHandle === 'accessories' ? 'bg-primary-foreground/20' : 'bg-primary/10 group-hover:bg-primary/20'
-                }`}>
-                  <Brush className={`w-6 h-6 transition-all duration-300 group-hover:scale-110 ${collectionHandle === 'accessories' ? 'text-primary-foreground' : 'text-primary'}`} />
-                </div>
-                <span className={`font-semibold transition-colors duration-300 ${collectionHandle === 'accessories' ? '' : 'group-hover:text-primary'}`}>{isRTL ? 'الإكسسوارات' : 'Accessories'}</span>
-              </div>
-            </button>
-
-            {/* Bundles */}
-            <button
-              onClick={() => setSearchParams({ collection: 'bundles' })}
-              className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl ${
-                collectionHandle === 'bundles' 
-                  ? 'bg-primary text-primary-foreground shadow-lg scale-[1.02]' 
-                  : 'bg-card border border-border/50 hover:border-primary hover:shadow-primary/20'
-              }`}
-            >
-              {/* Animated background gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.1),transparent_70%)] scale-0 group-hover:scale-150 transition-transform duration-700" />
-              
-              <div className="relative flex flex-col items-center gap-3 text-center">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 ${
-                  collectionHandle === 'bundles' ? 'bg-primary-foreground/20' : 'bg-primary/10 group-hover:bg-primary/20'
-                }`}>
-                  <Package className={`w-6 h-6 transition-all duration-300 group-hover:scale-110 ${collectionHandle === 'bundles' ? 'text-primary-foreground' : 'text-primary'}`} />
-                </div>
-                <span className={`font-semibold transition-colors duration-300 ${collectionHandle === 'bundles' ? '' : 'group-hover:text-primary'}`}>{isRTL ? 'الباقات' : 'Bundles'}</span>
-              </div>
-            </button>
-          </div>
-
-          {/* Clear Filter Button */}
-          {collectionHandle && (
-            <div className="mt-4 text-center">
-              <Button
-                variant="ghost"
-                onClick={() => setSearchParams({})}
-                className="text-muted-foreground hover:text-primary"
-              >
-                <X className="w-4 h-4 mr-2" />
-                {isRTL ? 'عرض جميع المنتجات' : 'Show All Products'}
-              </Button>
-            </div>
-          )}
-        </div>
-      </section>
 
       {/* Main Content */}
       <section className="py-16">
