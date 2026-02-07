@@ -276,29 +276,32 @@ const Shop = () => {
                       isActive ? 'ring-2 ring-primary ring-offset-2 rounded-2xl' : ''
                     }`}
                   >
-                    {/* Card Container */}
-                    <div className="bg-primary rounded-t-2xl p-4">
-                      <h3 className="text-white font-bold text-sm md:text-base lg:text-lg text-center">
-                        {displayTitle}
-                      </h3>
-                    </div>
-                    
-                    {/* Image Container */}
-                    <div className="bg-card rounded-b-2xl p-3 shadow-lg border border-t-0 border-border/30">
-                      <div className="aspect-square rounded-xl overflow-hidden bg-muted">
-                        {collection.node.image ? (
-                          <motion.img
-                            src={collection.node.image.url}
-                            alt={collection.node.image.altText || collection.node.title}
-                            className="w-full h-full object-cover"
-                            whileHover={{ scale: 1.1 }}
-                            transition={{ duration: 0.5 }}
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-primary/20 via-secondary to-primary/10 flex items-center justify-center">
-                            <span className="text-4xl md:text-5xl">🛍️</span>
-                          </div>
-                        )}
+                    {/* Card Container with unified background */}
+                    <div className="bg-secondary/40 rounded-2xl shadow-lg overflow-hidden">
+                      {/* Header */}
+                      <div className="bg-primary p-4">
+                        <h3 className="text-white font-bold text-sm md:text-base lg:text-lg text-center">
+                          {displayTitle}
+                        </h3>
+                      </div>
+                      
+                      {/* Image Container */}
+                      <div className="p-4">
+                        <div className="aspect-square rounded-xl overflow-hidden bg-secondary/60">
+                          {collection.node.image ? (
+                            <motion.img
+                              src={collection.node.image.url}
+                              alt={collection.node.image.altText || collection.node.title}
+                              className="w-full h-full object-cover"
+                              whileHover={{ scale: 1.1 }}
+                              transition={{ duration: 0.5 }}
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-secondary/60 flex items-center justify-center">
+                              <span className="text-4xl md:text-5xl">🛍️</span>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
 
