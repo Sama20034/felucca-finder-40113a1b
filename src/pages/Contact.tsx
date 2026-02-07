@@ -3,22 +3,59 @@ import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Phone, Mail, Clock, Facebook, Instagram, Send } from "lucide-react";
+import { Phone, Mail, Clock, Facebook, Instagram, Send, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useState } from "react";
 
 const Contact = () => {
   const { isRTL } = useLanguage();
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  });
 
   const contactInfo = [
     { icon: Phone, title: isRTL ? "الهاتف" : "Phone", value: "+20 103 449 9460" },
-    { icon: Mail, title: isRTL ? "البريد الإلكتروني" : "Email", value: "info@resiliencegold.com" },
+    { icon: Mail, title: isRTL ? "البريد الإلكتروني" : "Email", value: "Info@reselience-gold.com" },
     { icon: Clock, title: isRTL ? "ساعات العمل" : "Working Hours", value: isRTL ? "10 ص - 10 م" : "10 AM - 10 PM" },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success(isRTL ? "تم إرسال رسالتك بنجاح! سنتواصل معك قريباً." : "Your message has been sent successfully! We will contact you soon.");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('https://reselience-gold.com/contact.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success(isRTL ? "تم إرسال رسالتك بنجاح! سنتواصل معك قريباً." : "Your message has been sent successfully! We will contact you soon.");
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      } else {
+        toast.error(isRTL ? "حدث خطأ أثناء الإرسال. حاول مرة أخرى." : "Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      toast.error(isRTL ? "حدث خطأ في الاتصال. حاول مرة أخرى." : "Connection error. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -112,41 +149,77 @@ const Contact = () => {
                   <h3 className="text-2xl font-bold text-foreground mb-6">
                     {isRTL ? "أرسل رسالة" : "Send a Message"}
                   </h3>
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
                         <label className="block text-sm font-medium text-foreground mb-2">
                           {isRTL ? "الاسم" : "Name"}
                         </label>
-                        <Input placeholder={isRTL ? "اكتب اسمك" : "Enter your name"} required />
+                        <Input 
+                          name="name"
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          placeholder={isRTL ? "اكتب اسمك" : "Enter your name"} 
+                          required 
+                        />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-foreground mb-2">
                           {isRTL ? "البريد الإلكتروني" : "Email"}
                         </label>
-                        <Input type="email" placeholder="example@email.com" required />
+                        <Input 
+                          name="email"
+                          type="email" 
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          placeholder="example@email.com" 
+                          required 
+                        />
                       </div>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">
                         {isRTL ? "رقم الهاتف" : "Phone Number"}
                       </label>
-                      <Input type="tel" placeholder="01xxxxxxxxx" />
+                      <Input 
+                        name="phone"
+                        type="tel" 
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder="01xxxxxxxxx" 
+                      />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">
                         {isRTL ? "الموضوع" : "Subject"}
                       </label>
-                      <Input placeholder={isRTL ? "موضوع الرسالة" : "Message subject"} required />
+                      <Input 
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleInputChange}
+                        placeholder={isRTL ? "موضوع الرسالة" : "Message subject"} 
+                        required 
+                      />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">
                         {isRTL ? "الرسالة" : "Message"}
                       </label>
-                      <Textarea placeholder={isRTL ? "اكتب رسالتك هنا..." : "Write your message here..."} rows={5} required />
+                      <Textarea 
+                        name="message"
+                        value={formData.message}
+                        onChange={handleInputChange}
+                        placeholder={isRTL ? "اكتب رسالتك هنا..." : "Write your message here..."} 
+                        rows={5} 
+                        required 
+                      />
                     </div>
-                    <Button type="submit" variant="default" size="lg" className="w-full md:w-auto">
-                      <Send className="w-4 h-4" />
+                    <Button type="submit" variant="default" size="lg" className="w-full md:w-auto" disabled={isLoading}>
+                      {isLoading ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Send className="w-4 h-4" />
+                      )}
                       {isRTL ? "إرسال الرسالة" : "Send Message"}
                     </Button>
                   </form>
