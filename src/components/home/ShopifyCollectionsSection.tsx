@@ -80,7 +80,13 @@ const ShopifyCollectionsSection = () => {
           viewport={viewportOnce}
           className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
         >
-          {collections.map((collection) => (
+          {collections.map((collection) => {
+            // Rename "Home page" to "Shop page" for display
+            const displayTitle = collection.node.title.toLowerCase().includes('home') 
+              ? (isRTL ? 'صفحة المتجر' : 'Shop Page')
+              : collection.node.title;
+            
+            return (
             <motion.button
               key={collection.node.id}
               variants={staggerItem}
@@ -111,7 +117,7 @@ const ShopifyCollectionsSection = () => {
               <div className="absolute inset-0 flex items-end justify-center p-4 md:p-6">
                 <div className="text-center">
                   <h3 className="text-white font-semibold text-sm md:text-lg lg:text-xl drop-shadow-lg">
-                    {collection.node.title}
+                    {displayTitle}
                   </h3>
                   <motion.span 
                     className="inline-block mt-2 text-white/80 text-xs md:text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -123,7 +129,8 @@ const ShopifyCollectionsSection = () => {
                 </div>
               </div>
             </motion.button>
-          ))}
+          );
+          })}
         </motion.div>
 
         {/* View All Button */}
