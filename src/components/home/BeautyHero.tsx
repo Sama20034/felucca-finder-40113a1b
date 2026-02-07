@@ -173,6 +173,38 @@ const BeautyHero = () => {
               </motion.div>
             </motion.div>
 
+            {/* Trust Indicators with stagger */}
+            <motion.div 
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
+              className={`flex items-center gap-4 sm:gap-8 pt-6 w-full ${isRTL ? 'justify-start' : 'justify-start'}`}
+            >
+              {[
+                { value: '+5000', label: isRTL ? 'عميلة سعيدة' : 'Happy Customers' },
+                { value: '4.9⭐', label: isRTL ? 'تقييم' : 'Rating' }
+              ].map((stat, index) => (
+                <motion.div 
+                  key={index}
+                  variants={scaleInBounce}
+                  className="text-center flex-1 sm:flex-none"
+                >
+                  <motion.div 
+                    className="text-lg sm:text-2xl font-bold text-primary"
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ 
+                      delay: 0.8 + index * 0.1,
+                      type: 'spring',
+                      stiffness: 200
+                    }}
+                  >
+                    {stat.value}
+                  </motion.div>
+                  <div className="text-[10px] sm:text-xs text-muted-foreground">{stat.label}</div>
+                </motion.div>
+              ))}
+            </motion.div>
           </motion.div>
 
           {/* Image Side */}
