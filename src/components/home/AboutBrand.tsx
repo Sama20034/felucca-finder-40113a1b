@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import aboutImage from '@/assets/benefits-model.png';
+import aboutImage from '@/assets/products-collection.jpg';
 import { fadeInUp, imageReveal, staggerContainer, staggerItem, viewportOnce } from '@/hooks/useAnimations';
 
 const AboutBrand = () => {
