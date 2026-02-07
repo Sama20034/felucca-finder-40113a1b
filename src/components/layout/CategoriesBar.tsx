@@ -20,15 +20,15 @@ const CategoriesBar = () => {
   if (filteredCollections.length === 0) return null;
 
   return (
-    <div className="bg-secondary/50 border-b border-border/30 hidden lg:block">
+    <div className="bg-[#2a1245] border-b border-white/10 hidden lg:block">
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-center gap-8 py-3">
           {filteredCollections.map((collection: ShopifyCollection) => (
             <Link
               key={collection.node.id}
               to={`/shop?collection=${collection.node.handle}`}
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 relative py-1
-                after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:rounded-full
+              className="text-sm font-medium text-white/80 hover:text-white transition-colors duration-200 relative py-1
+                after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-white after:rounded-full
                 hover:after:w-full after:transition-all after:duration-300"
             >
               {collection.node.title}
