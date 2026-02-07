@@ -237,12 +237,37 @@ const Shop = () => {
 
             {/* Products */}
             <div className="flex-1">
+              {/* Current Collection Header */}
+              {currentCollectionName && (
+                <div className="flex items-center justify-between mb-6 p-4 bg-primary/5 border border-primary/20 rounded-xl">
+                  <div className="flex items-center gap-3">
+                    <Badge variant="secondary" className="text-sm px-4 py-2 bg-primary/10 text-primary border-primary/20">
+                      {currentCollectionName}
+                    </Badge>
+                    <span className="text-muted-foreground text-sm">
+                      {loading ? '...' : filteredProducts.length} {isRTL ? 'منتج' : 'products'}
+                    </span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSearchParams({})}
+                    className="text-primary hover:text-primary/80 hover:bg-primary/10"
+                  >
+                    <X className="w-4 h-4 mr-1" />
+                    {isRTL ? 'عرض الكل' : 'Show All'}
+                  </Button>
+                </div>
+              )}
+
               {/* Top Bar */}
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-3">
-                  <span className="text-muted-foreground">
-                    {loading ? '...' : filteredProducts.length} {isRTL ? 'منتج' : 'products'}
-                  </span>
+                  {!currentCollectionName && (
+                    <span className="text-muted-foreground">
+                      {loading ? '...' : filteredProducts.length} {isRTL ? 'منتج' : 'products'}
+                    </span>
+                  )}
                 </div>
 
                 {/* Mobile Filter */}
