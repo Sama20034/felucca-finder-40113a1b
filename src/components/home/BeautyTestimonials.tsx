@@ -114,7 +114,7 @@ const BeautyTestimonials = () => {
           <div
             ref={scrollContainerRef}
             onScroll={checkScrollButtons}
-            className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide px-12 md:px-16 pb-4 snap-x snap-mandatory"
+            className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide px-12 md:px-16 pb-4 snap-x snap-mandatory justify-start"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {testimonialImages.map((image, index) => (
@@ -123,15 +123,15 @@ const BeautyTestimonials = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.05 }}
                 whileHover={{ y: -5, scale: 1.02 }}
-                className="flex-shrink-0 snap-center"
+                className="flex-shrink-0 snap-center flex items-center"
               >
-                <div className="w-[280px] sm:w-[320px] md:w-[380px] bg-card rounded-2xl overflow-hidden border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="w-[280px] sm:w-[300px] md:w-[340px] h-[320px] sm:h-[360px] md:h-[400px] bg-card rounded-2xl overflow-hidden border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center p-2">
                   <img
                     src={image}
                     alt={`Customer review ${index + 1}`}
-                    className="w-full h-auto object-contain"
+                    className="w-full h-full object-contain rounded-xl"
                     loading="lazy"
                   />
                 </div>
