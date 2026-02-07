@@ -256,21 +256,21 @@ const BeautyHero = () => {
                   damping: 15
                 }}
                 whileHover={{ y: -5, scale: 1.05 }}
-                className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-background rounded-2xl p-4 shadow-xl border border-border cursor-pointer min-w-[200px]"
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-background rounded-2xl px-5 py-4 shadow-xl border border-border cursor-pointer"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
                   <motion.div 
-                    className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    className="w-11 h-11 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0"
                     animate={{ rotate: [0, 5, -5, 0] }}
                     transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
                   >
-                    <span className="text-2xl">✨</span>
+                    <span className="text-xl">✨</span>
                   </motion.div>
-                  <div className="flex-1">
-                    <div className="font-semibold text-foreground text-sm whitespace-nowrap">
+                  <div className="pr-2">
+                    <div className="font-semibold text-foreground text-sm">
                       {isRTL ? 'نتائج مضمونة' : 'Guaranteed Results'}
                     </div>
-                    <div className="text-xs text-muted-foreground whitespace-nowrap">
+                    <div className="text-xs text-muted-foreground">
                       {isRTL ? 'خلال 4 أسابيع' : 'Within 4 weeks'}
                     </div>
                   </div>
