@@ -102,23 +102,6 @@ const AboutBrand = () => {
               ))}
             </motion.ul>
 
-            <motion.div variants={staggerItem}>
-              <Link to="/about">
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Button size="lg" className="btn-beauty mt-4">
-                    {content.cta}
-                    {isRTL ? (
-                      <ArrowLeft className="w-4 h-4 mr-2" />
-                    ) : (
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    )}
-                  </Button>
-                </motion.div>
-              </Link>
-            </motion.div>
           </motion.div>
         </div>
       </div>
