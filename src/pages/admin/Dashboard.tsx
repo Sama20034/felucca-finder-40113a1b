@@ -141,7 +141,13 @@ const Dashboard = () => {
     ? shopifyProducts 
     : shopifyProducts.filter(p => !productDetails.some(d => d.shopify_handle === p.node.handle));
 
-  if (loading) {
+  // Merge Shopify products with product_details
+  const mergedProducts = shopifyProducts.map(sp => {
+    const detail = productDetails.find(d => d.shopify_handle === sp.node.handle);
+    return { shopifyProduct: sp, detail };
+  });
+
+  if (loading || loadingProducts) {
     return (
       <AdminLayout>
         <div className="flex items-center justify-center h-64">
@@ -156,43 +162,81 @@ const Dashboard = () => {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <h2 className="text-3xl font-bold text-foreground">إدارة بيانات المنتجات</h2>
-          <Button onClick={handleAdd} className="gap-2">
-            <Plus className="w-4 h-4" />
-            إضافة منتج جديد
-          </Button>
         </div>
 
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Package className="w-5 h-5" />
-              بيانات منتجات Shopify
+              منتجات Shopify ({shopifyProducts.length})
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {productDetails.length === 0 ? (
-              <p className="text-center text-muted-foreground py-8">لا توجد بيانات منتجات. أضف بيانات لمنتجات Shopify.</p>
+            {mergedProducts.length === 0 ? (
+              <p className="text-center text-muted-foreground py-8">لا توجد منتجات في Shopify.</p>
             ) : (
               <Table>
                 <TableHeader>
                   <TableRow>
+                    <TableHead>الصورة</TableHead>
                     <TableHead>اسم المنتج</TableHead>
-                    <TableHead>Handle</TableHead>
+                    <TableHead>السعر</TableHead>
+                    <TableHead>حالة البيانات</TableHead>
                     <TableHead>الإجراءات</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {productDetails.map((item) => (
-                    <TableRow key={item.id}>
-                      <TableCell>{item.product_title || '-'}</TableCell>
-                      <TableCell className="font-mono text-sm">{item.shopify_handle}</TableCell>
-                      <TableCell>
-                        <Button variant="ghost" size="icon" onClick={() => handleEdit(item)}>
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {mergedProducts.map(({ shopifyProduct, detail }) => {
+                    const imgUrl = shopifyProduct.node.images.edges[0]?.node.url;
+                    const price = shopifyProduct.node.priceRange.minVariantPrice;
+                    return (
+                      <TableRow key={shopifyProduct.node.id}>
+                        <TableCell>
+                          {imgUrl ? (
+                            <img src={imgUrl} alt={shopifyProduct.node.title} className="w-12 h-12 object-cover rounded" />
+                          ) : (
+                            <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+                              <Package className="w-5 h-5 text-muted-foreground" />
+                            </div>
+                          )}
+                        </TableCell>
+                        <TableCell className="font-medium">{shopifyProduct.node.title}</TableCell>
+                        <TableCell>{parseFloat(price.amount).toFixed(0)} {price.currencyCode}</TableCell>
+                        <TableCell>
+                          {detail ? (
+                            <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">تم إضافة البيانات</span>
+                          ) : (
+                            <span className="text-xs bg-accent text-accent-foreground px-2 py-1 rounded-full">بدون بيانات</span>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="gap-1"
+                            onClick={() => {
+                              if (detail) {
+                                handleEdit(detail);
+                              } else {
+                                setEditingItem(null);
+                                setFormData({
+                                  shopify_handle: shopifyProduct.node.handle,
+                                  product_title: shopifyProduct.node.title,
+                                  how_to_use: '',
+                                  how_it_works: '',
+                                  ingredients: ''
+                                });
+                                setDialogOpen(true);
+                              }
+                            }}
+                          >
+                            {detail ? <Edit className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                            {detail ? 'تعديل' : 'إضافة بيانات'}
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             )}
