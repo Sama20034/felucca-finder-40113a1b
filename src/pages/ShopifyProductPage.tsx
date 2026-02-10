@@ -242,12 +242,12 @@ const ShopifyProductPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* Images */}
           <div className="space-y-4">
-            <div className="aspect-square rounded-xl overflow-hidden bg-muted">
+            <div className="aspect-square rounded-xl overflow-hidden bg-muted flex items-center justify-center">
               {product.images.edges[selectedImage] ? (
                 <img
                   src={product.images.edges[selectedImage].node.url}
                   alt={product.images.edges[selectedImage].node.altText || product.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">

@@ -65,7 +65,7 @@ export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
               loading="lazy"
               decoding="async"
               onLoad={() => setImageLoaded(true)}
-              className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`w-full h-full object-contain group-hover:scale-105 transition-all duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
             />
           </>
         ) : (
