@@ -295,9 +295,16 @@ const ShopifyProductPage = () => {
               </div>
               
               <div className="bg-muted/50 rounded-lg p-4 min-h-[100px]">
-                <p className="text-muted-foreground whitespace-pre-wrap">
-                  {getTabContent() || (isRTL ? 'لا توجد معلومات' : 'No information available')}
-                </p>
+                {getTabContent() ? (
+                  <div 
+                    className="text-muted-foreground prose prose-sm max-w-none [&>p]:mb-2 [&>ul]:list-disc [&>ul]:pl-5 [&>ol]:list-decimal [&>ol]:pl-5"
+                    dangerouslySetInnerHTML={{ __html: getTabContent()! }}
+                  />
+                ) : (
+                  <p className="text-muted-foreground">
+                    {isRTL ? 'لا توجد معلومات' : 'No information available'}
+                  </p>
+                )}
               </div>
             </div>
 
