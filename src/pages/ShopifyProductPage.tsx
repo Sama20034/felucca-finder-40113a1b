@@ -14,6 +14,7 @@ interface ProductData {
   id: string;
   title: string;
   description: string;
+  descriptionHtml: string;
   handle: string;
   priceRange: {
     minVariantPrice: {
@@ -181,7 +182,7 @@ const ShopifyProductPage = () => {
       case 'ingredients':
         return productDetails?.ingredients;
       default:
-        return product?.description;
+        return product?.descriptionHtml || product?.description;
     }
   };
 
