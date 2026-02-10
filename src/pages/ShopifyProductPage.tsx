@@ -173,6 +173,12 @@ const ShopifyProductPage = () => {
     ...(productDetails?.ingredients ? [{ id: 'ingredients' as const, label: isRTL ? 'المكونات' : 'Ingredients', icon: Leaf }] : []),
   ];
 
+  const decodeHtmlEntities = (html: string): string => {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = html;
+    return textarea.value;
+  };
+
   const getTabContent = () => {
     switch (activeTab) {
       case 'how_to_use':
@@ -181,8 +187,10 @@ const ShopifyProductPage = () => {
         return productDetails?.how_it_works;
       case 'ingredients':
         return productDetails?.ingredients;
-      default:
-        return product?.descriptionHtml || product?.description;
+      default: {
+        const html = product?.descriptionHtml || product?.description;
+        return html ? decodeHtmlEntities(html) : null;
+      }
     }
   };
 
