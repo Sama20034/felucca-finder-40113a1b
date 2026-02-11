@@ -303,15 +303,15 @@ const ShopifyProductPage = () => {
                 ))}
               </div>
               
-              <div className="bg-muted/50 rounded-lg p-5 min-h-[100px]">
+              <div className="bg-muted/50 rounded-lg p-4 sm:p-5 min-h-[100px] overflow-hidden">
                 {getTabContent() ? (
-                  <div 
-                    className="text-foreground/80 max-w-none space-y-3
+              <div 
+                    className="text-foreground/80 max-w-none space-y-3 break-words overflow-hidden
                       [&>h3]:text-lg [&>h3]:font-bold [&>h3]:text-foreground [&>h3]:mt-5 [&>h3]:mb-2
-                      [&>p]:leading-relaxed [&>p]:mb-3
-                      [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-1.5 [&>ul]:mb-3
-                      [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-1.5 [&>ol]:mb-3
-                      [&_li]:leading-relaxed
+                      [&>p]:leading-relaxed [&>p]:mb-3 [&>p]:break-words
+                      [&>ul]:list-disc [&>ul]:ps-6 [&>ul]:space-y-1.5 [&>ul]:mb-3
+                      [&>ol]:list-decimal [&>ol]:ps-6 [&>ol]:space-y-1.5 [&>ol]:mb-3
+                      [&_li]:leading-relaxed [&_li]:break-words
                       [&_strong]:text-foreground [&_strong]:font-semibold
                       first:[&>h3]:mt-0"
                     dangerouslySetInnerHTML={{ __html: getTabContent()! }}
