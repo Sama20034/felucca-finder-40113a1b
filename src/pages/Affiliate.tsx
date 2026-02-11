@@ -14,7 +14,7 @@ const Affiliate = () => {
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
       
-      <main className="flex-1 mt-20">
+      <main className="flex-1">
         {/* Hero Section */}
         <div className="bg-gradient-to-br from-primary/20 via-primary/10 to-background py-16">
           <div className="container mx-auto px-4 text-center">

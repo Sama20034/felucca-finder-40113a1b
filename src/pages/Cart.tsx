@@ -17,7 +17,7 @@ const Cart = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="mt-20">
+      <main>
         {/* Page Header */}
         <div className="bg-secondary py-12">
           <div className="container mx-auto px-4 text-center">

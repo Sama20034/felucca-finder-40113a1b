@@ -19,7 +19,7 @@ const Categories = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="mt-20">
+      <main>
         {/* Page Header */}
         <div className="bg-gradient-to-br from-primary to-primary/80 py-12">
           <div className="container mx-auto px-4">
