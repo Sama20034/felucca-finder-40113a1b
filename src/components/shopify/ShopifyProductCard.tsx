@@ -101,9 +101,16 @@ export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
           {product.node.description}
         </p>
         <div className="flex items-center justify-between">
-          <span className="text-lg font-bold text-primary">
-            {price.currencyCode} {parseFloat(price.amount).toFixed(2)}
-          </span>
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-lg font-bold text-primary">
+              {price.currencyCode} {parseFloat(price.amount).toFixed(2)}
+            </span>
+            {firstVariant?.compareAtPrice && parseFloat(firstVariant.compareAtPrice.amount) > parseFloat(price.amount) && (
+              <span className="text-sm text-muted-foreground line-through">
+                {firstVariant.compareAtPrice.currencyCode} {parseFloat(firstVariant.compareAtPrice.amount).toFixed(2)}
+              </span>
+            )}
+          </div>
           {!firstVariant?.availableForSale && (
             <span className="text-xs text-destructive">
               {isRTL ? "غير متوفر" : "Out of stock"}

@@ -39,6 +39,10 @@ interface ProductData {
           amount: string;
           currencyCode: string;
         };
+        compareAtPrice: {
+          amount: string;
+          currencyCode: string;
+        } | null;
         availableForSale: boolean;
         selectedOptions: Array<{
           name: string;
@@ -281,9 +285,17 @@ const ShopifyProductPage = () => {
           <div className="space-y-6">
             <h1 className="text-3xl font-bold text-foreground">{product.title}</h1>
             
-            <div className="text-2xl font-bold text-primary">
-              {currentVariant?.price.currencyCode || product.priceRange.minVariantPrice.currencyCode}{' '}
-              {parseFloat(currentVariant?.price.amount || product.priceRange.minVariantPrice.amount).toFixed(2)}
+            <div className="flex items-center gap-3 flex-wrap">
+              <span className="text-2xl font-bold text-primary">
+                {currentVariant?.price.currencyCode || product.priceRange.minVariantPrice.currencyCode}{' '}
+                {parseFloat(currentVariant?.price.amount || product.priceRange.minVariantPrice.amount).toFixed(2)}
+              </span>
+              {currentVariant?.compareAtPrice && parseFloat(currentVariant.compareAtPrice.amount) > parseFloat(currentVariant.price.amount) && (
+                <span className="text-lg text-muted-foreground line-through">
+                  {currentVariant.compareAtPrice.currencyCode}{' '}
+                  {parseFloat(currentVariant.compareAtPrice.amount).toFixed(2)}
+                </span>
+              )}
             </div>
 
             {/* Tabs */}
