@@ -390,10 +390,15 @@ const Shop = () => {
                               )}
 
                               {/* Price */}
-                              <div className="flex items-center gap-3">
+                              <div className="flex items-center gap-3 flex-wrap">
                                 <span className="text-2xl font-bold text-white">
                                   {price.toFixed(0)} <span className="text-sm">{currency === 'EGP' ? 'ج.م' : currency}</span>
                                 </span>
+                                {product.node.variants.edges[0]?.node.compareAtPrice && parseFloat(product.node.variants.edges[0].node.compareAtPrice.amount) > price && (
+                                  <span className="text-base text-white/50 line-through">
+                                    {parseFloat(product.node.variants.edges[0].node.compareAtPrice.amount).toFixed(0)} <span className="text-xs">{product.node.variants.edges[0].node.compareAtPrice.currencyCode === 'EGP' ? 'ج.م' : product.node.variants.edges[0].node.compareAtPrice.currencyCode}</span>
+                                  </span>
+                                )}
                               </div>
                             </div>
                           </div>
