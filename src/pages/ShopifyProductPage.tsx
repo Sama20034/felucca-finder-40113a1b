@@ -183,14 +183,27 @@ const ShopifyProductPage = () => {
     return textarea.value;
   };
 
+  const formatPlainText = (text: string): string => {
+    // Convert plain text to HTML preserving line breaks and structure
+    return text
+      .split('\n')
+      .map(line => line.trim())
+      .filter((line, idx, arr) => !(line === '' && idx > 0 && arr[idx - 1] === ''))
+      .map(line => {
+        if (line === '') return '<br/>';
+        return `<p>${line}</p>`;
+      })
+      .join('');
+  };
+
   const getTabContent = () => {
     switch (activeTab) {
       case 'how_to_use':
-        return productDetails?.how_to_use;
+        return productDetails?.how_to_use ? formatPlainText(productDetails.how_to_use) : null;
       case 'how_it_works':
-        return productDetails?.how_it_works;
+        return productDetails?.how_it_works ? formatPlainText(productDetails.how_it_works) : null;
       case 'ingredients':
-        return productDetails?.ingredients;
+        return productDetails?.ingredients ? formatPlainText(productDetails.ingredients) : null;
       default: {
         const html = product?.descriptionHtml || product?.description;
         return html ? decodeHtmlEntities(html) : null;
