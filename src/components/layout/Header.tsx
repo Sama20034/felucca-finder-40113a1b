@@ -67,6 +67,7 @@ const Header = () => {
   ];
 
   return (
+    <>
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-[#1C092F] ${
       isScrolled 
         ? 'shadow-lg border-b border-[#D4AF37]/20' 
@@ -278,6 +279,9 @@ const Header = () => {
       {/* Categories Bar - Below Header */}
       <CategoriesBar />
     </header>
+    {/* Spacer to prevent content from being hidden behind fixed header */}
+    <div className="h-[72px] lg:h-[120px]" />
+    </>
   );
 };
 

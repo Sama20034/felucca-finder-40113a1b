@@ -35,7 +35,7 @@ const Checkout = () => {
     return (
       <div className="min-h-screen bg-background flex flex-col">
         <Header />
-        <main className="flex-1 flex items-center justify-center px-4 py-12 mt-20">
+        <main className="flex-1 flex items-center justify-center px-4 py-12">
           <div className="text-center max-w-md">
             <ShoppingBag className="w-16 h-16 mx-auto text-primary mb-6" />
             <h2 className="text-2xl font-bold mb-4">
@@ -65,7 +65,7 @@ const Checkout = () => {
     return (
       <div className="min-h-screen bg-background flex flex-col">
         <Header />
-        <main className="flex-1 flex items-center justify-center px-4 py-12 mt-20">
+        <main className="flex-1 flex items-center justify-center px-4 py-12">
           <div className="text-center">
             <div className="w-24 h-24 mx-auto bg-muted rounded-full flex items-center justify-center mb-6">
               <Package className="w-12 h-12 text-muted-foreground" />
@@ -136,7 +136,7 @@ const Checkout = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
       
-      <main className="flex-1 container mx-auto px-4 py-8 mt-20">
+      <main className="flex-1 container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">
           {isRTL ? 'إتمام الطلب' : 'Checkout'}
         </h1>
