@@ -349,8 +349,8 @@ const ShopifyProductPage = () => {
               </div>
             </div>
 
-            {/* Variants */}
-            {product.options.map((option) => (
+            {/* Variants - hide if only "Default Title" */}
+            {product.options.filter(option => !(option.name === 'Title' && option.values.length === 1 && option.values[0] === 'Default Title')).map((option) => (
               <div key={option.name} className="space-y-2">
                 <label className="font-medium text-foreground">{option.name}</label>
                 <div className="flex flex-wrap gap-2">
