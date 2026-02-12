@@ -331,7 +331,8 @@ const ShopifyProductPage = () => {
               <div className="bg-muted/50 rounded-lg p-4 sm:p-5 min-h-[100px] overflow-hidden">
                 {getTabContent() ? (
               <div 
-                    className="text-foreground/80 max-w-none space-y-3 break-words overflow-hidden
+                    className="text-foreground/80 max-w-none space-y-3 break-words overflow-hidden font-sans
+                      [&_*]:font-sans
                       [&>h3]:text-lg [&>h3]:font-bold [&>h3]:text-foreground [&>h3]:mt-5 [&>h3]:mb-2
                       [&>p]:leading-relaxed [&>p]:mb-3 [&>p]:break-words
                       [&>ul]:list-disc [&>ul]:ps-6 [&>ul]:space-y-1.5 [&>ul]:mb-3
