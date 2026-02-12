@@ -14,10 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        cormorant: ['Cormorant Garamond', 'Georgia', 'serif'],
-        montserrat: ['Montserrat', 'sans-serif'],
-        sans: ['Montserrat', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['Poppins', 'sans-serif'],
       },
       colors: {
         border: 'hsl(var(--border))',
