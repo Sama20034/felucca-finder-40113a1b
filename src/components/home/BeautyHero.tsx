@@ -43,7 +43,7 @@ const BeautyHero = () => {
   return (
     <section 
       ref={containerRef}
-      className="relative min-h-[90vh] flex items-center bg-gradient-to-b from-secondary/30 via-background to-background overflow-hidden"
+      className="relative min-h-[90vh] flex items-center bg-gradient-to-b from-secondary/30 via-background to-background overflow-hidden pt-8 sm:pt-4 lg:pt-0"
     >
       {/* Animated decorative elements */}
       <motion.div 
