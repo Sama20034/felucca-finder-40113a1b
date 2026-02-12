@@ -280,7 +280,7 @@ const Header = () => {
       <CategoriesBar />
     </header>
     {/* Spacer to prevent content from being hidden behind fixed header */}
-    <div className="h-[80px] lg:h-[120px]" />
+    <div className="h-[100px] lg:h-[130px]" />
     </>
   );
 };
