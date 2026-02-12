@@ -150,18 +150,6 @@ const BeautyHero = () => {
                 </Link>
               </motion.div>
               
-              <motion.div variants={staggerItem}>
-                <Link to="/results" className="w-full sm:w-auto block">
-                  <motion.div
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button size="lg" variant="outline" className="btn-outline-beauty text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 w-full sm:w-auto">
-                      {content.secondary}
-                    </Button>
-                  </motion.div>
-                </Link>
-              </motion.div>
             </motion.div>
 
             {/* Trust Indicators with stagger */}
