@@ -383,11 +383,6 @@ const Shop = () => {
                                 {product.node.title}
                               </h3>
                               
-                              {product.node.description && (
-                                <p className="text-white/70 text-sm mb-3 line-clamp-2">
-                                  {product.node.description}
-                                </p>
-                              )}
 
                               {/* Price */}
                               <div className="flex items-center gap-3 flex-wrap">
