@@ -416,7 +416,7 @@ const ShopifyProductPage = () => {
               <Button
                 onClick={handleAddToCart}
                 disabled={isAdding || isBuyingNow || !currentVariant?.availableForSale}
-                className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground py-6 text-lg rounded-full"
+                className={`flex-1 bg-primary hover:bg-primary/90 text-primary-foreground py-6 text-lg rounded-full ${shouldAnimate ? 'animate-[wiggle_0.5s_ease-in-out_infinite]' : ''}`}
                 size="lg"
               >
                 {isAdding ? (
