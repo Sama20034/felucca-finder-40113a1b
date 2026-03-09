@@ -434,7 +434,7 @@ const ShopifyProductPage = () => {
                 onClick={handleBuyNow}
                 disabled={isAdding || isBuyingNow || !currentVariant?.availableForSale}
                 variant="outline"
-                className="flex-1 border-2 border-foreground text-foreground hover:bg-foreground hover:text-background py-6 text-lg rounded-full"
+                className={`flex-1 border-2 border-foreground text-foreground hover:bg-foreground hover:text-background py-6 text-lg rounded-full ${shouldAnimate ? 'animate-[wiggle_0.5s_ease-in-out_infinite]' : ''}`}
                 size="lg"
               >
                 {isBuyingNow ? (
