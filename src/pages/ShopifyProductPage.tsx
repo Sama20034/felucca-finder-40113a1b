@@ -75,8 +75,14 @@ const ShopifyProductPage = () => {
   const [isAdding, setIsAdding] = useState(false);
   const [isBuyingNow, setIsBuyingNow] = useState(false);
   const [activeTab, setActiveTab] = useState<'description' | 'how_to_use' | 'how_it_works' | 'ingredients'>('description');
+  const [shouldAnimate, setShouldAnimate] = useState(true);
   const addItem = useCartStore(state => state.addItem);
   const getCheckoutUrl = useCartStore(state => state.getCheckoutUrl);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShouldAnimate(false), 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const loadProduct = async () => {
