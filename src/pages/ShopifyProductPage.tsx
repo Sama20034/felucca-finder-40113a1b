@@ -75,8 +75,14 @@ const ShopifyProductPage = () => {
   const [isAdding, setIsAdding] = useState(false);
   const [isBuyingNow, setIsBuyingNow] = useState(false);
   const [activeTab, setActiveTab] = useState<'description' | 'how_to_use' | 'how_it_works' | 'ingredients'>('description');
+  const [shouldAnimate, setShouldAnimate] = useState(true);
   const addItem = useCartStore(state => state.addItem);
   const getCheckoutUrl = useCartStore(state => state.getCheckoutUrl);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShouldAnimate(false), 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -410,7 +416,7 @@ const ShopifyProductPage = () => {
               <Button
                 onClick={handleAddToCart}
                 disabled={isAdding || isBuyingNow || !currentVariant?.availableForSale}
-                className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground py-6 text-lg rounded-full"
+                className={`flex-1 bg-primary hover:bg-primary/90 text-primary-foreground py-6 text-lg rounded-full ${shouldAnimate ? 'animate-[wiggle_0.5s_ease-in-out_infinite]' : ''}`}
                 size="lg"
               >
                 {isAdding ? (
@@ -428,7 +434,7 @@ const ShopifyProductPage = () => {
                 onClick={handleBuyNow}
                 disabled={isAdding || isBuyingNow || !currentVariant?.availableForSale}
                 variant="outline"
-                className="flex-1 border-2 border-foreground text-foreground hover:bg-foreground hover:text-background py-6 text-lg rounded-full"
+                className={`flex-1 border-2 border-foreground text-foreground hover:bg-foreground hover:text-background py-6 text-lg rounded-full ${shouldAnimate ? 'animate-[wiggle_0.5s_ease-in-out_infinite]' : ''}`}
                 size="lg"
               >
                 {isBuyingNow ? (
