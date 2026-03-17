@@ -12,6 +12,7 @@ import { fetchShopifyCollections, ShopifyCollection } from "@/lib/shopify";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { CartDrawer } from "@/components/shopify/CartDrawer";
 import CategoriesBar from "./CategoriesBar";
+import AnnouncementBar from "./AnnouncementBar";
 import logo from "@/assets/reselience-flowers-logo.png";
 import { useState, useEffect, useRef } from "react";
 
