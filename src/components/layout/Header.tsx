@@ -74,6 +74,7 @@ const Header = () => {
         ? 'shadow-lg border-b border-[#D4AF37]/20' 
         : ''
     }`}>
+      <AnnouncementBar />
       {/* Mobile Header - Single row layout */}
       <div className="lg:hidden">
         <div className="flex items-center justify-between px-4 py-4">
