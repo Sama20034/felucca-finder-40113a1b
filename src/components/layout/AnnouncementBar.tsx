@@ -28,9 +28,10 @@ const AnnouncementBar = () => {
   const fullText = `${marqueeText}   ✦   ${marqueeText}   ✦   `;
 
   return (
-    <div className="bg-primary text-primary-foreground overflow-hidden whitespace-nowrap py-2 text-xs md:text-sm font-medium">
-      <div className="animate-marquee inline-block">
-        {fullText}
+    <div className="bg-primary text-primary-foreground overflow-hidden whitespace-nowrap py-2 text-xs md:text-sm font-medium" dir="rtl">
+      <div className="flex w-max animate-marquee">
+        <span className="px-4">{marqueeText}   ✦   </span>
+        <span className="px-4">{marqueeText}   ✦   </span>
       </div>
     </div>
   );
