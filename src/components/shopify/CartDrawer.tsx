@@ -121,7 +121,7 @@ export const CartDrawer = () => {
                 </div>
                 <Button 
                   onClick={handleCheckout} 
-                  className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" 
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" 
                   size="lg" 
                   disabled={items.length === 0 || isLoading || isSyncing}
                 >
