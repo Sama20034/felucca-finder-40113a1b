@@ -161,6 +161,9 @@ const Dashboard = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
+        {/* Announcement Bar Management */}
+        <AnnouncementManager />
+
         <div className="flex justify-between items-center">
           <h2 className="text-3xl font-bold text-foreground">إدارة بيانات المنتجات</h2>
         </div>
