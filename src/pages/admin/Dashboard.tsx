@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { fetchShopifyProducts, ShopifyProduct } from '@/lib/shopify';
+import AnnouncementManager from '@/components/admin/AnnouncementManager';
 
 interface ProductDetail {
   id: string;
