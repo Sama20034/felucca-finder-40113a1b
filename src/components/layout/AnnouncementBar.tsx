@@ -24,12 +24,15 @@ const AnnouncementBar = () => {
   if (announcements.length === 0) return null;
 
   const marqueeText = announcements.map((a) => a.message).join("   ✦   ");
-  // Duplicate for seamless loop
-  const fullText = `${marqueeText}   ✦   ${marqueeText}   ✦   `;
 
   return (
-    <div className="bg-primary text-primary-foreground overflow-hidden whitespace-nowrap py-2 text-xs md:text-sm font-medium" dir="rtl">
-      <div className="flex w-max animate-marquee">
+    <div className="bg-primary text-primary-foreground overflow-hidden whitespace-nowrap py-2 text-xs md:text-sm font-medium" dir="ltr">
+      <div
+        className="inline-flex"
+        style={{
+          animation: 'marquee 20s linear infinite',
+        }}
+      >
         <span className="px-4">{marqueeText}   ✦   </span>
         <span className="px-4">{marqueeText}   ✦   </span>
       </div>
