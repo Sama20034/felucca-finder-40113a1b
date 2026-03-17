@@ -12,6 +12,7 @@ import { fetchShopifyCollections, ShopifyCollection } from "@/lib/shopify";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { CartDrawer } from "@/components/shopify/CartDrawer";
 import CategoriesBar from "./CategoriesBar";
+import AnnouncementBar from "./AnnouncementBar";
 import logo from "@/assets/reselience-flowers-logo.png";
 import { useState, useEffect, useRef } from "react";
 
@@ -73,6 +74,7 @@ const Header = () => {
         ? 'shadow-lg border-b border-[#D4AF37]/20' 
         : ''
     }`}>
+      <AnnouncementBar />
       {/* Mobile Header - Single row layout */}
       <div className="lg:hidden">
         <div className="flex items-center justify-between px-4 py-4">

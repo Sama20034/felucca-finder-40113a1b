@@ -36,7 +36,7 @@ const ProductCard = ({ id, name, nameAr, price, originalPrice, image, images, ba
   const [selectedColor, setSelectedColor] = useState<ColorOption | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   
   const allImages = [image, ...(images || []).filter(img => img !== image)];
   

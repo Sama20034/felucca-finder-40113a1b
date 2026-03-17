@@ -115,6 +115,10 @@ export default {
           '0%, 100%': { transform: 'translateX(0)' },
           '25%': { transform: 'translateX(-4px)' },
           '75%': { transform: 'translateX(4px)' }
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' }
         }
       },
       animation: {
@@ -123,7 +127,8 @@ export default {
         shimmer: 'shimmer 3s linear infinite',
         float: 'float 6s ease-in-out infinite',
         'fade-up': 'fadeUp 0.8s ease-out',
-        'scale-in': 'scaleIn 0.6s ease-out'
+        'scale-in': 'scaleIn 0.6s ease-out',
+        marquee: 'marquee 20s linear infinite'
       },
       boxShadow: {
         soft: '0 4px 20px -5px hsl(281 20% 20% / 0.08)',
