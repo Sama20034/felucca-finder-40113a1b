@@ -94,12 +94,13 @@ const CustomerReviews = () => {
     } else {
       toast({
         title: isRTL
-          ? "شكراً لتقييمك! سيظهر بعد المراجعة ✨"
-          : "Thank you! Your review will appear after approval ✨",
+          ? "شكراً لتقييمك! ✨"
+          : "Thank you for your review! ✨",
       });
       setName("");
       setRating(0);
       setComment("");
+      fetchReviews();
     }
   };
 
