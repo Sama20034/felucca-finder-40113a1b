@@ -209,49 +209,52 @@ const CustomerReviews = () => {
           </form>
         </motion.div>
 
-        {/* Reviews Grid */}
+        {/* Reviews Horizontal Scroll */}
         {!loading && reviews.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <AnimatePresence>
-              {reviews.map((review, index) => (
-                <motion.div
-                  key={review.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.08 }}
-                  className="group relative p-6 rounded-2xl border border-border/40 bg-card/60 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg transition-all duration-500"
-                >
-                  <Quote className="absolute top-3 right-3 w-8 h-8 text-primary/8" />
+          <div className="relative">
+            <div className="overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              <div className="flex gap-5" style={{ minWidth: 'max-content' }}>
+                {reviews.map((review, index) => (
+                  <motion.div
+                    key={review.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.06 }}
+                    className="group relative w-[300px] md:w-[340px] shrink-0 p-6 rounded-2xl border border-border/40 bg-card/60 backdrop-blur-sm hover:border-primary/30 hover:shadow-xl transition-all duration-500"
+                  >
+                    <Quote className="absolute top-3 right-3 w-8 h-8 text-primary/8" />
 
-                  <div className="flex items-center gap-3 mb-4">
-                    {/* Avatar */}
-                    <div
-                      className={`w-11 h-11 rounded-full bg-gradient-to-br ${colors[index % colors.length]} flex items-center justify-center text-white text-sm font-bold shadow-md`}
-                    >
-                      {getInitials(review.name)}
+                    <div className="flex items-center gap-3 mb-4">
+                      <div
+                        className={`w-11 h-11 rounded-full bg-gradient-to-br ${colors[index % colors.length]} flex items-center justify-center text-white text-sm font-bold shadow-md`}
+                      >
+                        {getInitials(review.name)}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-card-foreground truncate">
+                          {review.name}
+                        </h4>
+                        <p className="text-xs text-muted-foreground">
+                          {new Date(review.created_at).toLocaleDateString(
+                            isRTL ? "ar-EG" : "en-US",
+                            { year: "numeric", month: "short", day: "numeric" }
+                          )}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-card-foreground truncate">
-                        {review.name}
-                      </h4>
-                      <p className="text-xs text-muted-foreground">
-                        {new Date(review.created_at).toLocaleDateString(
-                          isRTL ? "ar-EG" : "en-US",
-                          { year: "numeric", month: "short", day: "numeric" }
-                        )}
-                      </p>
-                    </div>
-                  </div>
 
-                  <StarRating rating={review.rating} />
+                    <StarRating rating={review.rating} />
 
-                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed line-clamp-4">
-                    {review.comment}
-                  </p>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+                    <p className="mt-3 text-sm text-muted-foreground leading-relaxed line-clamp-4">
+                      {review.comment}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            {/* Scroll hint gradient */}
+            <div className="absolute top-0 bottom-4 right-0 w-16 bg-gradient-to-l from-background to-transparent pointer-events-none" />
           </div>
         )}
 
