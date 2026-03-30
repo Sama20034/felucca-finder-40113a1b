@@ -249,6 +249,17 @@ const CustomerReviews = () => {
                     <p className="mt-3 text-sm text-muted-foreground leading-relaxed line-clamp-4">
                       {review.comment}
                     </p>
+
+                    {review.admin_reply && (
+                      <div className="mt-3 pt-3 border-t border-border/40">
+                        <p className="text-xs font-semibold text-primary mb-1">
+                          {isRTL ? "رد الإدارة:" : "Admin Reply:"}
+                        </p>
+                        <p className="text-xs text-muted-foreground leading-relaxed">
+                          {review.admin_reply}
+                        </p>
+                      </div>
+                    )}
                   </motion.div>
                 ))}
               </div>
