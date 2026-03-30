@@ -60,6 +60,19 @@ const ReviewsManager = () => {
     }
   };
 
+  const handleDeleteReply = async (id: string) => {
+    const { error } = await supabase
+      .from("customer_reviews")
+      .update({ admin_reply: null })
+      .eq("id", id);
+    if (!error) {
+      toast({ title: "تم حذف الرد" });
+      fetchReviews();
+    } else {
+      toast({ title: "خطأ", description: error.message, variant: "destructive" });
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
