@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { fetchShopifyProducts, ShopifyProduct } from '@/lib/shopify';
 import AnnouncementManager from '@/components/admin/AnnouncementManager';
+import ReviewsManager from '@/components/admin/ReviewsManager';
 
 interface ProductDetail {
   id: string;
@@ -163,6 +164,9 @@ const Dashboard = () => {
       <div className="space-y-6">
         {/* Announcement Bar Management */}
         <AnnouncementManager />
+        
+        {/* Reviews Management */}
+        <ReviewsManager />
 
         <div className="flex justify-between items-center">
           <h2 className="text-3xl font-bold text-foreground">إدارة بيانات المنتجات</h2>

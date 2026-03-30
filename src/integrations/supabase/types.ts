@@ -43,6 +43,7 @@ export type Database = {
       }
       customer_reviews: {
         Row: {
+          admin_reply: string | null
           comment: string
           created_at: string
           id: string
@@ -51,6 +52,7 @@ export type Database = {
           rating: number
         }
         Insert: {
+          admin_reply?: string | null
           comment: string
           created_at?: string
           id?: string
@@ -59,6 +61,7 @@ export type Database = {
           rating: number
         }
         Update: {
+          admin_reply?: string | null
           comment?: string
           created_at?: string
           id?: string

@@ -10,6 +10,7 @@ interface Review {
   name: string;
   rating: number;
   comment: string;
+  admin_reply: string | null;
   created_at: string;
 }
 
@@ -65,11 +66,10 @@ const CustomerReviews = () => {
   const fetchReviews = async () => {
     const { data } = await supabase
       .from("customer_reviews")
-      .select("id, name, rating, comment, created_at")
-      .eq("is_approved", true)
+      .select("id, name, rating, comment, admin_reply, created_at")
       .order("created_at", { ascending: false })
-      .limit(12);
-    if (data) setReviews(data);
+      .limit(20);
+    if (data) setReviews(data as Review[]);
     setLoading(false);
   };
 
@@ -94,12 +94,13 @@ const CustomerReviews = () => {
     } else {
       toast({
         title: isRTL
-          ? "شكراً لتقييمك! سيظهر بعد المراجعة ✨"
-          : "Thank you! Your review will appear after approval ✨",
+          ? "شكراً لتقييمك! ✨"
+          : "Thank you for your review! ✨",
       });
       setName("");
       setRating(0);
       setComment("");
+      fetchReviews();
     }
   };
 
@@ -249,6 +250,17 @@ const CustomerReviews = () => {
                     <p className="mt-3 text-sm text-muted-foreground leading-relaxed line-clamp-4">
                       {review.comment}
                     </p>
+
+                    {review.admin_reply && (
+                      <div className="mt-3 pt-3 border-t border-border/40">
+                        <p className="text-xs font-semibold text-primary mb-1">
+                          {isRTL ? "رد الإدارة:" : "Admin Reply:"}
+                        </p>
+                        <p className="text-xs text-muted-foreground leading-relaxed">
+                          {review.admin_reply}
+                        </p>
+                      </div>
+                    )}
                   </motion.div>
                 ))}
               </div>
