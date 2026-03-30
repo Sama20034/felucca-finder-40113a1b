@@ -10,6 +10,7 @@ interface Review {
   name: string;
   rating: number;
   comment: string;
+  admin_reply: string | null;
   created_at: string;
 }
 
@@ -65,11 +66,10 @@ const CustomerReviews = () => {
   const fetchReviews = async () => {
     const { data } = await supabase
       .from("customer_reviews")
-      .select("id, name, rating, comment, created_at")
-      .eq("is_approved", true)
+      .select("id, name, rating, comment, admin_reply, created_at")
       .order("created_at", { ascending: false })
-      .limit(12);
-    if (data) setReviews(data);
+      .limit(20);
+    if (data) setReviews(data as Review[]);
     setLoading(false);
   };
 
