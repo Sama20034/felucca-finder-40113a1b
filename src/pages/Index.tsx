@@ -7,6 +7,7 @@ import FeaturedProducts from "@/components/home/FeaturedProducts";
 import AboutBrand from "@/components/home/AboutBrand";
 import BeautyTestimonials from "@/components/home/BeautyTestimonials";
 import BeautyCTA from "@/components/home/BeautyCTA";
+import CustomerReviews from "@/components/home/CustomerReviews";
 
 const Index = () => {
   return (
