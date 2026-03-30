@@ -106,9 +106,20 @@ const ReviewsManager = () => {
 
               {/* Existing reply */}
               {review.admin_reply && (
-                <div className="bg-primary/10 rounded-lg p-3 text-sm">
-                  <span className="font-semibold text-primary text-xs">ردك: </span>
-                  <span className="text-card-foreground">{review.admin_reply}</span>
+                <div className="bg-primary/10 rounded-lg p-3 text-sm flex items-center justify-between gap-2">
+                  <div>
+                    <span className="font-semibold text-primary text-xs">ردك: </span>
+                    <span className="text-card-foreground">{review.admin_reply}</span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleDeleteReply(review.id)}
+                    className="text-destructive hover:text-destructive hover:bg-destructive/10 h-7 w-7 shrink-0"
+                    title="حذف الرد"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </Button>
                 </div>
               )}
 
