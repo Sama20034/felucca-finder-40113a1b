@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { fetchShopifyProducts, ShopifyProduct } from '@/lib/shopify';
 import AnnouncementManager from '@/components/admin/AnnouncementManager';
+import ReviewsManager from '@/components/admin/ReviewsManager';
 
 interface ProductDetail {
   id: string;
