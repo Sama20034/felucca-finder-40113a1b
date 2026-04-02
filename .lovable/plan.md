@@ -1,24 +1,29 @@
 
 
 ## المشكلة
-رابط الدعوة بيوجّه المستخدم على `localhost:3000` بدل عنوان الموقع الفعلي. ده لأن Supabase بيستخدم الـ Site URL المحدد في إعدادات المشروع كـ redirect URL افتراضي.
+
+لما المستخدم المدعو يضغط على رابط الدعوة (Accept Invitation)، Supabase بيوجهه لصفحة `/auth` ومعاه token في الـ URL. لكن صفحة Auth الحالية مش بتتعامل مع الـ token ده — بتعرض فورم تسجيل دخول عادي. المستخدم المدعو لسه ما عندوش باسورد، فلما يحاول يسجل دخول بيظهر "Invalid login credentials".
 
 ## الحل
 
-### 1. تعديل Edge Function `invite-admin`
-نضيف `redirectTo` في استدعاء `inviteUserByEmail` عشان يوجّه على الموقع الصحيح:
+نعدل صفحة `Auth.tsx` عشان تكتشف لو المستخدم جاي من رابط دعوة (invite token في الـ URL hash)، وتعرضله فورم "تعيين كلمة المرور" بدل فورم تسجيل الدخول العادي.
 
-```typescript
-await adminClient.auth.admin.inviteUserByEmail(email, {
-  redirectTo: 'https://felucca-finder.lovable.app/auth'
-});
-```
+### التغييرات في `src/pages/Auth.tsx`:
 
-### 2. تحديث Site URL في Supabase Dashboard
-الأهم: لازم تروح على Supabase Dashboard → Authentication → URL Configuration وتغيّر الـ Site URL من `localhost:3000` إلى `https://felucca-finder.lovable.app`.
+1. **كشف الـ invite/recovery token** — نقرأ `window.location.hash` وندور على `type=invite` أو `type=recovery`
+2. **عرض فورم "تعيين كلمة مرور"** — لو في token، نعرض فورم فيه خانة باسورد جديد وتأكيد الباسورد
+3. **حفظ الباسورد** — نستخدم `supabase.auth.updateUser({ password })` لتعيين الباسورد الجديد
+4. **إعادة توجيه** — بعد تعيين الباسورد بنجاح، يتم توجيه المستخدم للداشبورد (لو أدمن) أو الصفحة الرئيسية
 
-ده بيأثر على كل الإيميلات (دعوات، تأكيد حساب، إلخ).
+### التغييرات في `src/contexts/AuthContext.tsx`:
 
-### 3. إضافة Redirect URL في Supabase
-تضيف `https://felucca-finder.lovable.app/**` في قائمة الـ Redirect URLs المسموحة.
+لا تغييرات مطلوبة — الـ `onAuthStateChange` بيتعامل مع الـ session تلقائياً بعد ما Supabase يعمل token exchange.
+
+### السيناريو بعد التعديل:
+
+1. المدعو يضغط رابط الدعوة في الإيميل
+2. Supabase يعمل token exchange ويوجهه لـ `/auth#type=invite&access_token=...`
+3. صفحة Auth تكتشف إن ده invite وتعرض فورم "اختار كلمة مرور"
+4. المدعو يكتب الباسورد ويضغط حفظ
+5. النظام يحفظ الباسورد ويسجل دخوله تلقائياً
 
