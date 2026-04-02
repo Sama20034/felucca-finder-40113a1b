@@ -63,7 +63,7 @@ Deno.serve(async (req) => {
     );
 
     if (existingUser) {
-      // User exists, just grant admin role
+      // User exists — grant admin role
       await adminClient
         .from("user_roles")
         .upsert(
@@ -71,8 +71,30 @@ Deno.serve(async (req) => {
           { onConflict: "user_id,role" }
         );
 
+      // Generate a new magic link so they can set their password
+      const { error: linkError } = await adminClient.auth.admin.generateLink({
+        type: 'magiclink',
+        email: email,
+        options: {
+          redirectTo: 'https://felucca-finder.lovable.app/auth'
+        }
+      });
+
+      if (linkError) {
+        // Still granted admin, just couldn't send email
+        return new Response(
+          JSON.stringify({ success: true, message: "Admin role granted but could not send email: " + linkError.message }),
+          { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      // Also set needs_password metadata
+      await adminClient.auth.admin.updateUserById(existingUser.id, {
+        user_metadata: { needs_password: true }
+      });
+
       return new Response(
-        JSON.stringify({ success: true, message: "User already exists, admin role granted" }),
+        JSON.stringify({ success: true, message: "Admin role granted and login link sent" }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
