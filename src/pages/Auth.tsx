@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,6 +12,12 @@ import Footer from '@/components/layout/Footer';
 import { Crown, Sparkles, Lock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
+// Check hash BEFORE component renders to avoid race condition with auth state
+const getInitialInviteState = () => {
+  const hash = window.location.hash;
+  return !!(hash && (hash.includes('type=invite') || hash.includes('type=recovery')));
+};
+
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
@@ -20,27 +26,33 @@ const Auth = () => {
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
   
-  // Invite/recovery state
-  const [isSettingPassword, setIsSettingPassword] = useState(false);
+  // Invite/recovery state - initialized synchronously from URL hash
+  const [isSettingPassword, setIsSettingPassword] = useState(getInitialInviteState);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const isInviteRef = useRef(getInitialInviteState());
   
   const { user, isAdmin, signIn, signUp } = useAuth();
   const { isRTL } = useLanguage();
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Detect invite/recovery token in URL hash
+  // Also listen for PASSWORD_RECOVERY event from Supabase
   useEffect(() => {
-    const hash = window.location.hash;
-    if (hash && (hash.includes('type=invite') || hash.includes('type=recovery'))) {
-      setIsSettingPassword(true);
-    }
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') {
+        // If we detected invite from hash, keep showing password form
+        if (isInviteRef.current) {
+          setIsSettingPassword(true);
+        }
+      }
+    });
+    return () => subscription.unsubscribe();
   }, []);
 
-  // Redirect logged-in users (but not if setting password)
+  // Redirect logged-in users ONLY if NOT setting password
   useEffect(() => {
-    if (user && !isSettingPassword) {
+    if (user && !isSettingPassword && !isInviteRef.current) {
       navigate(isAdmin ? '/admin' : '/');
     }
   }, [user, isAdmin, navigate, isSettingPassword]);
@@ -81,7 +93,9 @@ const Auth = () => {
         title: isRTL ? 'تم بنجاح!' : 'Success!',
         description: isRTL ? 'تم تعيين كلمة المرور. مرحباً بك!' : 'Password set successfully. Welcome!',
       });
+      isInviteRef.current = false;
       setIsSettingPassword(false);
+      // Now allow redirect
       navigate(isAdmin ? '/admin' : '/');
     }
   };
