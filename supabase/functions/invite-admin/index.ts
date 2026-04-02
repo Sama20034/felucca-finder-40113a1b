@@ -77,10 +77,11 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Invite new user
+    // Invite new user with needs_password metadata
     const { data: inviteData, error: inviteError } =
       await adminClient.auth.admin.inviteUserByEmail(email, {
-        redirectTo: 'https://felucca-finder.lovable.app/auth'
+        redirectTo: 'https://felucca-finder.lovable.app/auth',
+        data: { needs_password: true }
       });
 
     if (inviteError) {
