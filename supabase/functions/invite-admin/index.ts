@@ -79,7 +79,9 @@ Deno.serve(async (req) => {
 
     // Invite new user
     const { data: inviteData, error: inviteError } =
-      await adminClient.auth.admin.inviteUserByEmail(email);
+      await adminClient.auth.admin.inviteUserByEmail(email, {
+        redirectTo: 'https://felucca-finder.lovable.app/auth'
+      });
 
     if (inviteError) {
       return new Response(JSON.stringify({ error: inviteError.message }), {
