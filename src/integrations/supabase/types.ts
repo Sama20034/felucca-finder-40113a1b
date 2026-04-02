@@ -292,6 +292,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      grant_admin_by_email: { Args: { _email: string }; Returns: boolean }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -299,6 +300,14 @@ export type Database = {
         }
         Returns: boolean
       }
+      list_admin_emails: {
+        Args: never
+        Returns: {
+          email: string
+          user_id: string
+        }[]
+      }
+      revoke_admin_by_email: { Args: { _email: string }; Returns: boolean }
     }
     Enums: {
       app_role: "admin" | "user"
