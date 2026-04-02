@@ -6,8 +6,6 @@ interface ProtectedAdminRouteProps {
   children: ReactNode;
 }
 
-const ADMIN_EMAIL = 'admin@gmail.com';
-
 const ProtectedAdminRoute = ({ children }: ProtectedAdminRouteProps) => {
   const { user, isAdmin, loading } = useAuth();
 
@@ -19,8 +17,7 @@ const ProtectedAdminRoute = ({ children }: ProtectedAdminRouteProps) => {
     );
   }
 
-  // Only allow access if user is admin AND has the specific admin email
-  if (!user || !isAdmin || user.email !== ADMIN_EMAIL) {
+  if (!user || !isAdmin) {
     return <Navigate to="/auth" replace />;
   }
 

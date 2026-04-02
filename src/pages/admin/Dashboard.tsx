@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { fetchShopifyProducts, ShopifyProduct } from '@/lib/shopify';
 import AnnouncementManager from '@/components/admin/AnnouncementManager';
 import ReviewsManager from '@/components/admin/ReviewsManager';
+import AdminAccessManager from '@/components/admin/AdminAccessManager';
 
 interface ProductDetail {
   id: string;
