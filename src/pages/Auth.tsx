@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,12 +12,6 @@ import Footer from '@/components/layout/Footer';
 import { Crown, Sparkles, Lock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-// Check hash BEFORE component renders to avoid race condition with auth state
-const getInitialInviteState = () => {
-  const hash = window.location.hash;
-  return !!(hash && (hash.includes('type=invite') || hash.includes('type=recovery')));
-};
-
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
@@ -25,37 +19,20 @@ const Auth = () => {
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
-  
-  // Invite/recovery state - initialized synchronously from URL hash
-  const [isSettingPassword, setIsSettingPassword] = useState(getInitialInviteState);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const isInviteRef = useRef(getInitialInviteState());
   
-  const { user, isAdmin, signIn, signUp } = useAuth();
+  const { user, isAdmin, needsPasswordSetup, clearPasswordSetup, signIn, signUp } = useAuth();
   const { isRTL } = useLanguage();
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Also listen for PASSWORD_RECOVERY event from Supabase
+  // Redirect logged-in users ONLY if NOT needing password setup
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') {
-        // If we detected invite from hash, keep showing password form
-        if (isInviteRef.current) {
-          setIsSettingPassword(true);
-        }
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, []);
-
-  // Redirect logged-in users ONLY if NOT setting password
-  useEffect(() => {
-    if (user && !isSettingPassword && !isInviteRef.current) {
+    if (user && !needsPasswordSetup) {
       navigate(isAdmin ? '/admin' : '/');
     }
-  }, [user, isAdmin, navigate, isSettingPassword]);
+  }, [user, isAdmin, navigate, needsPasswordSetup]);
 
   const handleSetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,7 +56,13 @@ const Auth = () => {
     }
 
     setLoading(true);
-    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    
+    // Update password
+    const { error } = await supabase.auth.updateUser({ 
+      password: newPassword,
+      data: { needs_password: false }
+    });
+    
     setLoading(false);
 
     if (error) {
@@ -93,9 +76,7 @@ const Auth = () => {
         title: isRTL ? 'تم بنجاح!' : 'Success!',
         description: isRTL ? 'تم تعيين كلمة المرور. مرحباً بك!' : 'Password set successfully. Welcome!',
       });
-      isInviteRef.current = false;
-      setIsSettingPassword(false);
-      // Now allow redirect
+      clearPasswordSetup();
       navigate(isAdmin ? '/admin' : '/');
     }
   };
@@ -122,21 +103,21 @@ const Auth = () => {
         <div className="w-full max-w-md card-luxury p-8">
           <div className="text-center mb-8">
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center">
-              {isSettingPassword ? <Lock className="w-8 h-8 text-primary" /> : <Crown className="w-8 h-8 text-primary" />}
+              {needsPasswordSetup ? <Lock className="w-8 h-8 text-primary" /> : <Crown className="w-8 h-8 text-primary" />}
             </div>
             <h1 className="font-serif text-3xl font-bold text-primary mb-2">
-              {isSettingPassword
+              {needsPasswordSetup
                 ? (isRTL ? 'تعيين كلمة المرور' : 'Set Your Password')
                 : (isRTL ? 'مرحباً بك' : 'Welcome')}
             </h1>
             <p className="text-muted-foreground">
-              {isSettingPassword
+              {needsPasswordSetup
                 ? (isRTL ? 'اختار كلمة مرور جديدة لحسابك' : 'Choose a new password for your account')
                 : (isRTL ? 'سجلي دخولك أو أنشئي حساب جديد' : 'Sign in or create a new account')}
             </p>
           </div>
 
-          {isSettingPassword ? (
+          {needsPasswordSetup ? (
             <form onSubmit={handleSetPassword} className="space-y-4">
               <div className="space-y-2">
                 <Label className="text-card-foreground">{isRTL ? 'كلمة المرور الجديدة' : 'New Password'}</Label>
