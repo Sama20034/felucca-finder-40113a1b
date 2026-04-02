@@ -71,30 +71,39 @@ Deno.serve(async (req) => {
           { onConflict: "user_id,role" }
         );
 
-      // Generate a new magic link so they can set their password
-      const { error: linkError } = await adminClient.auth.admin.generateLink({
-        type: 'magiclink',
-        email: email,
-        options: {
-          redirectTo: 'https://felucca-finder.lovable.app/auth'
-        }
-      });
-
-      if (linkError) {
-        // Still granted admin, just couldn't send email
-        return new Response(
-          JSON.stringify({ success: true, message: "Admin role granted but could not send email: " + linkError.message }),
-          { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
-      }
-
-      // Also set needs_password metadata
+      // Set needs_password metadata
       await adminClient.auth.admin.updateUserById(existingUser.id, {
         user_metadata: { needs_password: true }
       });
 
+      // Delete and re-invite to send a fresh invite email
+      await adminClient.auth.admin.deleteUser(existingUser.id);
+      
+      const { data: reInviteData, error: reInviteError } = 
+        await adminClient.auth.admin.inviteUserByEmail(email, {
+          redirectTo: 'https://felucca-finder.lovable.app/auth',
+          data: { needs_password: true }
+        });
+
+      if (reInviteError) {
+        return new Response(
+          JSON.stringify({ success: true, message: "Admin role granted but could not resend invite: " + reInviteError.message }),
+          { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      // Re-grant admin role to the new user record
+      if (reInviteData.user) {
+        await adminClient
+          .from("user_roles")
+          .upsert(
+            { user_id: reInviteData.user.id, role: "admin" },
+            { onConflict: "user_id,role" }
+          );
+      }
+
       return new Response(
-        JSON.stringify({ success: true, message: "Admin role granted and login link sent" }),
+        JSON.stringify({ success: true, message: "Admin role granted and new invitation sent" }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
