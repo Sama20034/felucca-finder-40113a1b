@@ -163,6 +163,9 @@ const Dashboard = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
+        {/* Admin Access Management */}
+        <AdminAccessManager />
+
         {/* Announcement Bar Management */}
         <AnnouncementManager />
         
