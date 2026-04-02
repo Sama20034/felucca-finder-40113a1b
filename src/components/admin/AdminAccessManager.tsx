@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Shield, Plus, Trash2, Loader2 } from 'lucide-react';
+import { Shield, Plus, Trash2, Loader2, Mail } from 'lucide-react';
 
 interface AdminUser {
   user_id: string;
@@ -38,16 +38,42 @@ const AdminAccessManager = () => {
     if (!newEmail.trim()) return;
     setAdding(true);
     try {
+      // Try granting admin first (if user exists)
       const { error } = await supabase.rpc('grant_admin_by_email', { _email: newEmail.trim() });
       if (error) throw error;
       toast({ title: 'تم إضافة الأدمن بنجاح' });
       setNewEmail('');
       fetchAdmins();
     } catch (error: any) {
-      const msg = error.message.includes('User not found')
-        ? 'هذا الإيميل غير مسجل في الموقع'
-        : error.message;
-      toast({ title: 'خطأ', description: msg, variant: 'destructive' });
+      if (error.message.includes('User not found')) {
+        // User not registered — offer to invite
+        handleInvite();
+      } else {
+        toast({ title: 'خطأ', description: error.message, variant: 'destructive' });
+      }
+    } finally {
+      setAdding(false);
+    }
+  };
+
+  const handleInvite = async () => {
+    setAdding(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('invite-admin', {
+        body: { email: newEmail.trim() },
+      });
+
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+
+      toast({
+        title: 'تم إرسال الدعوة بنجاح ✉️',
+        description: `تم إرسال رابط دعوة إلى ${newEmail}. سيقوم بتعيين كلمة المرور بنفسه.`,
+      });
+      setNewEmail('');
+      fetchAdmins();
+    } catch (error: any) {
+      toast({ title: 'خطأ في إرسال الدعوة', description: error.message, variant: 'destructive' });
     } finally {
       setAdding(false);
     }
@@ -89,6 +115,10 @@ const AdminAccessManager = () => {
             {adding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
             إضافة
           </Button>
+          <Button onClick={handleInvite} disabled={adding || !newEmail.trim()} variant="outline" className="gap-1">
+            {adding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Mail className="w-4 h-4" />}
+            دعوة
+          </Button>
         </div>
 
         {loading ? (
@@ -115,9 +145,10 @@ const AdminAccessManager = () => {
           </div>
         )}
 
-        <p className="text-xs text-muted-foreground">
-          * يجب أن يكون المستخدم مسجل في الموقع أولاً حتى تتمكن من إضافته كأدمن
-        </p>
+        <div className="text-xs text-muted-foreground space-y-1">
+          <p>* <strong>إضافة:</strong> لو المستخدم مسجل بالفعل، يتم إعطاؤه صلاحية أدمن مباشرة</p>
+          <p>* <strong>دعوة:</strong> لو المستخدم مش مسجل، يتم إرسال رابط دعوة على إيميله ويختار الباسورد بنفسه</p>
+        </div>
       </CardContent>
     </Card>
   );
